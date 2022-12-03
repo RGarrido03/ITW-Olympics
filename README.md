@@ -2,6 +2,7 @@
 Project for ITW about the Olympic Games
 
 ## Common code between pages
+```html
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -25,3 +26,4 @@ Project for ITW about the Olympic Games
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous"></script>
 </body>
+```
