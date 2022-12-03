@@ -1,5 +1,6 @@
 # ITW-Olympics
-Project for ITW about the Olympic Games
+Project for ITW about the Olympic Games.<br>
+Check the page at https://rgarrido03.github.io/ITW-Olympics.
 
 ## Common code between pages
 ```html
