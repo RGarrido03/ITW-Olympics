@@ -1,6 +1,6 @@
 # ITW-Olympics
 Project for ITW about the Olympic Games.<br>
-Check the page at https://rgarrido03.github.io/ITW-Olympics.
+Check the page at https://rgarrido03.github.io/ITW-Olympics.<br>
 Every time there's a new notable change, put it <a href="changes.md">here</a>.
 
 ## Common code between pages
