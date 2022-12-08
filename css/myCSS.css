@@ -77,16 +77,16 @@ html,body{
   line-height: 60px;
   transition: all 0.3s ease-out;
 }
-.wrapper .button:nth-child(1):hover .icon{
+.wrapper #v:hover .icon{
   background: #4267B2;
 }
-.wrapper .button:nth-child(2):hover .icon{
+.wrapper #c:hover .icon{
   background: #1DA1F2;
 }
-.wrapper .button:nth-child(3):hover .icon{
+.wrapper #z:hover .icon{
   background: #E1306C;
 }
-.wrapper .button:nth-child(4):hover .icon{
+.wrapper #x:hover .icon{
   background: #ff0000;
 }
 .wrapper .button .icon i{
@@ -104,18 +104,19 @@ html,body{
   margin-left: 10px;
   transition: all 0.3s ease-out;
 }
-.wrapper .button:nth-child(1) span{
+.wrapper #v span{
   color: #4267B2;
 }
-.wrapper .button:nth-child(2) span{
+.wrapper #c span{
   color: #1DA1F2;
 }
-.wrapper .button:nth-child(3) span{
+.wrapper #z span{
   color: #E1306C;
 }
-.wrapper .button:nth-child(4) span{
+.wrapper #x span{
   color: #ff0000;
 }
 a {
     color: rgb(2, 0, 0);
 }
+
