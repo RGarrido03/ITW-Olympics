@@ -42,7 +42,7 @@
         <span data-bind="html: 'Competitions: '+ fromRecord() + '-' + toRecord() + ' of ' + totalRecords()"></span>
       </p>
       <div class="col-8 my-0 pt-3">
-        <ul class="pagination float-end">
+        <ul  class="pagination float-end">
           <!-- ko if: currentPage() > 5 && totalPages() > 10 -->
           <li class="page-item float-end"><a class="page-link" title="First Page" data-bind="attr: { href: './competitions.html?page=' + '1',  rel:'prev'}">⇤</a></li>
           <li class="page-item float-end"><a class="page-link" title="Previous Page" data-bind="attr: { href: './competitions.html?page=' + previousPage(),  rel:'prev'}">←</a></li>
@@ -77,7 +77,16 @@
       </thead>
       <tbody data-bind="foreach: records">
         <tr>
-          <td class="align-middle" data-bind="text:Photo"></td>
+          <td class="align-middle">
+            <div data-bind="if: Photo">
+              <img data-bind="attr:{src: Photo}" style="height:3em; width:3em; object-fit:cover; border-radius: 0.5em;">
+            </div>
+            <div data-bind="ifnot: Photo">
+              <div style="height:3em; width:3em; line-height: 2.6em;" class="text-center border border-2 border-dark rounded-circle">
+                <i class="fa-solid fa-user"></i>
+              </div>
+            </div>
+          </td>
           <td class="align-middle" data-bind="text:Id"></td>
           <td class="align-middle" data-bind="text:Name"></td>
           <td class="align-middle" data-bind="text:Modality"></td>
