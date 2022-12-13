@@ -44,7 +44,7 @@ var vm = function () {
 
     //--- Page Events
     self.activate = function (id) {
-        console.log('CALL: getGames...');
+        console.log('CALL: getAthletes...');
         var composedUri = self.baseUri() + "?page=" + id + "&pageSize=" + self.pagesize();
         ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
