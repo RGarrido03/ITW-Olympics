@@ -122,6 +122,14 @@ var vm = function () {
     console.log("VM initialized!");
 };
 
+function showButtons() {
+    $(event.target).children("div").fadeTo('fast', 1.0);
+}
+
+function hideButtons() {
+    $(event.target).children("div").fadeTo('fast', 0.0);
+}
+
 $(document).ready(function () {
     console.log("ready!");
     ko.applyBindings(new vm());

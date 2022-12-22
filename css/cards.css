@@ -1,0 +1,39 @@
+.card-image-cover {
+    object-fit: cover;
+    height: 15rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.card-action-buttons {
+    height: 15rem;
+    backdrop-filter: blur(1.5rem);
+    background-blend-mode: soft-light;
+    opacity: 0;
+}
+
+.card-action-buttons-each {
+    height: 3.5rem;
+    width: 3.5rem;
+    --bs-btn-bg: #f8f9fabb;
+    --bs-btn-border-color: #f8f9fabb;
+    --bs-btn-hover-bg: #f8f9fa99;
+    --bs-btn-hover-border-color: #f8f9fa99;
+    mix-blend-mode: soft-light;
+    border-radius: 50%;
+    transition: border-radius 0.2s;
+}
+
+.card-action-buttons-each:hover {
+    border-radius: 25%;
+}
+
+/* Instead of always use class="d-flex align-items-center justify-content-center",
+   this simpler class simplifies the process of centering things both horizontally and vertically */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
