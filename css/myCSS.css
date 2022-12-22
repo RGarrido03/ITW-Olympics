@@ -37,11 +37,6 @@ li.page-item a {
     font-size: 0.85rem;
 }
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 html,body{
   display: grid;
   height: 100%;
@@ -105,23 +100,6 @@ html,body{
 
 a {
     color: rgb(2, 0, 0);
-}
-
-.content-box {
-    border-radius: 8px;
-    background-color: #fafafb;
-    box-shadow: 1px 4px 8px rgba(0,0,0,.15);
-    transition: all .3s ease-in-out;
-    padding: 10px;
-    padding-bottom: 0;
-    margin-top: 0px;
-    margin-bottom: 10px;
-    height: 430px;
-}
-.content-box .finbyz-icon {
-    height: 100px;
-    width: 100px;
-    display: inline;
 }
 
 .blue-fade {
