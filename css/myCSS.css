@@ -4,27 +4,6 @@
     background: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
 }
 
-/* button default
----------------------------- */
-.btn-default {
-    color: #333;
-    background-color: #f8f9fa;
-    border-color: #ccc;
-}
-
-    .btn-default:focus {
-        color: #333;
-        background-color: #e6e6e6;
-        border-color: #8c8c8c;
-    }
-
-    .btn-default:active,
-    .btn-default:hover {
-        color: #333;
-        background-color: #e6e6e6;
-        border-color: #adadad;
-    }
-
 li.page-item a {
     font-size: 0.85rem;
 }
