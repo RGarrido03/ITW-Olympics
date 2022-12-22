@@ -51,69 +51,58 @@ html,body{
 }
 .wrapper .button{
   display: inline-block;
-  height: 60px;
-  width: 60px;
+  height: 2.5rem;
+  width: 2.5rem;
   float: left;
   margin: 0 5px;
   overflow: hidden;
   background: #fff;
-  border-radius: 50px;
+  border-radius: 1.5rem;
   cursor: pointer;
   box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
   transition: all 0.3s ease-out;
 }
 .wrapper .button:hover{
-  width: 200px;
+  width: 9.5rem;
 }
 .wrapper .button .icon{
   display: inline-block;
-  height: 60px;
-  width: 60px;
+  height: 2.5rem;
+  width: 2.5rem;
   text-align: center;
   border-radius: 50px;
   box-sizing: border-box;
-  line-height: 60px;
+  line-height: 2.5rem;
   transition: all 0.3s ease-out;
 }
-.wrapper #v:hover .icon{
-  background: #4267B2;
-}
-.wrapper #c:hover .icon{
-  background: #1DA1F2;
-}
-.wrapper #z:hover .icon{
-  background: #E1306C;
-}
-.wrapper #x:hover .icon{
-  background: #ff0000;
-}
 .wrapper .button .icon i{
-  font-size: 25px;
-  line-height: 60px;
+  font-size: 1rem;
+  line-height: 2.5rem;
   transition: all 0.3s ease-out;
 }
 .wrapper .button:hover .icon i{
   color: #fff;
 }
 .wrapper .button span{
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 60px;
+  line-height: 2.5rem;
   margin-left: 10px;
   transition: all 0.3s ease-out;
 }
-.wrapper #v span{
-  color: #4267B2;
-}
-.wrapper #c span{
-  color: #1DA1F2;
-}
-.wrapper #z span{
-  color: #E1306C;
-}
-.wrapper #x span{
-  color: #ff0000;
-}
+
+.wrapper #facebook span{color: #2374E1;}
+.wrapper #facebook:hover .icon{background: #2374E1;}
+
+.wrapper #twitter span{color: #1DA1F2;}
+.wrapper #twitter:hover .icon{background: #1DA1F2;}
+
+.wrapper #instagram span{color: #E1306C;}
+.wrapper #instagram:hover .icon{background: #E1306C;}
+
+.wrapper #youtube span{color: #ff0000;}
+.wrapper #youtube:hover .icon{background: #ff0000;}
+
 a {
     color: rgb(2, 0, 0);
 }
