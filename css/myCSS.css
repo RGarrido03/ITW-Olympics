@@ -1,6 +1,7 @@
 ﻿body {
     font-family: 'Open Sans', sans-serif;
-    margin: 60px 0 60px 0;
+    margin: 3.5rem 0 4.5rem 0;
+    background: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
 }
 
 /* button default
@@ -37,13 +38,6 @@ li.page-item a {
     font-size: 0.85rem;
 }
 
-html,body{
-  display: grid;
-  height: 100%;
-  width: 100%;
-  place-items: center;
-  background: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
-}
 .wrapper .button{
   display: inline-block;
   height: 2.5rem;
