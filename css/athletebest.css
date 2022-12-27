@@ -1,0 +1,116 @@
+
+.border{
+  height: 369px;
+  width: 290px;
+  background: transparent;
+  border-radius: 10px;
+  transition: border 1s;
+  position: relative;
+}
+.border:hover {
+  border: 1px solid white;
+}
+
+.card0{
+  height: 379px;
+  width: 300px;
+  background: grey;
+  border-radius: 10px;
+  transition: background 0.8s;
+  overflow: hidden;
+  background: black;
+  box-shadow: 0 70px 63px -60px #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.card1{
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Michael_Phelps_Rio_Olympics_2016.jpg/800px-Michael_Phelps_Rio_Olympics_2016.jpg') center center no-repeat;
+  background-size: 300px 
+}
+.card1:hover{
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Michael_Phelps_Rio_Olympics_2016.jpg/800px-Michael_Phelps_Rio_Olympics_2016.jpg') left center no-repeat;
+  background-size: 600px
+}
+
+.card2{
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Usain_Bolt_Olympics_cropped.jpg/640px-Usain_Bolt_Olympics_cropped.jpg') center center no-repeat;
+  background-size: 300px 
+}
+.card2:hover {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Usain_Bolt_Olympics_cropped.jpg/640px-Usain_Bolt_Olympics_cropped.jpg') left center no-repeat;
+  background-size: 600px 
+}
+
+.card3{
+  background: url('https://i.pinimg.com/736x/92/06/17/9206179d0dd7dfb856140baea0bc34b4.jpg') center center no-repeat;
+  background-size: 300px 
+}
+.card3:hover{
+  background: url('https://i.pinimg.com/736x/92/06/17/9206179d0dd7dfb856140baea0bc34b4.jpg') left center no-repeat;
+  background-size: 600px 
+}
+
+.card4{
+  background: url('https://paavonurmi.fi/wp-content/fancygallery/1/1/pn_potretti.JPEG') center center no-repeat;
+  background-size: 300px 
+}
+.card4:hover{
+  background: url('https://paavonurmi.fi/wp-content/fancygallery/1/1/pn_potretti.JPEG') left center no-repeat;
+  background-size: 600px
+}
+
+.card5{
+  background: url('https://img.texasmonthly.com/2022/04/carl-lewis-and-the-exquisite-science-of-jumping.jpg?auto=compress&crop=faces&fit=fit&fm=jpg&h=0&ixlib=php-3.3.1&q=45&w=1250') center center no-repeat;
+  background-size: 300px 
+}
+.card5:hover{
+  background: url('https://img.texasmonthly.com/2022/04/carl-lewis-and-the-exquisite-science-of-jumping.jpg?auto=compress&crop=faces&fit=fit&fm=jpg&h=0&ixlib=php-3.3.1&q=45&w=1250') left center no-repeat;
+  background-size: 600px
+}
+
+.card6{
+  background: url('https://image.news.livedoor.com/newsimage/0/7/071ac432f6c5c43a5097f4487747cc22.jpg') center center no-repeat;
+  background-size: 300px 
+}
+.card6:hover{
+  background: url('https://image.news.livedoor.com/newsimage/0/7/071ac432f6c5c43a5097f4487747cc22.jpg') left center no-repeat;
+  background-size: 600px
+}
+
+.card7{
+  background: url('https://pbs.twimg.com/media/EA7gZEoUIAAlFsW.jpg') center center no-repeat;
+  background-size: 300px 
+}
+.card7:hover{
+  background: url('https://pbs.twimg.com/media/EA7gZEoUIAAlFsW.jpg') left center no-repeat;
+  background-size: 600px
+}
+
+.card8{
+  background: url('https://www.runblogrun.com/wp-content/uploads/2022/07/FraserPryce-ShellyAnne-FV-Worlds22.jpg') center center no-repeat;
+  background-size: 300px 
+}
+.card8:hover{
+  background: url('https://www.runblogrun.com/wp-content/uploads/2022/07/FraserPryce-ShellyAnne-FV-Worlds22.jpg') left center no-repeat;
+  background-size: 600px
+}
+
+.card9{
+  background: url('https://img5.hotnessrater.com/6333820/mikaela-shiffrin.jpg?w=600&h=900') center center no-repeat;
+  background-size: 300px 
+}
+.card9:hover{
+  background: url('https://img5.hotnessrater.com/6333820/mikaela-shiffrin.jpg?w=600&h=900') left center no-repeat;
+  background-size: 600px
+}
+
+h2{
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: white;
+  margin: 20px;
+  opacity:;
+  transition: opacity 1s;
+}
+

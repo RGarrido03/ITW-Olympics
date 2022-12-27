@@ -1,0 +1,8 @@
+h1 {
+    font-size: 4em; /*fallback*/
+    font-size: 5vw;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+  }
+
+
