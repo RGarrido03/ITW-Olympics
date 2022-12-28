@@ -68,12 +68,18 @@
 
     <div class="row g-3" data-bind="foreach: records">
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card w-100">
+        <div class="card bg-light w-100">
           <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
-            <img class="card-img-top card-image-cover" data-bind="attr:{src:Photo, alt:Name, id:'img' + Id}">
+            <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
+            <div data-bind="hidden: Photo" class="card-img-top card-image-default">
+              <div class="center w-100 h-100">
+                <img src="img/Olympic_rings.svg" class="w-75" />
+              </div>
+            </div>
             <div class="center card-action-buttons rounded">
               <a class="btn btn-light me-2 card-action-buttons-each center" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg"></i></a>
               <a class="btn btn-light ms-2 card-action-buttons-each center"><i class="fa-solid fa-heart fa-lg"></i></a>
+              <p class="m-0 text-muted" style="position: absolute; bottom: 1rem" data-bind="hidden: Photo">Imagem não disponível</p>
             </div>
           </div>
           <div class="card-body">

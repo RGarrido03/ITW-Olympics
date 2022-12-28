@@ -123,11 +123,11 @@ var vm = function () {
 };
 
 function showButtons() {
-    $(event.target).children("div").fadeTo('fast', 1.0);
+    $(event.target).children(".card-action-buttons").fadeTo('fast', 1.0);
 }
 
 function hideButtons() {
-    $(event.target).children("div").fadeTo('fast', 0.0);
+    $(event.target).children(".card-action-buttons").fadeTo('fast', 0.0);
 }
 
 $(document).ready(function () {

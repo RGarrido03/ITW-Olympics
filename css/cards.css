@@ -7,6 +7,15 @@
     pointer-events: none;
 }
 
+.card-image-default {
+    height: 15rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    background: #f0f0f0;
+}
+
 .card-action-buttons {
     height: 15rem;
     backdrop-filter: blur(1.5rem);
