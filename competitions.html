@@ -43,7 +43,7 @@
         <span data-bind="html: 'Competitions: '+ fromRecord() + '-' + toRecord() + ' of ' + totalRecords()"></span>
       </p>
       <div class="col-8 my-0 pt-3">
-        <ul  class="pagination float-end">
+        <ul class="pagination float-end">
           <!-- ko if: currentPage() > 5 && totalPages() > 10 -->
           <li class="page-item float-end"><a class="page-link text-dark" title="First Page" data-bind="attr: { href: './competitions.html?page=' + '1',  rel:'prev'}"><i class="fa-solid fa-angle-double-left"></i></a></li>
           <li class="page-item float-end"><a class="page-link text-dark" title="Previous Page" data-bind="attr: { href: './competitions.html?page=' + previousPage(),  rel:'prev'}"><i class="fa fa-arrow-left"></i></a></li>
@@ -66,26 +66,25 @@
     <!-- /ko -->
 
 
-  <div class="row g-3" data-bind="foreach: records">
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="card w-100">
-        <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
-          <img class="card-img-top card-image-cover" data-bind="attr:{src:Photo, alt:Name, id:'img' + Id}">
-          <div class="center card-action-buttons rounded">
-            <a class="btn btn-light me-2 card-action-buttons-each center" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg"></i></a>
-            <a class="btn btn-light ms-2 card-action-buttons-each center"><i class="fa-solid fa-heart fa-lg"></i></a>
+    <div class="row g-3" data-bind="foreach: records">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card w-100">
+          <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
+            <img class="card-img-top card-image-cover" data-bind="attr:{src:Photo, alt:Name, id:'img' + Id}">
+            <div class="center card-action-buttons rounded">
+              <a class="btn btn-light me-2 card-action-buttons-each center" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg"></i></a>
+              <a class="btn btn-light ms-2 card-action-buttons-each center"><i class="fa-solid fa-heart fa-lg"></i></a>
+            </div>
           </div>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title fw-semibold" data-bind="text:Modality"></h5>
-          <p class="card-text" data-bind="text: Name"></p>
+          <div class="card-body">
+            <h5 class="card-title fw-semibold" data-bind="text:Modality"></h5>
+            <p class="card-text" data-bind="text: Name"></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </table>
-</div>
-  
+
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -104,7 +103,7 @@
   <!-- End of Working Area -->
   <nav class="navbar navbar-light bg-light fixed-bottom">
     <div class="container small">
-      <div class="navbar-text">&copy;  Introdução as Tecnologias Web - 2022/23</div>
+      <div class="navbar-text">&copy; Introdução as Tecnologias Web - 2022/23</div>
       <div class="navbar-text">Made with <i class="fa-solid fa-heart text-danger"></i> for U by <a href="mailto:brunotavaresmeixedo@ua.pt" class="text-decoration-none text-muted">Bruno Tavares</a> and <a href="mailto:rubengarrido@ua.pt" class="text-decoration-none text-muted">Rúben Garrido</a>.</div>
       <div class="navbar-nav">
         <div class="nav-item text-end"><a href="https://www.ua.pt" class="nav-link">Universidade de Aveiro</a></div>
