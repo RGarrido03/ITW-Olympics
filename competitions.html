@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/cards.css" />
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html" tabindex="Olympics"><img src="img/Olympic_rings.svg" height="24" /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,7 @@
 
     <div class="row g-3" data-bind="foreach: records">
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card bg-light w-100">
+        <div class="card bg-light w-100 h-100">
           <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
             <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
             <div data-bind="hidden: Photo" class="card-img-top card-image-default">
