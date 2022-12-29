@@ -85,11 +85,22 @@ var vm = function () {
 
     var count = 1;
     $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+        if ($(window).scrollTop() == 0) {
+            console.log('scroll: 0');
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 425) {
             count = self.fetchMoreData(count);
         }
         return true;
     });
+
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+    };
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
