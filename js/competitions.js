@@ -83,6 +83,54 @@ var vm = function () {
         return id;
     };
 
+    var typingTimeout;
+    self.SearchChanged = function () {
+        var searchQuery = $(event.target).val();
+
+        if (searchQuery.length > 0) {
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            }
+            typingTimeout = setTimeout(function () {
+                $.get("http://192.168.160.58/Olympics/api/Competitions/SearchByName", {
+                    q: searchQuery
+                }, function (data) {
+                    $("#AutocompleteList").html("");
+                    var list = "";
+
+                    if (data.length > 0) {
+                        if (data.length > 4) {
+                            var count = 4;
+                            var more = true;
+                        } else {
+                            var count = data.length;
+                            var more = false;
+                        }
+
+                        data.slice(0, count).map(function (item) {
+                            list += '<a href="competitionsDetails.html?id=' + item.Id + '" class="list-group-item list-group-item-action">' + item.Name + '</a>';
+                        });
+
+                        if (more) {
+                            list += '<a class="list-group-item list-group-item-action">' + (data.length - 4) + ' outros resultados</a>';
+                        }
+
+                        $("#AutocompleteList").html(list);
+
+                    } else {
+                        $("#AutocompleteList").html(
+                            '<a class="list-group-item list-group-item-action">No results found</a>'
+                        );
+                    }
+                    $("#AutocompleteList").fadeIn("fast");
+                });
+            }, 500);
+        }
+        else {
+            $("#AutocompleteList").fadeOut("fast");
+        }
+    };
+
     var count = 1;
     $(window).scroll(function () {
         if ($(window).scrollTop() == 0) {
