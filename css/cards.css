@@ -53,6 +53,11 @@
     box-shadow: 0 4px 6px 0 rgba(22, 22, 26, 0.18);
 }
 
+.card-image-not-available {
+    position: absolute;
+    bottom: 1rem;
+}
+
 /* Instead of always use class="d-flex align-items-center justify-content-center",
    this simpler class simplifies the process of centering things both horizontally and vertically */
 .center {
