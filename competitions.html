@@ -33,8 +33,16 @@
   </nav>
   <!-- Working Area -->
   <div class="container">
-    <div class="py-3">
-      <h2 data-bind="text:displayName"></h2>
+    <div class="py-3 row">
+      <div class="col-sm-12 col-md-8 col-lg-9 pe-md-2">
+        <h2 data-bind="text:displayName"></h2>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
+        <select class="form-select" aria-label="Default select example">
+          <option value="0" selected>Nome: A->Z</option>
+          <option value="1">Nome: Z->A</option>
+        </select>
+      </div>
     </div>
 
     <div class="row g-3" data-bind="foreach: records">
