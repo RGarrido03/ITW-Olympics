@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/cards.css" />
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html" tabindex="Olympics"><img src="img/Olympic_rings.svg" height="24" /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,47 +33,33 @@
   </nav>
   <!-- Working Area -->
   <div class="container">
-    <div class="border-bottom py-2 mb-2">
-      <h2 data-bind="text:displayName"></h2>
-    </div>
-    <!-- ko if:records().length > 0 -->
-    <div class="row small">
-      <p class=" col-4 mr-auto pt-2">
-        <span data-bind="html: 'Page: ' + currentPage() + ' of ' + totalPages()"></span><br />
-        <span data-bind="html: 'Competitions: '+ fromRecord() + '-' + toRecord() + ' of ' + totalRecords()"></span>
-      </p>
-      <div class="col-8 my-0 pt-3">
-        <ul class="pagination float-end">
-          <!-- ko if: currentPage() > 5 && totalPages() > 10 -->
-          <li class="page-item float-end"><a class="page-link text-dark" title="First Page" data-bind="attr: { href: './competitions.html?page=' + '1',  rel:'prev'}"><i class="fa-solid fa-angle-double-left"></i></a></li>
-          <li class="page-item float-end"><a class="page-link text-dark" title="Previous Page" data-bind="attr: { href: './competitions.html?page=' + previousPage(),  rel:'prev'}"><i class="fa fa-arrow-left"></i></a></li>
-          <!-- /ko -->
-          <!-- ko foreach: pageArray()-->
-          <!-- ko if:$data == $parent.currentPage() -->
-          <li class="active page-item"><a class="page-link bg-dark border-dark" data-bind="attr: { title:'Current Page ' + $data }, text: $data"></a></li>
-          <!-- /ko -->
-          <!-- ko if:$data != $parent.currentPage() -->
-          <li class="page-item"><a class="page-link text-dark" data-bind="attr: { href: './competitions.html?page=' + $data, title:'Goto Page ' + $data }, text:$data"></a></li>
-          <!-- /ko -->
-          <!-- /ko -->
-          <!-- ko if: currentPage() < totalPages() - 4 && totalPages() > 9 -->
-          <li class="page-item"><a class="page-link text-dark" title="Next Page" data-bind="attr: { href: './competitions.html?page=' + nextPage(), rel:'next' }"><i class="fa fa-arrow-right"></i></a></li>
-          <li class="page-item"><a class="page-link text-dark" title="Last Page" data-bind="attr: { href: './competitions.html?page=' + totalPages() }"><i class="fa-solid fa-angle-double-right"></i></a></li>
-          <!-- /ko -->
-        </ul>
+    <div class="py-3 row">
+      <div class="col-sm-12 col-md-8 col-lg-9 pe-md-2">
+        <h2 data-bind="text:displayName"></h2>
+      </div>
+      <!-- NÃO FUNCIONA (ainda) -->
+      <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
+        <select class="form-select" aria-label="Default select example">
+          <option value="0" selected>Nome: A->Z</option>
+          <option value="1">Nome: Z->A</option>
+        </select>
       </div>
     </div>
-    <!-- /ko -->
-
 
     <div class="row g-3" data-bind="foreach: records">
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card w-100">
+        <div class="card bg-light w-100 h-100">
           <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
-            <img class="card-img-top card-image-cover" data-bind="attr:{src:Photo, alt:Name, id:'img' + Id}">
+            <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
+            <div data-bind="hidden: Photo" class="card-img-top card-image-default">
+              <div class="center w-100 h-100">
+                <img src="img/Olympic_rings.svg" class="w-75" />
+              </div>
+            </div>
             <div class="center card-action-buttons rounded">
               <a class="btn btn-light me-2 card-action-buttons-each center" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg"></i></a>
               <a class="btn btn-light ms-2 card-action-buttons-each center"><i class="fa-solid fa-heart fa-lg"></i></a>
+              <p class="m-0 text-muted card-image-not-available" data-bind="hidden: Photo">Imagem não disponível</p>
             </div>
           </div>
           <div class="card-body">
@@ -103,11 +89,7 @@
   <!-- End of Working Area -->
   <nav class="navbar navbar-light bg-light fixed-bottom">
     <div class="container small">
-      <div class="navbar-text">&copy; Introdução as Tecnologias Web - 2022/23</div>
-      <div class="navbar-text">Made with <i class="fa-solid fa-heart text-danger"></i> for U by <a href="mailto:brunotavaresmeixedo@ua.pt" class="text-decoration-none text-muted">Bruno Tavares</a> and <a href="mailto:rubengarrido@ua.pt" class="text-decoration-none text-muted">Rúben Garrido</a>.</div>
-      <div class="navbar-nav">
-        <div class="nav-item text-end"><a href="https://www.ua.pt" class="nav-link">Universidade de Aveiro</a></div>
-      </div>
+      <div class="navbar-text">Made with <i class="fa-solid fa-heart text-danger"></i> for ITW by <a href="mailto:brunotavaresmeixedo@ua.pt" class="text-decoration-none text-muted">Bruno Tavares</a> and <a href="mailto:rubengarrido@ua.pt" class="text-decoration-none text-muted">Rúben Garrido</a>.</div>
     </div>
   </nav>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

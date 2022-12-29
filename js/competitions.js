@@ -44,9 +44,9 @@ var vm = function () {
     };
 
     //--- Page Events
-    self.activate = function (id) {
+    self.activate = function () {
         console.log('CALL: getCompetitions...');
-        var composedUri = self.baseUri() + "?page=" + id + "&pageSize=" + self.pagesize();
+        var composedUri = self.baseUri() + "?page=1&pageSize=" + self.pagesize();
         ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             hideLoading();
@@ -59,7 +59,37 @@ var vm = function () {
             self.totalRecords(data.TotalRecords);
             //self.SetFavourites();
         });
+        loading = false;
     };
+
+    self.fetchMoreData = function (id) {
+        if (loading == false && self.hasNext() == true) {
+            id++;
+            loading = true;
+            var composedUri = self.baseUri() + "?page=" + id + "&pageSize=" + self.pagesize();
+            ajaxHelper(composedUri, 'GET').done(function (data) {
+                console.log(data);
+                self.records(self.records().concat(data.Records));
+                self.currentPage(data.CurrentPage);
+                self.hasNext(data.HasNext);
+                self.hasPrevious(data.HasPrevious);
+                self.pagesize(data.PageSize)
+                self.totalPages(data.TotalPages);
+                self.totalRecords(data.TotalRecords);
+                //self.SetFavourites();
+                loading = false;
+            });
+        }
+        return id;
+    };
+
+    var count = 1;
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+            count = self.fetchMoreData(count);
+        }
+        return true;
+    });
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -111,23 +141,18 @@ var vm = function () {
     };
 
     //--- start ....
+    var loading = true;
     showLoading();
-    var pg = getUrlParameter('page');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    self.activate();
     console.log("VM initialized!");
 };
 
 function showButtons() {
-    $(event.target).children("div").fadeTo('fast', 1.0);
+    $(event.target).children(".card-action-buttons").fadeTo('fast', 1.0);
 }
 
 function hideButtons() {
-    $(event.target).children("div").fadeTo('fast', 0.0);
+    $(event.target).children(".card-action-buttons").fadeTo('fast', 0.0);
 }
 
 $(document).ready(function () {
