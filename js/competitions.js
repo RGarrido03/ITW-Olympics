@@ -108,7 +108,7 @@ var vm = function () {
                         }
 
                         data.slice(0, count).map(function (item) {
-                            list += '<a href="competitionsDetails.html?id=' + item.Id + '" class="list-group-item list-group-item-action">' + item.Name + '</a>';
+                            list += '<a href="competitionsDetails.html?id=' + item.Id + '" class="list-group-item list-group-item-action">' + item.Name.replace(new RegExp('('+searchQuery+')', 'ig'), '<span class="fw-semibold">$1</span>') + '</a>';
                         });
 
                         if (more) {
