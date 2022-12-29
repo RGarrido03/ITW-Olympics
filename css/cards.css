@@ -1,3 +1,11 @@
+.card {
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
 .card-image-cover {
     object-fit: cover;
     height: 15rem;
@@ -32,7 +40,8 @@
     --bs-btn-hover-border-color: #f8f9fa99;
     mix-blend-mode: soft-light;
     border-radius: 50%;
-    transition: border-radius 0.2s;
+    transition-property: border-radius, border-color, background-color;
+    transition-duration: 0.2s;
 }
 
 .card-action-buttons-each:hover {
@@ -52,5 +61,5 @@
     border-radius: 20px;
     padding: 100px 60px;
     width: 200px;
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.25);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
 }
