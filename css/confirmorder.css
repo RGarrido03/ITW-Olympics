@@ -1,0 +1,45 @@
+.thanks-order{
+  text-align: center;
+   background: #ffffff8a;
+ padding: 17px 14px 6px;
+}
+
+.thanks-order h3 {
+     line-height: 30px;
+     font-size: 22px;
+}
+.back-home{
+     padding: 12px 15px;
+     font-size: 15px;
+     background: #a41d21;
+     border: none;
+     margin-top: 13px;
+     color: #fff;
+     text-decoration: none;
+}
+p.lead {
+    padding-top: 12px;
+}
+a.back-home.ui-link {
+    color: #fff;
+    font-weight: 400;}
+.img-back-popup{
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   /* background-position: center;*/
+   border: 6px solid #a41d21;
+}
+.problem{
+  padding-top: 12px;
+  padding-bottom: 18px;
+}
+i.fa.fa-check  {
+  background: #31af91;
+  padding: 14px;
+  color: white;
+  border-radius: 50%;
+  font-size: 40px;
+}
+.body-popup{
+    padding: 66px 397px}
+
