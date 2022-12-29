@@ -134,7 +134,6 @@ var vm = function () {
     var count = 1;
     $(window).scroll(function () {
         if ($(window).scrollTop() == 0) {
-            console.log('scroll: 0');
             $("#scrollToTop").slideUp('fast');
         } else {
             $("#scrollToTop").slideDown('fast');
