@@ -68,18 +68,22 @@
     </div>
 
     <div class="row g-3" data-bind="foreach: records">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card bg-body-tertiary w-100 h-100">
-          <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
-            <img class="card-img-top card-image-cover" data-bind="attr:{src: Photo, alt:Name, id:'img' + Id}">
-            <div class="center card-action-buttons rounded-top">
-              <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="Ver detalhes" data-bind="attr: { href:'./modalitiesDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
-              <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Definir como favorito"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
+      <div class="col-xs-12 col-md-6 col-xl-4">
+        <div class="p-3 rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center">
+          <div class="card-body align-items-center h-auto">
+            <div class="row align-items-center">
+              <div class="col-auto pe-0">
+                <img class="bg-body-secondary border rounded-circle" style="width: 3rem; height: 3rem; object-fit: cover;" data-bind="attr:{src: Photo, alt:Name, id:'img' + Id}">
+              </div>
+              <div class="col">
+                <h5 class="card-title fw-semibold" data-bind="text: Name"></h5>
+                <p class="card-text" data-bind="text: 'Modality ID: ' + Id"></p>
+              </div>
+              <div class="col-auto">
+                <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="Ver detalhes" data-bind="attr: { href:'./modalitiesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body"></i></a>
+                <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body"></i></a>
+              </div>
             </div>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title fw-semibold" data-bind="text: Name"></h5>
-            <p class="card-text" data-bind="text: 'Modality ID: ' + Id"></p>
           </div>
         </div>
       </div>
