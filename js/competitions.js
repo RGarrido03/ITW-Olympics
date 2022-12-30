@@ -62,14 +62,51 @@ var vm = function () {
         loading = false;
     };
 
-    self.fetchMoreData = function (id) {
-        if (loading == false && self.hasNext() == true) {
-            id++;
+    self.order = ko.observable(0);
+    self.count = ko.observable(1);
+    self.setNewOrder = function () {
+        self.order($("#orderSelect option").filter(':selected').val());
+        if (self.order() == '0') {
+            self.count(1);
+        } else {
+            self.count(self.totalPages());
+        }
+
+        var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+        ajaxHelper(composedUri, 'GET').done(function (data) {
+            console.log(data);
+            if (self.order() == 0) {
+                self.records(data.Records);
+            } else {
+                self.records(data.Records.reverse());
+            }
+            self.currentPage(data.CurrentPage);
+            self.hasNext(data.HasNext);
+            self.hasPrevious(data.HasPrevious);
+            self.pagesize(data.PageSize)
+            self.totalPages(data.TotalPages);
+            self.totalRecords(data.TotalRecords);
+            //self.SetFavourites();
+            loading = false;
+        });
+    }
+
+    self.fetchMoreData = function () {
+        if (loading == false) {
+            if (self.order() == 0) {
+                self.count(self.count() + 1);
+            } else {
+                self.count(self.count() - 1);
+            }
             loading = true;
-            var composedUri = self.baseUri() + "?page=" + id + "&pageSize=" + self.pagesize();
+            var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
             ajaxHelper(composedUri, 'GET').done(function (data) {
                 console.log(data);
-                self.records(self.records().concat(data.Records));
+                if (self.order() == 0) {
+                    self.records(self.records().concat(data.Records));
+                } else {
+                    self.records(self.records().concat(data.Records.reverse()));
+                }
                 self.currentPage(data.CurrentPage);
                 self.hasNext(data.HasNext);
                 self.hasPrevious(data.HasPrevious);
@@ -80,7 +117,6 @@ var vm = function () {
                 loading = false;
             });
         }
-        return id;
     };
 
     var typingTimeout;
@@ -95,39 +131,18 @@ var vm = function () {
                 $.get("http://192.168.160.58/Olympics/api/Competitions/SearchByName", {
                     q: searchQuery
                 }, function (data) {
-                    $("#AutocompleteList").html("");
-                    var list = "";
-
-                    if (data.length > 0) {
-                        if (data.length > 4) {
-                            var count = 4;
-                            var more = true;
-                        } else {
-                            var count = data.length;
-                            var more = false;
-                        }
-
-                        data.slice(0, count).map(function (item) {
-                            list += '<a href="competitionsDetails.html?id=' + item.Id + '" class="list-group-item list-group-item-action">' + item.Name.replace(new RegExp('('+searchQuery+')', 'ig'), '<span class="fw-semibold">$1</span>') + '</a>';
-                        });
-
-                        if (more) {
-                            list += '<a class="list-group-item list-group-item-action">' + (data.length - 4) + ' outros resultados</a>';
-                        }
-
-                        $("#AutocompleteList").html(list);
-
+                    console.log(data);
+                    if (self.order() == 0) {
+                        self.records(data);
                     } else {
-                        $("#AutocompleteList").html(
-                            '<a class="list-group-item list-group-item-action">No results found</a>'
-                        );
+                        self.records(data.reverse());
                     }
-                    $("#AutocompleteList").fadeIn("fast");
                 });
-            }, 500);
+            }, 1000);
         }
         else {
-            $("#AutocompleteList").fadeOut("fast");
+            clearTimeout(typingTimeout);
+            self.setNewOrder();
         }
     };
 
@@ -135,16 +150,15 @@ var vm = function () {
         $("#AutocompleteList").fadeOut("fast");
     };
 
-    var count = 1;
     $(window).scroll(function () {
         if ($(window).scrollTop() == 0) {
             $("#scrollToTop").slideUp('fast');
         } else {
             $("#scrollToTop").slideDown('fast');
         }
-
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 425) {
-            count = self.fetchMoreData(count);
+        
+        if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
+            count = self.fetchMoreData();
         }
         return true;
     });

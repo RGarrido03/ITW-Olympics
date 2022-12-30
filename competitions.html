@@ -50,13 +50,13 @@
       <div class="col-sm-12 col-md-4 col-lg-3 px-md-2" style="position: relative;">
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="basic-addon1" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
+          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="basic-addon1" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
         </div>
         <div class="list-group shadow" id="AutocompleteList"></div>
       </div>
       <!-- NÃO FUNCIONA (ainda) -->
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
-        <select class="form-select" aria-label="Default select example">
+        <select class="form-select" aria-label="Default select example" id="orderSelect" data-bind="event: { change: setNewOrder }">
           <option value="0" selected>Nome: A-Z</option>
           <option value="1">Nome: Z-A</option>
         </select>
