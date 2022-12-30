@@ -3,7 +3,7 @@ var vm = function () {
     console.log('ViewModel initiated...');
     //---Variáveis locais
     var self = this;
-    self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/modalities');
+    self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/Modalities');
     //self.baseUri = ko.observable('http://localhost:62595/api/drivers');
     self.displayName = 'Olympic Modalities List';
     self.error = ko.observable('');
@@ -44,9 +44,9 @@ var vm = function () {
     };
 
     //--- Page Events
-    self.activate = function (id) {
+    self.activate = function () {
         console.log('CALL: getModalities...');
-        var composedUri = self.baseUri() + "?page=" + id + "&pageSize=" + self.pagesize();
+        var composedUri = self.baseUri() + "?page=1&pageSize=" + self.pagesize();
         ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             hideLoading();
@@ -59,6 +59,138 @@ var vm = function () {
             self.totalRecords(data.TotalRecords);
             //self.SetFavourites();
         });
+        loading = false;
+    };
+
+    self.order = ko.observable(0);
+    self.count = ko.observable(1);
+    self.setNewOrder = function () {
+        self.order($("#orderSelect option").filter(':selected').val());
+        if (self.order() == '0') {
+            self.count(1);
+        } else {
+            self.count(self.totalPages());
+        }
+
+        var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+        ajaxHelper(composedUri, 'GET').done(function (data) {
+            console.log(data);
+            if (self.order() == 0) {
+                self.records(data.Records);
+            } else {
+                self.records(data.Records.reverse());
+            }
+            self.currentPage(data.CurrentPage);
+            self.hasNext(data.HasNext);
+            self.hasPrevious(data.HasPrevious);
+            self.pagesize(data.PageSize);
+            self.totalPages(data.TotalPages);
+            self.totalRecords(data.TotalRecords);
+            //self.SetFavourites();
+            loading = false;
+        });
+
+        if (self.order() == '1') {
+            sleep(500);
+            self.count(self.count() - 1);
+            var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+            ajaxHelper(composedUri, 'GET').done(function (data) {
+                console.log(data);
+                self.records(self.records().concat(data.Records.reverse()));
+                self.currentPage(data.CurrentPage);
+                self.hasNext(data.HasNext);
+                self.hasPrevious(data.HasPrevious);
+                self.pagesize(data.PageSize);
+                self.totalPages(data.TotalPages);
+                self.totalRecords(data.TotalRecords);
+                //self.SetFavourites();
+                loading = false;
+            });
+        }
+    }
+
+    self.fetchMoreData = function () {
+        if (loading == false) {
+            if (self.order() == 0) {
+                if (self.hasNext()) {
+                    self.count(self.count() + 1);
+                } else {
+                    return;
+                }
+            } else {
+                if (self.hasPrevious()) {
+                    self.count(self.count() - 1);
+                } else {
+                    return;
+                }
+            }
+            loading = true;
+            var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+            ajaxHelper(composedUri, 'GET').done(function (data) {
+                console.log(data);
+                if (self.order() == 0) {
+                    self.records(self.records().concat(data.Records));
+                } else {
+                    self.records(self.records().concat(data.Records.reverse()));
+                }
+                self.currentPage(data.CurrentPage);
+                self.hasNext(data.HasNext);
+                self.hasPrevious(data.HasPrevious);
+                self.pagesize(data.PageSize)
+                self.totalPages(data.TotalPages);
+                self.totalRecords(data.TotalRecords);
+                //self.SetFavourites();
+                loading = false;
+            });
+        }
+    };
+
+    var typingTimeout;
+    self.searchChanged = function () {
+        var searchQuery = $(event.target).val();
+
+        if (searchQuery.length > 0) {
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            }
+            typingTimeout = setTimeout(function () {
+                $.get(self.baseUri() + "/SearchByName", {
+                    q: searchQuery
+                }, function (data) {
+                    console.log(data);
+                    if (self.order() == 0) {
+                        self.records(data);
+                    } else {
+                        self.records(data.reverse());
+                    }
+                });
+            }, 1000);
+        }
+        else {
+            clearTimeout(typingTimeout);
+            self.setNewOrder();
+        }
+    };
+
+    self.closeAutocompleteList = function () {
+        $("#AutocompleteList").fadeOut("fast");
+    };
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == 0) {
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+        
+        if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
+            count = self.fetchMoreData();
+        }
+        return true;
+    });
+
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
 
     //--- Internal functions
@@ -74,6 +206,8 @@ var vm = function () {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }
@@ -111,23 +245,18 @@ var vm = function () {
     };
 
     //--- start ....
+    var loading = true;
     showLoading();
-    var pg = getUrlParameter('page');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    self.activate();
     console.log("VM initialized!");
 };
 
 function showButtons() {
-    $(event.target).children("div").fadeTo('fast', 1.0);
+    $(event.target).children(".card-action-buttons").fadeTo('fast', 1.0);
 }
 
 function hideButtons() {
-    $(event.target).children("div").fadeTo('fast', 0.0);
+    $(event.target).children(".card-action-buttons").fadeTo('fast', 0.0);
 }
 
 $(document).ready(function () {

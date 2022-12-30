@@ -24,7 +24,6 @@
     top: 0;
     right: 0;
     pointer-events: none;
-    background: #f0f0f0;
 }
 
 .card-action-buttons {
@@ -38,8 +37,6 @@
 .card-action-buttons-each {
     height: 3.5rem;
     width: 3.5rem;
-    --bs-btn-bg: #f8f9fabb;
-    --bs-btn-hover-bg: #f8f9fa99;
     mix-blend-mode: soft-light;
     border-radius: 50%;
     box-shadow: none;

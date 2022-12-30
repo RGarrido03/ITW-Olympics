@@ -8,16 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="css/myCSS.css" />
   <link rel="stylesheet" href="css/cards.css" />
   <link rel="stylesheet" href="css/scrollToTop.css" />
   <link rel="stylesheet" href="css/searchBar.css" />
+  <script src="js/darkMode.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html" tabindex="Olympics"><img src="img/Olympic_rings.svg" height="24" /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,7 @@
           <li class="nav-item"><a class="nav-link" aria-current="page" href="countries.html"><i class="fa-solid fa-flag text-danger"></i> Countries</a></li>
           <li class="nav-item"><a class="nav-link" aria-current="page" href="games.html"><i class="fa-solid fa-map-marker text-success"></i> Games</a></li>
           <li class="nav-item"><a class="nav-link" aria-current="page" href="modalities.html"><i class="fa-solid fa-soccer-ball text-primary"></i> Modalities</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="store.html"><i class="fa-solid fa-store"></i> Store</a></li>
         </ul>
       </div>
     </div>
@@ -44,39 +45,42 @@
   <div class="container">
     <div class="py-3 row g-3 d-flex align-items-center">
       <div class="col-sm-12 col-md-4 col-lg-6 pe-md-2">
-        <h2 data-bind="text:displayName"></h2>
+        <h2 class="m-0 p-0" data-bind="text:displayName"></h2>
       </div>
       <!-- Search bar -->
-      <div class="col-sm-12 col-md-4 col-lg-3 px-md-2" style="position: relative;">
+      <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
         <div class="input-group">
-          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="basic-addon1" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
+          <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
         </div>
         <div class="list-group shadow" id="AutocompleteList"></div>
       </div>
-      <!-- NÃO FUNCIONA (ainda) -->
+      <!-- Order by -->
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
-        <select class="form-select" aria-label="Default select example" id="orderSelect" data-bind="event: { change: setNewOrder }">
-          <option value="0" selected>Nome: A-Z</option>
-          <option value="1">Nome: Z-A</option>
-        </select>
+        <div class="input-group">
+          <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
+          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: setNewOrder }">
+            <option value="0" selected>Nome: A-Z</option>
+            <option value="1">Nome: Z-A</option>
+          </select>
+        </div>
       </div>
     </div>
 
     <div class="row g-3" data-bind="foreach: records">
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card bg-light w-100 h-100">
+        <div class="card bg-body-tertiary w-100 h-100">
           <div onmouseenter="showButtons()" onmouseleave="hideButtons()">
             <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
-            <div data-bind="hidden: Photo" class="card-img-top card-image-default">
+            <div data-bind="hidden: Photo" class="card-img-top card-image-default bg-body-secondary">
               <div class="center w-100 h-100">
-                <img src="img/Olympic_rings.svg" class="w-75" />
+                <img src="img/Olympic_rings.svg" alt="Imagem não disponível" class="w-75" />
               </div>
             </div>
-            <div class="center card-action-buttons rounded">
-              <a class="btn btn-light me-2 card-action-buttons-each center" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg"></i></a>
-              <a class="btn btn-light ms-2 card-action-buttons-each center"><i class="fa-solid fa-heart fa-lg"></i></a>
-              <p class="m-0 text-muted card-image-not-available" data-bind="hidden: Photo">Imagem não disponível</p>
+            <div class="center card-action-buttons rounded-top">
+              <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="Ver detalhes" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
+              <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Definir como favorito"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
+              <p class="m-0 text-body-secondary card-image-not-available" data-bind="hidden: Photo">Imagem não disponível</p>
             </div>
           </div>
           <div class="card-body">
@@ -103,17 +107,26 @@
       </div>
     </div>
   </div>
+
+  <!-- Toast -->
+  <div id="errorToast" class="toast text-bg-danger position-fixed border-0" style="bottom: calc(53px + 16px); right: 16px;" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <span class="fw-bold">API error: </span><span data-bind="text: error"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
   <!-- End of Working Area -->
-  <nav class="navbar navbar-light bg-light fixed-bottom">
+  <nav class="navbar bg-body-tertiary border-top fixed-bottom">
     <div class="container small">
-      <div class="navbar-text">Made with <i class="fa-solid fa-heart text-danger"></i> for ITW by <a href="mailto:brunotavaresmeixedo@ua.pt" class="text-decoration-none text-muted">Bruno Tavares</a> and <a href="mailto:rubengarrido@ua.pt" class="text-decoration-none text-muted">Rúben Garrido</a>.</div>
+      <div class="navbar-text">Made with <i class="fa-solid fa-heart text-danger"></i> for ITW by <a href="mailto:brunotavaresmeixedo@ua.pt" class="text-decoration-none text-body-secondary">Bruno Tavares</a> and <a href="mailto:rubengarrido@ua.pt" class="text-decoration-none text-body-secondary">Rúben Garrido</a>.</div>
     </div>
   </nav>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
   <script src="js/competitions.js"></script>
-  <script src="js/emoji.js"></script>
 </body>
 </html>
