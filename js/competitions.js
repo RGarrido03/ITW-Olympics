@@ -3,7 +3,7 @@ var vm = function () {
     console.log('ViewModel initiated...');
     //---Variáveis locais
     var self = this;
-    self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/competitions');
+    self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/Competitions');
     //self.baseUri = ko.observable('http://localhost:62595/api/drivers');
     self.displayName = 'Olympic Competitions List';
     self.error = ko.observable('');
@@ -91,6 +91,7 @@ var vm = function () {
         });
 
         if (self.order() == '1') {
+            sleep(500);
             self.count(self.count() - 1);
             var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
             ajaxHelper(composedUri, 'GET').done(function (data) {
@@ -111,9 +112,17 @@ var vm = function () {
     self.fetchMoreData = function () {
         if (loading == false) {
             if (self.order() == 0) {
-                self.count(self.count() + 1);
+                if (self.hasNext()) {
+                    self.count(self.count() + 1);
+                } else {
+                    return;
+                }
             } else {
-                self.count(self.count() - 1);
+                if (self.hasPrevious()) {
+                    self.count(self.count() - 1);
+                } else {
+                    return;
+                }
             }
             loading = true;
             var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
@@ -145,7 +154,7 @@ var vm = function () {
                 clearTimeout(typingTimeout);
             }
             typingTimeout = setTimeout(function () {
-                $.get("http://192.168.160.58/Olympics/api/Competitions/SearchByName", {
+                $.get(self.baseUri() + "/SearchByName", {
                     q: searchQuery
                 }, function (data) {
                     console.log(data);
@@ -256,5 +265,3 @@ $(document).ready(function () {
 $(document).ajaxComplete(function (event, xhr, options) {
     $("#myModal").modal('hide');
 })
-
-
