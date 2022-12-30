@@ -84,7 +84,7 @@ var vm = function () {
     };
 
     var typingTimeout;
-    self.SearchChanged = function () {
+    self.searchChanged = function () {
         var searchQuery = $(event.target).val();
 
         if (searchQuery.length > 0) {
@@ -129,6 +129,10 @@ var vm = function () {
         else {
             $("#AutocompleteList").fadeOut("fast");
         }
+    };
+
+    self.closeAutocompleteList = function () {
+        $("#AutocompleteList").fadeOut("fast");
     };
 
     var count = 1;
