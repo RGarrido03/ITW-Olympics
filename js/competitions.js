@@ -83,12 +83,29 @@ var vm = function () {
             self.currentPage(data.CurrentPage);
             self.hasNext(data.HasNext);
             self.hasPrevious(data.HasPrevious);
-            self.pagesize(data.PageSize)
+            self.pagesize(data.PageSize);
             self.totalPages(data.TotalPages);
             self.totalRecords(data.TotalRecords);
             //self.SetFavourites();
             loading = false;
         });
+
+        if (self.order() == '1') {
+            self.count(self.count() - 1);
+            var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+            ajaxHelper(composedUri, 'GET').done(function (data) {
+                console.log(data);
+                self.records(self.records().concat(data.Records.reverse()));
+                self.currentPage(data.CurrentPage);
+                self.hasNext(data.HasNext);
+                self.hasPrevious(data.HasPrevious);
+                self.pagesize(data.PageSize);
+                self.totalPages(data.TotalPages);
+                self.totalRecords(data.TotalRecords);
+                //self.SetFavourites();
+                loading = false;
+            });
+        }
     }
 
     self.fetchMoreData = function () {
