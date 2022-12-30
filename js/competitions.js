@@ -206,6 +206,8 @@ var vm = function () {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }

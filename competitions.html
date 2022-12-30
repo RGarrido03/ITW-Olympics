@@ -107,6 +107,17 @@
       </div>
     </div>
   </div>
+
+  <!-- Toast -->
+  <div id="errorToast" class="toast text-bg-danger position-fixed border-0" style="bottom: calc(53px + 16px); right: 16px;" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <span class="fw-bold">API error: </span><span data-bind="text: error"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
   <!-- End of Working Area -->
   <nav class="navbar bg-body-tertiary border-top fixed-bottom">
     <div class="container small">
