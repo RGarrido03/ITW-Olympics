@@ -50,16 +50,16 @@
       <!-- Search bar -->
       <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
         <div class="input-group">
-          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="basic-addon1" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
+          <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
         </div>
         <div class="list-group shadow" id="AutocompleteList"></div>
       </div>
       <!-- Order by -->
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
         <div class="input-group">
-          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-arrow-down-a-z"></i></span>
-          <select class="form-select" aria-label="Default select example" id="orderSelect" data-bind="event: { change: setNewOrder }">
+          <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
+          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: setNewOrder }">
             <option value="0" selected>Nome: A-Z</option>
             <option value="1">Nome: Z-A</option>
           </select>
@@ -74,12 +74,12 @@
             <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
             <div data-bind="hidden: Photo" class="card-img-top card-image-default bg-body-secondary">
               <div class="center w-100 h-100">
-                <img src="img/Olympic_rings.svg" class="w-75" />
+                <img src="img/Olympic_rings.svg" alt="Imagem não disponível" class="w-75" />
               </div>
             </div>
             <div class="center card-action-buttons rounded-top">
-              <a class="btn me-2 bg-body card-action-buttons-each center" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
-              <a class="btn ms-2 bg-body card-action-buttons-each center"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
+              <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="Ver detalhes" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
+              <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Definir como favorito"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
               <p class="m-0 text-body-secondary card-image-not-available" data-bind="hidden: Photo">Imagem não disponível</p>
             </div>
           </div>
