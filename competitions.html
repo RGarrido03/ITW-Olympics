@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/myCSS.css" />
   <link rel="stylesheet" href="css/cards.css" />
   <link rel="stylesheet" href="css/scrollToTop.css" />
+  <link rel="stylesheet" href="css/searchBar.css" />
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top">
@@ -51,7 +52,7 @@
           <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="basic-addon1" data-bind="event: { input: SearchChanged }">
         </div>
-        <div class="list-group shadow" id="AutocompleteList" style="position: absolute; top: 46px; z-index: 5; display: none; width:calc(100% - 16px)"></div>
+        <div class="list-group shadow" id="AutocompleteList"></div>
       </div>
       <!-- NÃO FUNCIONA (ainda) -->
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">

@@ -1,0 +1,7 @@
+#AutocompleteList {
+    position: absolute;
+    top: 46px;
+    z-index: 5;
+    display: none;
+    width: calc(100% - 16px);
+}
