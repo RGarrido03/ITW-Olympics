@@ -57,6 +57,9 @@ var vm = function () {
             self.pagesize(data.PageSize)
             self.totalPages(data.TotalPages);
             self.totalRecords(data.TotalRecords);
+            if (($(window).scrollTop() + $(window).height() > $(document).height() - 425)) {
+                self.fetchMoreData();
+            }
             //self.SetFavourites();
         });
         loading = false;
@@ -188,7 +191,7 @@ var vm = function () {
         $("#AutocompleteList").fadeOut("fast");
     };
 
-    $(window).scroll(function () {
+    $(window).on("resize scroll", function () {
         if ($(window).scrollTop() == 0) {
             $("#scrollToTop").slideUp('fast');
         } else {
@@ -196,7 +199,7 @@ var vm = function () {
         }
         
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
-            count = self.fetchMoreData();
+            self.fetchMoreData();
         }
         return true;
     });
