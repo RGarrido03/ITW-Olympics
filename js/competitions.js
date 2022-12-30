@@ -64,6 +64,8 @@ var vm = function () {
 
     self.order = ko.observable(0);
     self.count = ko.observable(1);
+    self.hasMore = ko.observable(true);
+
     self.setNewOrder = function () {
         self.order($("#orderSelect option").filter(':selected').val());
         if (self.order() == '0') {
@@ -128,14 +130,24 @@ var vm = function () {
             var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
             ajaxHelper(composedUri, 'GET').done(function (data) {
                 console.log(data);
-                if (self.order() == 0) {
-                    self.records(self.records().concat(data.Records));
-                } else {
-                    self.records(self.records().concat(data.Records.reverse()));
-                }
-                self.currentPage(data.CurrentPage);
                 self.hasNext(data.HasNext);
                 self.hasPrevious(data.HasPrevious);
+                if (self.order() == 0) {
+                    self.records(self.records().concat(data.Records));
+                    if (self.hasNext() == false) {
+                        self.hasMore(false);
+                    } else {
+                        self.hasMore(true);
+                    }
+                } else {
+                    self.records(self.records().concat(data.Records.reverse()));
+                    if (self.hasPrevious() == false) {
+                        self.hasMore(false);
+                    } else {
+                        self.hasMore(true);
+                    }
+                }
+                self.currentPage(data.CurrentPage);
                 self.pagesize(data.PageSize)
                 self.totalPages(data.TotalPages);
                 self.totalRecords(data.TotalRecords);
