@@ -12,9 +12,9 @@ a {
 }
 
 .blue-fade {
-  font-size: 40px;
-  font-weight: 100; 
-  background: -webkit-linear-gradient(#1ba0d7, #002d3f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    font-size: 40px;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#1ba0d7, #002d3f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
