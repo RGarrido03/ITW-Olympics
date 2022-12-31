@@ -87,7 +87,6 @@ var vm = function () {
         });
 
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
-            sleep(500);
             self.fetchData(false);
         }
     }
@@ -125,7 +124,7 @@ var vm = function () {
         } else {
             $("#scrollToTop").slideDown('fast');
         }
-        
+
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
             self.fetchData(false);
         }

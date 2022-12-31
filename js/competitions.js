@@ -87,7 +87,6 @@ var vm = function () {
         });
 
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
-            sleep(500);
             self.fetchData(false);
         }
     }
