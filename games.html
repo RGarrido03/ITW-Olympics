@@ -44,37 +44,28 @@
 
   <!-- Working Area -->
   <div class="container">
-    <div class="border-bottom py-2 mb-2">
-      <h2 data-bind="text:displayName"></h2>
-    </div>
-    <!-- ko if:records().length > 0 -->
-    <div class="row small">
-      <p class=" col-4 mr-auto pt-2">
-        <span data-bind="html: 'Page: ' + currentPage() + ' of ' + totalPages()"></span><br />
-        <span data-bind="html: 'Games: '+ fromRecord() + '-' + toRecord() + ' of ' + totalRecords()"></span>
-      </p>
-      <div class="col-8 my-0 pt-3">
-        <ul class="pagination float-end">
-          <!-- ko if: currentPage() > 5 && totalPages() > 10 -->
-          <li class="page-item float-end"><a class="page-link text-dark" title="First Page" data-bind="attr: { href: './games.html?page=' + '1',  rel:'prev'}"><i class="fa-solid fa-angle-double-left"></i></a></li>
-          <li class="page-item float-end"><a class="page-link text-dark" title="Previous Page" data-bind="attr: { href: './games.html?page=' + previousPage(),  rel:'prev'}"><i class="fa fa-arrow-left"></i></a></li>
-          <!-- /ko -->
-          <!-- ko foreach: pageArray()-->
-          <!-- ko if:$data == $parent.currentPage() -->
-          <li class="active page-item"><a class="page-link bg-dark border-dark" data-bind="attr: { title:'Current Page ' + $data }, text: $data"></a></li>
-          <!-- /ko -->
-          <!-- ko if:$data != $parent.currentPage() -->
-          <li class="page-item"><a class="page-link text-dark" data-bind="attr: { href: './games.html?page=' + $data, title:'Goto Page ' + $data }, text:$data"></a></li>
-          <!-- /ko -->
-          <!-- /ko -->
-          <!-- ko if: currentPage() < totalPages() - 4 && totalPages() > 9 -->
-          <li class="page-item"><a class="page-link text-dark" title="Next Page" data-bind="attr: { href: './games.html?page=' + nextPage(), rel:'next' }"><i class="fa fa-arrow-right"></i></a></li>
-          <li class="page-item"><a class="page-link text-dark" title="Last Page" data-bind="attr: { href: './games.html?page=' + totalPages() }"><i class="fa-solid fa-angle-double-right"></i></a></li>
-          <!-- /ko -->
-        </ul>
+    <div class="py-3 row g-3 d-flex align-items-center">
+      <div class="col-sm-12 col-md-4 col-lg-6 pe-md-2">
+        <h2 class="m-0 p-0" data-bind="text:displayName"></h2>
+      </div>
+      <!-- Search bar -->
+      <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
+        <div class="input-group">
+          <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
+        </div>
+      </div>
+      <!-- Order by -->
+      <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
+        <div class="input-group">
+          <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
+          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
+            <option value="0" selected>Nome: A-Z</option>
+            <option value="1">Nome: Z-A</option>
+          </select>
+        </div>
       </div>
     </div>
-    <!-- /ko -->
 
     <div class="row g-3" data-bind="foreach: records">
       <div class="col-sm-6 col-md-4 col-lg-3">
