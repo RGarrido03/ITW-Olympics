@@ -16,10 +16,10 @@ var vm = function () {
 
 
     //--- Page Events
-    self.activate = function (id) {
-        console.log('CALL: getComepetitons...');
+    self.activate = async function (id) {
+        console.log("Competition ID: " + id);
         var composedUri = self.baseUri() + id;
-        ajaxHelper(composedUri, 'GET').done(function (data) {
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             hideLoading();
             self.Id(data.Id);
@@ -43,6 +43,8 @@ var vm = function () {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }
@@ -76,13 +78,8 @@ var vm = function () {
 
     //--- start ....
     showLoading();
-    var pg = getUrlParameter('id');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    var id = getUrlParameter('id');
+    self.activate(id);
     console.log("VM initialized!");
 };
 

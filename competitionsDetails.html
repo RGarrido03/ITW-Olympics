@@ -59,6 +59,7 @@
         <a href="./competitions.html" class="btn btn-light btn-sm small"><i class="fa-solid fa-list"></i> Back to List</a>
         <a data-bind="attr: { href:'./competitionsFull.html?id=' + Id() }" class="btn btn-light btn-sm small"><i class="fa-solid fa-th"></i> Full Setails</a>
   </div>
+  
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -74,6 +75,17 @@
             </div>
         </div>
   </div>
+
+  <!-- Toast -->
+  <div id="errorToast" class="toast text-bg-danger position-fixed border-0" style="bottom: calc(53px + 16px); right: 16px;" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <span class="fw-bold">API error: </span><span data-bind="text: error"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
   <!-- End of Work Area -->
   <nav class="navbar navbar-light bg-light border-top fixed-bottom">
         <div class="container small">
