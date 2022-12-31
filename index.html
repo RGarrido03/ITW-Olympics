@@ -12,7 +12,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="css/myCSS.css" />
   <link rel="stylesheet" href="css/socialMedia.css" />
+  <link rel="stylesheet" href="css/scrollToTop.css" />
   <link rel="stylesheet" href="css/a.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css" integrity="sha512-fYyZwU1wU0QWB4Yutd/Pvhy5J1oWAwFXun1pt+Bps04WSe4Aq6tyHlT4+MHSJhD8JlLfgLuC4CbCnX5KHSjyCg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css" integrity="sha512-ENrTWqddXrLJsQS2A86QmvA17PkJ0GVm1bqj5aTgpeMAfDKN2+SIOLpKG8R/6KkimnhTb+VW5qqUHB/r1zaRgg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     .carousel { width: 100%; margin: 0 auto; }
     .carousel-item { z-index: -100; height: 800px; background-position: center center; background-repeat: no-repeat; background-size: cover; }
@@ -81,6 +85,12 @@
       </div>
     </div>
   </nav>
+
+  <!-- Scroll to top button -->
+  <a class="btn btn-dark btn-lg" id="scrollToTop" data-bind="click: scrollToTop">
+    <i class="fa-solid fa-arrow-up"></i><span id="scrollToTopText">&nbsp;&nbsp;Scroll to top</span>
+  </a>
+
   <!-- Working Area -->
   <div id="myCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -219,7 +229,8 @@
     <a href="olympicRecords.html"><img src="../img/guiness.png" style="width: 20%; margin-left: 20%;"></a>
   
   </div>
-  <div style=" background-color:#000000; border-radius: 20px; height: 600px; margin-bottom: 20px"><iframe src="https://www.google.com.qa/maps/d/u/0/embed?mid=1czFIY3vBsnFZ7rYSjNdtOHRhi5IG5Fc&ehbc=2E312F" width="60%" height="100%" style="border-top-right-radius: 20px;border-bottom-right-radius: 20px; float: right;"></iframe>
+  <div style=" background-color:#000000; border-radius: 20px; height: 600px; margin-bottom: 20px">
+    <div id="map" class="rounded-right" style="width: 60%; height: 100%; border-top-right-radius: 20px;border-bottom-right-radius: 20px; float: right; z-index: 1"></div>
     <h1 style="margin-top:2%; margin-bottom:2%; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: rgb(108, 112, 117);">Olympic Venues</h1>
     <iframe width="36%" height="60%" src="https://www.youtube.com/embed/ttGBiRB_YmA" title="Olympic Stadiums (1896-2028)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left: 2.5%; border-radius: 10px;"></iframe>
   </div>
@@ -252,7 +263,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous"></script>
-  <script src="js/myScript.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js" integrity="sha512-TiMWaqipFi2Vqt4ugRzsF8oRoGFlFFuqIi30FFxEPNw58Ov9mOy6LgC05ysfkxwLE0xVeZtmr92wVg9siAFRWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/leaflet.markercluster.layersupport@2.0.1/dist/leaflet.markercluster.layersupport.js"></script>
+  <script src="js/index.js"></script>
   <script src="js/emoji.js"></script>
 </body>
 </html>
