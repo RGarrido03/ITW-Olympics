@@ -100,6 +100,7 @@ var vm = function () {
                 clearTimeout(typingTimeout);
             }
             typingTimeout = setTimeout(function () {
+                self.hasMore(false);
                 $.get(self.baseUri() + "/SearchByName", {
                     q: searchQuery
                 }, function (data) {
