@@ -4,7 +4,7 @@ var vm = function () {
     //---Variáveis locais
     var self = this;
     self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/Games/');
-    self.displayName = 'Olympic Games edition Details';
+    self.displayName = 'Olympic Game details';
     self.error = ko.observable('');
     self.passingMessage = ko.observable('');
     //--- Data Record
@@ -18,10 +18,10 @@ var vm = function () {
     self.Url = ko.observable('');
 
     //--- Page Events
-    self.activate = function (id) {
-        console.log('CALL: getGame...');
+    self.activate = async function (id) {
+        console.log("Game ID: " + id);
         var composedUri = self.baseUri() + id;
-        ajaxHelper(composedUri, 'GET').done(function (data) {
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             hideLoading();
             self.Id(data.Id);
@@ -33,6 +33,27 @@ var vm = function () {
             self.Year(data.Year);
         });
     };
+
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+    };
+
+    self.goBack = function () {
+        if (window.history.length > 1) {
+            history.back();
+        } else {
+            window.location.href = '/competitions.html';
+        }
+    };
+
+    $(window).on("resize scroll", function () {
+        if ($(window).scrollTop() == 0) {
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+        return true;
+    });
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -47,6 +68,8 @@ var vm = function () {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }
@@ -80,13 +103,8 @@ var vm = function () {
 
     //--- start ....
     showLoading();
-    var pg = getUrlParameter('id');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    var id = getUrlParameter('id');
+    self.activate(id);
     console.log("VM initialized!");
 };
 
