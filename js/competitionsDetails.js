@@ -30,6 +30,19 @@ var vm = function () {
         });
     };
 
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+    };
+
+    $(window).on("resize scroll", function () {
+        if ($(window).scrollTop() == 0) {
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+        return true;
+    });
+
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
