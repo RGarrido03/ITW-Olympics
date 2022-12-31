@@ -4,7 +4,7 @@ var vm = function () {
     //---Variáveis locais
     var self = this;
     self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/Competitions/');
-    self.displayName = 'Olympic Competitions edition Details';
+    self.displayName = 'Olympic Competition details';
     self.error = ko.observable('');
     self.passingMessage = ko.observable('');
     //--- Data Record
@@ -13,7 +13,7 @@ var vm = function () {
     self.ModalityId = ko.observable('');
     self.Modality = ko.observable('');
     self.Photo = ko.observable('');
-
+    self.Games = ko.observableArray([]);
 
     //--- Page Events
     self.activate = async function (id) {
@@ -27,6 +27,7 @@ var vm = function () {
             self.ModalityId(data.ModalityId);
             self.Modality(data.Modality);
             self.Photo(data.Photo);
+            self.Games(data.Participant);
         });
     };
 
