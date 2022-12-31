@@ -101,9 +101,7 @@ var vm = function () {
             }
             typingTimeout = setTimeout(function () {
                 self.hasMore(false);
-                $.get(self.baseUri() + "/SearchByName", {
-                    q: searchQuery
-                }, function (data) {
+                ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
                     if (self.order() == 0) {
                         self.records(data);
@@ -144,7 +142,7 @@ var vm = function () {
             url: uri,
             dataType: 'json',
             contentType: 'application/json',
-            data: data ? JSON.stringify(data) : null,
+            data: data ? data : null,
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
