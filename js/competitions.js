@@ -124,7 +124,7 @@ var vm = function () {
         } else {
             $("#scrollToTop").slideDown('fast');
         }
-        
+
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
             self.fetchData(false);
         }
@@ -134,6 +134,10 @@ var vm = function () {
     self.scrollToTop = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
+
+    self.toggleButtons = function (event, action) {
+        $(event.target).fadeTo('fast', action == "show" ? 1.0 : 0.0);
+    }
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -177,14 +181,6 @@ var vm = function () {
     self.fetchData(true);
     console.log("VM initialized!");
 };
-
-function showButtons() {
-    $(event.target).children(".card-action-buttons").fadeTo('fast', 1.0);
-}
-
-function hideButtons() {
-    $(event.target).children(".card-action-buttons").fadeTo('fast', 0.0);
-}
 
 $(document).ready(function () {
     ko.applyBindings(new vm());
