@@ -44,28 +44,46 @@
 
   <!-- Work Area-->
   <div class="container">
-    <div class="py-2 border-bottom mb-3">
-      <h2 data-bind="text:Name() +' [' + Id() + ']'"></h2>
-    </div>
-    <!-- ko if:Name().length > 0 -->
-    <div class="row border-bottom mx-0 my-1">
-      <div class="col-2">ModalityId</div>
-      <div class="col-10" data-bind="text: Id"></div>
-    </div>
-    <div class="row border-bottom mx-0  my-1">
-      <div class="col-2">Name</div>
-      <div class="col-10" data-bind="text: Name"></div>
-    </div>
-    <div class="row border-bottom mx-0  my-1" data-bind="visible: Photo() != '' && Photo() != null">
-      <div class="col-2">Photo</div>
-      <div class="small col-10">
-        <img class="img-thumbnail" data-bind="attr:{src: Photo}"><br />
-        <i class="fa-solid fa-link"></i> [<a class="link-dark text-decoration-none" data-bind="attr: { href: Photo }, text : Photo" target="_blank"></a>]
+    <div class="row mb-3 pt-2 d-flex align-items-center">
+      <div class="col-auto">
+        <div style="width: 2.5rem; height: 2.5rem;" class="btn btn-hover bg-body-secondary border rounded center" data-bind="click: goBack"><i class="fa-solid text-body fa-arrow-left fa-lg"></i></div>
+      </div>
+      <div class="col ps-0">
+        <h3 class="m-0 px-0 py-3" data-bind="text:displayName"></h3>
       </div>
     </div>
-    <!-- /ko -->
-    <a href="./modalities.html" class="btn btn-light btn-sm small"><i class="fa-solid fa-list"></i> Back to List</a>
-    <a data-bind="attr: { href:'./modalitiesFull.html?id=' + Id() }" class="btn btn-light btn-sm small"><i class="fa-solid fa-th"></i> Full Setails</a>
+
+    <div class="row gy-2 d-flex align-items-center">
+      <div class="col-xs-12 col-lg-4 mb-2">
+        <img class="card-hover rounded border w-100" data-bind="attr:{src: Photo}" />
+      </div>
+      <div class="col-xs-12 col-lg-8">
+        <p class="mb-0">Modality ID: <span data-bind="text: Id"></span></p>
+        <h2 class="mb-0 fw-bold" data-bind="text: Name"></h2>
+      </div>
+    </div>
+
+    <p class="mb-2 mt-3">Modalities</p>
+    <div class="row g-3" data-bind="foreach: Modalities">
+      <div class="col-xs-12 col-md-6 col-xl-4">
+        <div class="card-hover p-3 rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center">
+          <div class="card-body align-items-center h-auto">
+            <div class="row align-items-center">
+              <div class="col-auto pe-0">
+                <img class="bg-body-secondary border rounded-circle" style="width: 3rem; height: 3rem; object-fit: cover;" data-bind="attr:{src: Photo, alt:Name, id:'img' + Id}">
+              </div>
+              <div class="col">
+                <p class="card-title m-0 text-body-emphasis" data-bind="text: Name"></p>
+              </div>
+              <div class="col-auto">
+                <a class="btn py-1 px-2 bg-body-secondary border btn-hover me-1" aria-label="Ver detalhes" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
+                <a class="btn py-1 px-2 bg-body-secondary border btn-hover" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Modal -->
