@@ -44,97 +44,52 @@ var vm = function () {
     };
 
     //--- Page Events
-    self.activate = function () {
-        console.log('CALL: getCompetitions...');
-        var composedUri = self.baseUri() + "?page=1&pageSize=" + self.pagesize();
-        ajaxHelper(composedUri, 'GET').done(function (data) {
-            console.log(data);
-            hideLoading();
-            self.records(data.Records);
-            self.currentPage(data.CurrentPage);
-            self.hasNext(data.HasNext);
-            self.hasPrevious(data.HasPrevious);
-            self.pagesize(data.PageSize)
-            self.totalPages(data.TotalPages);
-            self.totalRecords(data.TotalRecords);
-            if (($(window).scrollTop() + $(window).height() > $(document).height() - 425)) {
-                self.fetchMoreData();
-            }
-            //self.SetFavourites();
-        });
-        loading = false;
-    };
-
     self.order = ko.observable(0);
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
 
-    self.setNewOrder = function () {
-        self.order($("#orderSelect option").filter(':selected').val());
-        if (self.order() == '0') {
-            self.count(1);
+    self.fetchData = async function (isNew) {
+        if (isNew) {
+            console.log("New data: true")
+            self.order($("#orderSelect option").filter(':selected').val());
+            if (self.order() == '0') {
+                self.count(1);
+            } else {
+                self.count(self.totalPages());
+            }
         } else {
-            self.count(self.totalPages());
+            if (loading) {
+                return;
+            } else {
+                if (self.order() == 0) {
+                    if (self.hasNext()) {
+                        self.count(self.count() + 1);
+                    } else {
+                        return;
+                    }
+                } else {
+                    if (self.hasPrevious()) {
+                        self.count(self.count() - 1);
+                    } else {
+                        return;
+                    }
+                }
+                loading = true;
+            }
         }
 
         var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
-        ajaxHelper(composedUri, 'GET').done(function (data) {
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
-            if (self.order() == 0) {
-                self.records(data.Records);
-            } else {
-                self.records(data.Records.reverse());
-            }
-            self.currentPage(data.CurrentPage);
             self.hasNext(data.HasNext);
             self.hasPrevious(data.HasPrevious);
-            self.pagesize(data.PageSize);
-            self.totalPages(data.TotalPages);
-            self.totalRecords(data.TotalRecords);
-            //self.SetFavourites();
-            loading = false;
-        });
-
-        if (self.order() == '1') {
-            sleep(500);
-            self.count(self.count() - 1);
-            var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
-            ajaxHelper(composedUri, 'GET').done(function (data) {
-                console.log(data);
-                self.records(self.records().concat(data.Records.reverse()));
-                self.currentPage(data.CurrentPage);
-                self.hasNext(data.HasNext);
-                self.hasPrevious(data.HasPrevious);
-                self.pagesize(data.PageSize);
-                self.totalPages(data.TotalPages);
-                self.totalRecords(data.TotalRecords);
-                //self.SetFavourites();
-                loading = false;
-            });
-        }
-    }
-
-    self.fetchMoreData = function () {
-        if (loading == false) {
-            if (self.order() == 0) {
-                if (self.hasNext()) {
-                    self.count(self.count() + 1);
+            if (isNew) {
+                if (self.order() == 0) {
+                    self.records(data.Records);
                 } else {
-                    return;
+                    self.records(data.Records.reverse());
                 }
             } else {
-                if (self.hasPrevious()) {
-                    self.count(self.count() - 1);
-                } else {
-                    return;
-                }
-            }
-            loading = true;
-            var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
-            ajaxHelper(composedUri, 'GET').done(function (data) {
-                console.log(data);
-                self.hasNext(data.HasNext);
-                self.hasPrevious(data.HasPrevious);
                 if (self.order() == 0) {
                     self.records(self.records().concat(data.Records));
                     if (self.hasNext() == false) {
@@ -150,15 +105,22 @@ var vm = function () {
                         self.hasMore(true);
                     }
                 }
-                self.currentPage(data.CurrentPage);
-                self.pagesize(data.PageSize)
-                self.totalPages(data.TotalPages);
-                self.totalRecords(data.TotalRecords);
-                //self.SetFavourites();
-                loading = false;
-            });
+            }
+            self.currentPage(data.CurrentPage);
+            self.pagesize(data.PageSize);
+            self.totalPages(data.TotalPages);
+            self.totalRecords(data.TotalRecords);
+            hideLoading();
+            //self.SetFavourites();
+            loading = false;
+        });
+
+        if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
+            console.log("Low scroll height: fetching data condition is true.")
+            sleep(500);
+            self.fetchData(false);
         }
-    };
+    }
 
     var typingTimeout;
     self.searchChanged = function () {
@@ -183,12 +145,8 @@ var vm = function () {
         }
         else {
             clearTimeout(typingTimeout);
-            self.setNewOrder();
+            self.fetchData(true);
         }
-    };
-
-    self.closeAutocompleteList = function () {
-        $("#AutocompleteList").fadeOut("fast");
     };
 
     $(window).on("resize scroll", function () {
@@ -199,7 +157,7 @@ var vm = function () {
         }
         
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
-            self.fetchMoreData();
+            self.fetchData(false);
         }
         return true;
     });
@@ -262,7 +220,7 @@ var vm = function () {
     //--- start ....
     var loading = true;
     showLoading();
-    self.activate();
+    self.fetchData(true);
     console.log("VM initialized!");
 };
 

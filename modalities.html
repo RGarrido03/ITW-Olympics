@@ -51,15 +51,14 @@
       <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
         <div class="input-group">
           <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged, focus: searchChanged, blur: closeAutocompleteList }">
+          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
         </div>
-        <div class="list-group shadow" id="AutocompleteList"></div>
       </div>
       <!-- Order by -->
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
         <div class="input-group">
           <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
-          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: setNewOrder }">
+          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
             <option value="0" selected>Nome: A-Z</option>
             <option value="1">Nome: Z-A</option>
           </select>
