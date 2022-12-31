@@ -4,7 +4,7 @@ var vm = function () {
     //---Variáveis locais
     var self = this;
     self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/modalities/');
-    self.displayName = 'Olympic Modalities edition Details';
+    self.displayName = 'Olympic Modality details';
     self.error = ko.observable('');
     self.passingMessage = ko.observable('');
     //--- Data Record
@@ -13,20 +13,42 @@ var vm = function () {
     self.ModalityId = ko.observable('');
     self.Modality = ko.observable('');
     self.Photo = ko.observable('');
-
+    self.Modalities = ko.observableArray([]);
 
     //--- Page Events
-    self.activate = function (id) {
-        console.log('CALL: getComepetitons...');
+    self.activate = async function (id) {
+        console.log("Modality ID: " + id);
         var composedUri = self.baseUri() + id;
-        ajaxHelper(composedUri, 'GET').done(function (data) {
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             hideLoading();
             self.Id(data.Id);
             self.Name(data.Name);
+            self.Modalities(data.Modalities);
             self.Photo(data.Photo);
         });
     };
+
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+    };
+
+    self.goBack = function () {
+        if (window.history.length > 1) {
+            history.back();
+        } else {
+            window.location.href = '/competitions.html';
+        }
+    };
+
+    $(window).on("resize scroll", function () {
+        if ($(window).scrollTop() == 0) {
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+        return true;
+    });
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -41,6 +63,8 @@ var vm = function () {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }
@@ -74,13 +98,8 @@ var vm = function () {
 
     //--- start ....
     showLoading();
-    var pg = getUrlParameter('id');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    var id = getUrlParameter('id');
+    self.activate(id);
     console.log("VM initialized!");
 };
 
