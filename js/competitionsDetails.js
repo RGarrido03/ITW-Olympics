@@ -35,6 +35,14 @@ var vm = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
 
+    self.goBack = function () {
+        if (window.history.length > 1) {
+            history.back();
+        } else {
+            window.location.href = '/competitions.html';
+        }
+    };
+
     $(window).on("resize scroll", function () {
         if ($(window).scrollTop() == 0) {
             $("#scrollToTop").slideUp('fast');
