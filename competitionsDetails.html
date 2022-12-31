@@ -56,13 +56,16 @@
 
     <div class="row gy-2 d-flex align-items-center">
       <div class="col-xs-12 col-lg-4 mb-2">
-        <img class="card-hover rounded border w-100" data-bind="attr:{src: Photo}" />
+        <img class="card-hover rounded border bg-body-tertiary w-100" data-bind="attr:{src: Photo}" />
       </div>
       <div class="col-xs-12 col-lg-8">
         <p class="mb-0">Competition ID: <span data-bind="text: Id"></span></p>
         <h2 class="mb-4 fw-bold" data-bind="text: Name"></h2>
         <p class="mb-0">Modality</p>
-        <p class="mb-0 fs-5 text-body-emphasis" data-bind="text: Modality"></p>
+        <p class="mb-0 fs-5 text-body-emphasis">
+          <span data-bind="text: Modality"></span>&nbsp;
+          <a class="btn py-1 px-2 bg-body-secondary border btn-hover me-1" aria-label="Ver modalidade" data-bind="attr: { href: ModalityLink }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
+        </p>
       </div>
     </div>
 

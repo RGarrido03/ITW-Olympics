@@ -10,8 +10,17 @@ var vm = function () {
     //--- Data Record
     self.Id = ko.observable('');
     self.Name = ko.observable('');
-    self.ModalityId = ko.observable('');
+    self.ModalityId = ko.observable(0);
     self.Modality = ko.observable('');
+    self.ModalityLink = ko.observable('');
+    self.ModalityLink = ko.pureComputed({
+        read: function () {
+            return './modalitiesDetails.html?id=' + self.ModalityId();
+        },
+        write: function (value) {
+            self.ModalityId(value);
+        }
+    }),
     self.Photo = ko.observable('');
     self.Games = ko.observableArray([]);
 
@@ -26,6 +35,7 @@ var vm = function () {
             self.Name(data.Name);
             self.ModalityId(data.ModalityId);
             self.Modality(data.Modality);
+            self.ModalityLink(data.ModalityId);
             self.Photo(data.Photo);
             self.Games(data.Participant);
         });
