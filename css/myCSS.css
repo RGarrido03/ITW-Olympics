@@ -37,5 +37,5 @@ a {
 
 .btn-hover:hover {
     transform: scale(1.1);
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    box-shadow: 0 .125rem .25rem rgba(var(--bs-body-color-rgb),.075)!important;
 }

@@ -6,7 +6,7 @@
 
 .card-hover:hover {
     transform: scale(1.02);
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    box-shadow: 0 .5rem 1rem rgba(var(--bs-body-color-rgb),.15)!important;
 }
 
 .card-image-cover {
