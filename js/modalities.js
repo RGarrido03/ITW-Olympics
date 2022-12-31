@@ -50,7 +50,6 @@ var vm = function () {
 
     self.fetchData = async function (isNew) {
         if (isNew) {
-            console.log("New data: true")
             self.order($("#orderSelect option").filter(':selected').val());
             if (self.order() == '0') {
                 self.count(1);
@@ -116,7 +115,6 @@ var vm = function () {
         });
 
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
-            console.log("Low scroll height: fetching data condition is true.")
             sleep(500);
             self.fetchData(false);
         }
@@ -155,7 +153,7 @@ var vm = function () {
         } else {
             $("#scrollToTop").slideDown('fast');
         }
-        
+
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
             self.fetchData(false);
         }
@@ -233,7 +231,6 @@ function hideButtons() {
 }
 
 $(document).ready(function () {
-    console.log("ready!");
     ko.applyBindings(new vm());
 });
 
