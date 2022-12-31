@@ -68,7 +68,7 @@
 
     <div class="row g-3" data-bind="foreach: records">
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card bg-body-tertiary w-100 h-100">
+        <div class="card card-hover bg-body-tertiary w-100 h-100">
           <div data-bind="event: {mouseenter: function () {$parent.toggleButtons(event, 'show')}, mouseleave: function () {$parent.toggleButtons(event, 'hide')}}">
             <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
             <div data-bind="hidden: Photo" class="card-img-top card-image-default bg-body-secondary">

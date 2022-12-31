@@ -20,3 +20,11 @@ a {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+/* Instead of always use class="d-flex align-items-center justify-content-center",
+   this simpler class simplifies the process of centering things both horizontally and vertically */
+   .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

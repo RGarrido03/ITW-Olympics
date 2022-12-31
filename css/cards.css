@@ -1,10 +1,10 @@
-.card {
+.card-hover {
     box-shadow: none;
     transition-property: transform, box-shadow;
     transition-duration: 0.2s;
 }
 
-.card:hover {
+.card-hover:hover {
     transform: scale(1.02);
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
 }
@@ -53,12 +53,4 @@
 .card-image-not-available {
     position: absolute;
     bottom: 1rem;
-}
-
-/* Instead of always use class="d-flex align-items-center justify-content-center",
-   this simpler class simplifies the process of centering things both horizontally and vertically */
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
