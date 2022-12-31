@@ -28,3 +28,14 @@ a {
     justify-content: center;
     align-items: center;
 }
+
+.btn-hover {
+    box-shadow: none;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.2s;
+}
+
+.btn-hover:hover {
+    transform: scale(1.1);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
