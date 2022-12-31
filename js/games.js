@@ -4,7 +4,6 @@ var vm = function () {
     //---Variáveis locais
     var self = this;
     self.baseUri = ko.observable('http://192.168.160.58/Olympics/api/games');
-    //self.baseUri = ko.observable('http://localhost:62595/api/drivers');
     self.displayName = 'Olympic Games List';
     self.error = ko.observable('');
     self.passingMessage = ko.observable('');
@@ -146,6 +145,8 @@ var vm = function () {
             }
             typingTimeout = setTimeout(function () {
                 self.hasMore(false);
+                console.log(searchQuery);
+                console.log(self.baseUri() + "/SearchByName");
                 ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
                     if (self.order() == 0) {
