@@ -75,12 +75,12 @@
                 <img class="bg-body-secondary border rounded-circle" style="width: 3rem; height: 3rem; object-fit: cover;" data-bind="attr:{src: Photo, alt:Name, id:'img' + Id}">
               </div>
               <div class="col">
-                <h5 class="card-title fw-semibold" data-bind="text: Name"></h5>
+                <h5 class="card-title fw-semibold text-body-emphasis" data-bind="text: Name"></h5>
                 <p class="card-text" data-bind="text: 'Modality ID: ' + Id"></p>
               </div>
               <div class="col-auto">
-                <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="Ver detalhes" data-bind="attr: { href:'./modalitiesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body"></i></a>
-                <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body"></i></a>
+                <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="Ver detalhes" data-bind="attr: { href:'./modalitiesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
+                <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body-secondary"></i></a>
               </div>
             </div>
           </div>
