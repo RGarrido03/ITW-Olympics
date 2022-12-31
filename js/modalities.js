@@ -178,14 +178,6 @@ var vm = function () {
     console.log("VM initialized!");
 };
 
-function showButtons() {
-    $(event.target).children(".card-action-buttons").fadeTo('fast', 1.0);
-}
-
-function hideButtons() {
-    $(event.target).children(".card-action-buttons").fadeTo('fast', 0.0);
-}
-
 $(document).ready(function () {
     ko.applyBindings(new vm());
 });
