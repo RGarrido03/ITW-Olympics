@@ -110,7 +110,7 @@ var vm = function () {
                         self.records(self.records().concat(data.Records.reverse()))
                         self.hasPrevious() == false ? self.hasMore(false) : self.hasMore(true);
                     }
-                        
+
                 } else {
                     if (self.filter() == 0) {
                         self.records(self.records().concat(data.Records.reverse()));
@@ -175,13 +175,39 @@ var vm = function () {
         }
         return true;
     });
-
+    
     self.scrollToTop = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
-
+    
     self.toggleButtons = function (event, action) {
         $(event.target).fadeTo('fast', action == "show" ? 1.0 : 0.0);
+    }
+    
+    self.addMarkers = async function () {
+        var mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
+        mcgLayerSupportGroup.addTo(map);
+
+        var summer = L.layerGroup().addTo(map);
+        var winter = L.layerGroup().addTo(map);
+        await ajaxHelper(self.baseUri() + "?page=1&pageSize=" + self.totalRecords(), 'GET').done(function (data) {
+            data.Records.forEach(function (record) {
+                var marker = L.marker([record.Lat, record.Lon], {alt: record.Name}).addTo(map);
+                marker.bindPopup("<b>" + record.Name + "</b><br>" + record.CityName);
+                if (record.Name.includes('Summer')) {
+                    summer.addLayer(marker);
+                } else {
+                    winter.addLayer(marker);
+                }
+            });
+        })
+        mcgLayerSupportGroup.checkIn(summer);
+        mcgLayerSupportGroup.checkIn(winter);
+        summer.addTo(map);
+        winter.addTo(map);
+        
+        var overlay = {'Summer': summer, 'Winter': winter};
+        L.control.layers(null, overlay).addTo(map);
     }
 
     //--- Internal functions
@@ -224,9 +250,17 @@ var vm = function () {
     var loading = true;
     showLoading();
     self.getInitialPageData().then(function () {
-        self.fetchData(true);
+        self.fetchData(true).then(function () {
+            self.addMarkers();
+        });
     });
-    
+
+    var map = L.map('map', {zoomSnap: 0.25}).setView([28,0], 1.5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
     console.log("VM initialized!");
 };
 
