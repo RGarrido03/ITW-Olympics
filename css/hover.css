@@ -1,0 +1,21 @@
+.btn-hover {
+    box-shadow: none;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.2s;
+}
+
+.btn-hover:hover {
+    transform: scale(1.1);
+    box-shadow: 0 .125rem .25rem rgba(var(--bs-body-color-rgb),.075)!important;
+}
+
+.card-hover {
+    box-shadow: none;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.2s;
+}
+
+.card-hover:hover {
+    transform: scale(1.02);
+    box-shadow: 0 .5rem 1rem rgba(var(--bs-body-color-rgb),.15)!important;
+}
