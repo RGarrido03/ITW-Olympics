@@ -14,40 +14,12 @@ var vm = function () {
     self.totalRecords = ko.observable(50);
     self.hasPrevious = ko.observable(false);
     self.hasNext = ko.observable(false);
-    self.previousPage = ko.computed(function () {
-        return self.currentPage() * 1 - 1;
-    }, self);
-    self.nextPage = ko.computed(function () {
-        return self.currentPage() * 1 + 1;
-    }, self);
-    self.fromRecord = ko.computed(function () {
-        return self.previousPage() * self.pagesize() + 1;
-    }, self);
-    self.toRecord = ko.computed(function () {
-        return Math.min(self.currentPage() * self.pagesize(), self.totalRecords());
-    }, self);
     self.totalPages = ko.observable(0);
-    self.pageArray = function () {
-        var list = [];
-        var size = Math.min(self.totalPages(), 9);
-        var step;
-        if (size < 9 || self.currentPage() === 1)
-            step = 0;
-        else if (self.currentPage() >= self.totalPages() - 4)
-            step = self.totalPages() - 9;
-        else
-            step = Math.max(self.currentPage() - 5, 0);
-
-        for (var i = 1; i <= size; i++)
-            list.push(i + step);
-        return list;
-    };
-
-    //--- Page Events
     self.order = ko.observable(0);
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
 
+    //--- Page Events
     self.fetchData = async function (isNew) {
         if (isNew) {
             self.order($("#orderSelect option").filter(':selected').val());
@@ -153,7 +125,7 @@ var vm = function () {
         } else {
             $("#scrollToTop").slideDown('fast');
         }
-
+        
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
             self.fetchData(false);
         }
@@ -199,21 +171,6 @@ var vm = function () {
             $("#myModal").modal('hide');
         })
     }
-
-    function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-        console.log("sPageURL=", sPageURL);
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-            }
-        }
-    };
 
     //--- start ....
     var loading = true;
