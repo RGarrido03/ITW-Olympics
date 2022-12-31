@@ -44,21 +44,21 @@
   <!-- Working Area -->
   <div class="container">
     <div class="py-3 row g-3 d-flex align-items-center">
-      <div class="col-sm-12 col-md-4 col-lg-6 pe-md-2">
+      <div class="col-sm-12 col-md-4 col-lg-4 pe-md-2">
         <h2 class="m-0 p-0" data-bind="text:displayName"></h2>
       </div>
       <!-- Search bar -->
-      <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
+      <div class="col-sm-12 col-md-4 col-lg-4 px-md-2">
         <div class="input-group">
           <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
         </div>
       </div>
       <!-- Order by -->
-      <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
+      <div class="col-sm-12 col-md-4 col-lg-4 ps-md-2">
         <div class="input-group">
           <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
-          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
+          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true)} }">
             <option value="0" selected>Nome: A-Z</option>
             <option value="1">Nome: Z-A</option>
           </select>
