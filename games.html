@@ -52,7 +52,7 @@
       <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
         <div class="input-group">
           <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search by year" aria-label="Search by year" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
         </div>
       </div>
       <!-- Sort & Filter -->
@@ -61,16 +61,16 @@
           <div class="col-6">
             <div class="input-group">
               <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
-              <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
-                <option value="0" selected>A-Z</option>
-                <option value="1">Z-A</option>
+              <select class="form-select" aria-label="Sort by" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
+                <option value="0" selected>Ascending</option>
+                <option value="1">Descending</option>
               </select>
             </div>
           </div>
           <div class="col-6">
             <div class="input-group">
-              <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-filter"></i></span>
-              <select class="form-select" aria-label="Filter items" aria-describedby="sortLabel" id="orderFilter" data-bind="event: { change: function () { fetchData(true) } }">
+              <span class="input-group-text" id="filterLabel"><i class="fa-solid fa-filter"></i></span>
+              <select class="form-select" aria-label="Filter" aria-describedby="filterLabel" id="orderFilter" data-bind="event: { change: function () { fetchData(true) } }">
                 <option value="0" selected>All</option>
                 <option value="1">Summer</option>
                 <option value="2">Winter</option>
@@ -87,13 +87,25 @@
           <div data-bind="event: {mouseenter: function () {$parent.toggleButtons(event, 'show')}, mouseleave: function () {$parent.toggleButtons(event, 'hide')}}">
             <img class="card-img-top card-image-cover" data-bind="attr:{src: Photo, alt:Name, id:'img' + Id}">
             <div class="center card-action-buttons rounded-top">
-              <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="Ver detalhes" data-bind="attr: { href:'./gamesDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
-              <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Definir como favorito"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
+              <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="See more details" data-bind="attr: { href:'./gamesDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
+              <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Set as favorite"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
             </div>
           </div>
           <div class="card-body">
-            <h5 class="card-title fw-semibold" data-bind="text:CityName + ' ' + Year"></h5>
-            <p class="card-text" data-bind="text: CountryName"></p>
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title fw-semibold" data-bind="text:CityName + ' ' + Year"></h5>
+                <p class="card-text" data-bind="text: CountryName"></p>
+              </div>
+              <div class="col-auto">
+                <div data-bind="if: Name.includes('Summer')">
+                  <i class="fa-solid fa-sun"></i>
+                </div>
+                <div data-bind="if: Name.includes('Winter')">
+                  <i class="fa-solid fa-snowflake"></i>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
