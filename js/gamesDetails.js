@@ -26,7 +26,16 @@ var vm = function () {
             self.City(value);
             self.CountryName(value_b);
         }
-    })
+    });
+    self.Summary = ko.observable(true);
+    self.Athletes = ko.observableArray([]);
+    self.AthletesPage = ko.observable(1);
+    self.AthletesMin = ko.observableArray([]);
+    self.Modalities = ko.observableArray([]);
+    self.Competitions = ko.observableArray([]);
+    self.CompetitionsPage = ko.observable(1);
+    self.CompetitionsMin = ko.observableArray([]);
+    self.Medals = ko.observableArray([]);
 
     //--- Page Events
     self.activate = async function (id) {
@@ -50,6 +59,22 @@ var vm = function () {
         });
     };
 
+    self.getMoreData = async function () {
+        console.log("Getting full details of game with ID " + self.Id());
+        showLoading();
+        var composedUri = self.baseUri() + "/FullDetails?id=" + id;
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
+            console.log(data);
+            self.Summary(false);
+            self.Athletes(data.Athletes);
+            self.AthletesMin(data.Athletes.slice(0,20));
+            self.Modalities(data.Modalities);
+            self.Competitions(data.Competitions);
+            self.CompetitionsMin(data.Competitions.slice(0, 20));
+            self.Medals(data.Medals);
+        }).then(hideLoading());
+    };
+
     self.scrollToTop = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
@@ -58,15 +83,43 @@ var vm = function () {
         if (window.history.length > 1) {
             history.back();
         } else {
-            window.location.href = '/competitions.html';
+            window.location.href = '/games.html';
         }
     };
+
+    var loading = false;
+    self.getNewAthletesData = function () {
+        if (!loading) {
+            console.log("Getting more athletes...");
+            loading = true;
+            self.AthletesPage(self.AthletesPage() + 1);
+            self.AthletesMin(self.AthletesMin().concat(self.Athletes().slice((self.AthletesPage() - 1) * 20, self.AthletesPage() * 20)));
+            loading = false;
+        }
+    }
+
+    self.getNewCompetitionsData = function () {
+        if (!loading) {
+            console.log("Getting more competitions...");
+            loading = true;
+            self.CompetitionsPage(self.CompetitionsPage() + 1);
+            self.CompetitionsMin(self.CompetitionsMin().concat(self.Competitions().slice((self.CompetitionsPage() - 1) * 20, self.CompetitionsPage() * 20)));
+            loading = false;
+        }
+    }
 
     $(window).on("resize scroll", function () {
         if ($(window).scrollTop() == 0) {
             $("#scrollToTop").slideUp('fast');
         } else {
             $("#scrollToTop").slideDown('fast');
+        }
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 425) {
+            if ($("#AthletesArray").attr("aria-expanded") == "true") {
+                self.getNewAthletesData();
+            } else if ($("#CompetitionsArray").attr("aria-expanded") == "true") {
+                self.getNewCompetitionsData();
+            }
         }
         return true;
     });
