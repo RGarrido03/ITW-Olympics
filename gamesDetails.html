@@ -45,40 +45,30 @@
 
   <!-- Work Area-->
   <div class="container">
-        <div class="py-2 border-bottom mb-3">
-            <h2 data-bind="text:Name() +' [' + Id() + ']'"></h2>
-        </div>
-        <!-- ko if:Name().length > 0 -->
-        <div class="row border-bottom mx-0 my-1">
-            <div class="col-2">Game Id</div><div class="col-10" data-bind="text: Id"></div>
-        </div>
-        <div class="row border-bottom mx-0  my-1">
-            <div class="col-2">Name</div><div class="col-10" data-bind="text: Name"></div>
-        </div>
-        <div class="row border-bottom mx-0  my-1">
-            <div class="col-2">Country Name</div><div class="col-10" data-bind="text: CountryName"></div>
-        </div>
-        <div class="row border-bottom mx-0  my-1"><div class="col-2">Season</div>
-            <div class="col-10" data-bind="text: Season"></div>
-        </div>
-        <div class="row border-bottom mx-0  my-1">
-            <div class="col-2">Year</div><div class="col-10" data-bind="text: Year"></div>
-        </div>
-        <div class="row border-bottom mx-0  my-1" data-bind="visible: Logo() != '' && Logo() != null">
-            <div class="col-2">Logo</div><div class="small col-10">
-                <img class="img-thumbnail" data-bind="attr:{src: Logo}"><br /><i class="fa-solid fa-link"></i><br />
-                [<a class="link-dark text-decoration-none" data-bind="attr: { href: Logo }, text: Logo" target="_blank"></a>]</div>
-        </div>
-        <div class="row border-bottom mx-0  my-1" data-bind="visible: Photo() != '' && Photo() != null">
-            <div class="col-2">Photo</div><div class="small col-10">
-                <img class="img-thumbnail" data-bind="attr:{src: Photo}"><br />
-                <i class="fa-solid fa-link"></i> [<a class="link-dark text-decoration-none" data-bind="attr: { href: Photo }, text : Photo" target="_blank"></a>]
-            </div>
-        </div>
-        <!-- /ko -->
-        <a href="./games.html" class="btn btn-light btn-sm small"><i class="fa-solid fa-list"></i> Back to List</a>
-        <a data-bind="attr: { href:'./gameFull.html?id=' + Id() }" class="btn btn-light btn-sm small"><i class="fa-solid fa-th"></i> Full Setails</a>
+    <div class="row mb-3 pt-2 d-flex align-items-center">
+      <div class="col-auto">
+        <div style="width: 2.5rem; height: 2.5rem;" class="btn btn-hover bg-body-secondary border rounded center" data-bind="click: goBack"><i class="fa-solid text-body fa-arrow-left fa-lg"></i></div>
+      </div>
+      <div class="col ps-0">
+        <h3 class="m-0 px-0 py-3" data-bind="text:displayName"></h3>
+      </div>
+    </div>
+
+    <div class="row gy-2 d-flex align-items-center">
+      <div class="col-xs-12 col-lg-4 mb-2">
+        <img class="card-hover rounded border bg-body-tertiary w-100" data-bind="attr:{src: Photo}" />
+      </div>
+      <div class="col-xs-12 col-lg-8">
+        <p class="mb-0">Competition ID: <span data-bind="text: Id"></span></p>
+        <h2 class="mb-4 fw-bold" data-bind="text: Name"></h2>
+        <p class="mb-0">Location</p>
+        <p class="mb-4 fs-5 text-body-emphasis" data-bind="text: Location"></p>
+        <p class="mb-0">Season</p>
+        <p class="mb-0 fs-5 text-body-emphasis" data-bind="text: Season"></p>
+      </div>
+    </div>
   </div>
+
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

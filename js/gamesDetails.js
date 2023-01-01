@@ -15,7 +15,17 @@ var vm = function () {
     self.Photo = ko.observable('');
     self.Season = ko.observable('');
     self.Year = ko.observableArray('');
+    self.City = ko.observable('');
     self.Url = ko.observable('');
+    self.Location = ko.computed({
+        read: function () {
+            return self.City() + ', ' + self.CountryName();
+        },
+        write: function (value, value_b) {
+            self.City(value);
+            self.CountryName(value_b);
+        }
+    })
 
     //--- Page Events
     self.activate = async function (id) {
@@ -31,6 +41,7 @@ var vm = function () {
             self.Photo(data.Photo);
             self.Season(data.Season);
             self.Year(data.Year);
+            self.City(data.City);
         });
     };
 
