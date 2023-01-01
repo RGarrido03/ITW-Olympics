@@ -43,7 +43,7 @@ function calculate() {
     precoTotal = 0;
     qtdTotal = 0;
 
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= 16; i++) {
         precAtual = parseFloat(document.getElementById('price' + i).value);
         qtdAtual = parseFloat(document.getElementById('qty' + i).value);
         precoTotal += precAtual * qtdAtual;
@@ -72,7 +72,7 @@ function valid() {
 }
 
 function clean() {
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= 16; i++) {
         qtdAtual = document.getElementById('qty' + i).value = 0;
     }
     precoTotal = 0;
