@@ -60,6 +60,20 @@ var vm = function () {
         });
     };
 
+    $(window).on("resize scroll", function () {
+        if ($(window).scrollTop() == 0) {
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+        return true;
+    });
+
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+    };
+
+
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
@@ -68,11 +82,13 @@ var vm = function () {
             url: uri,
             dataType: 'json',
             contentType: 'application/json',
-            data: data ? JSON.stringify(data) : null,
+            data: data ? data : null,
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }
@@ -130,12 +146,9 @@ function hideButtons() {
 }
 
 $(document).ready(function () {
-    console.log("ready!");
     ko.applyBindings(new vm());
 });
 
 $(document).ajaxComplete(function (event, xhr, options) {
     $("#myModal").modal('hide');
 })
-
-
