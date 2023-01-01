@@ -54,17 +54,50 @@
       </div>
     </div>
 
-    <div class="row gy-2 d-flex align-items-center">
-      <div class="col-xs-12 col-lg-4 mb-2">
+    <div class="row g-3 d-flex align-items-center mb-sm-0 mb-lg-3">
+      <div class="col-xs-12 col-lg-4">
         <img class="card-hover rounded border bg-body-tertiary w-100" data-bind="attr:{src: Photo}" />
       </div>
-      <div class="col-xs-12 col-lg-8">
+      <div class="col">
         <p class="mb-0">Competition ID: <span data-bind="text: Id"></span></p>
         <h2 class="mb-4 fw-bold" data-bind="text: Name"></h2>
-        <p class="mb-0">Location</p>
-        <p class="mb-4 fs-5 text-body-emphasis" data-bind="text: Location"></p>
-        <p class="mb-0">Season</p>
-        <p class="mb-0 fs-5 text-body-emphasis" data-bind="text: Season"></p>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card py-3 text-center bg-body-tertiary">
+          <p class="card-text mb-1">Game ID</p>
+          <h3 class="card-title mb-0" data-bind="text:Id"></h3>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card py-3 text-center bg-body-tertiary">
+          <p class="card-text mb-1">Year</p>
+          <h3 class="card-title mb-0" data-bind="text:Year"></h3>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card py-3 text-center bg-body-tertiary">
+          <p class="card-text mb-1">Season</p>
+          <h3 class="card-title mb-0" data-bind="text:Season"></h3>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card py-3 text-center bg-body-tertiary">
+          <p class="card-text mb-1">Country</p>
+          <div class="card-title mb-0">
+            <h3 class="mb-0">
+              <span data-bind="text: CountryName"></span>
+              <span data-bind="text: Emoji, visible: Emoji"></span>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card py-3 text-center bg-body-tertiary">
+          <p class="card-text mb-1">City</p>
+          <h3 class="card-title mb-0" data-bind="text:City"></h3>
+        </div>
       </div>
     </div>
   </div>

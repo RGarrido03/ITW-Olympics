@@ -17,6 +17,7 @@ var vm = function () {
     self.Year = ko.observableArray('');
     self.City = ko.observable('');
     self.Url = ko.observable('');
+    self.Emoji = ko.observable('');
     self.Location = ko.computed({
         read: function () {
             return self.City() + ', ' + self.CountryName();
@@ -40,8 +41,12 @@ var vm = function () {
             self.Name(data.Name);
             self.Photo(data.Photo);
             self.Season(data.Season);
-            self.Year(data.Year);
             self.City(data.City);
+            self.Year(data.Year);
+        });
+        var CountryEmojiName = self.CountryName() == "Great Britain" ? "United Kingdom" : self.CountryName();
+        await ajaxHelper("https://api.emojisworld.fr/v1/search", 'GET', { "q": CountryEmojiName, limit: 1, categories: 10 }).done(function (data) {
+            self.Emoji(data.results[0].emoji);
         });
     };
 
@@ -74,7 +79,7 @@ var vm = function () {
             url: uri,
             dataType: 'json',
             contentType: 'application/json',
-            data: data ? JSON.stringify(data) : null,
+            data: data ? data : null,
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
