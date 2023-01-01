@@ -13,51 +13,107 @@ var vm = function () {
     self.totalRecords = ko.observable(50);
     self.hasPrevious = ko.observable(false);
     self.hasNext = ko.observable(false);
-    self.previousPage = ko.computed(function () {
-        return self.currentPage() * 1 - 1;
-    }, self);
-    self.nextPage = ko.computed(function () {
-        return self.currentPage() * 1 + 1;
-    }, self);
-    self.fromRecord = ko.computed(function () {
-        return self.previousPage() * self.pagesize() + 1;
-    }, self);
-    self.toRecord = ko.computed(function () {
-        return Math.min(self.currentPage() * self.pagesize(), self.totalRecords());
-    }, self);
     self.totalPages = ko.observable(0);
-    self.pageArray = function () {
-        var list = [];
-        var size = Math.min(self.totalPages(), 9);
-        var step;
-        if (size < 9 || self.currentPage() === 1)
-            step = 0;
-        else if (self.currentPage() >= self.totalPages() - 4)
-            step = self.totalPages() - 9;
-        else
-            step = Math.max(self.currentPage() - 5, 0);
-
-        for (var i = 1; i <= size; i++)
-            list.push(i + step);
-        return list;
-    };
+    self.order = ko.observable(0);
+    self.count = ko.observable(1);
+    self.hasMore = ko.observable(true);
 
     //--- Page Events
-    self.activate = function (id) {
-        console.log('CALL: getCountries...');
-        var composedUri = self.baseUri() + "?page=" + id + "&pageSize=" + self.pagesize();
-        ajaxHelper(composedUri, 'GET').done(function (data) {
+    self.fetchData = async function (isNew) {
+        if (isNew) {
+            self.order($("#orderSelect option").filter(':selected').val());
+            if (self.order() == '0') {
+                self.count(1);
+            } else {
+                self.count(self.totalPages());
+            }
+        } else {
+            if (loading) {
+                return;
+            } else {
+                if (self.order() == 0) {
+                    if (self.hasNext()) {
+                        self.count(self.count() + 1);
+                    } else {
+                        return;
+                    }
+                } else {
+                    if (self.hasPrevious()) {
+                        self.count(self.count() - 1);
+                    } else {
+                        return;
+                    }
+                }
+                loading = true;
+            }
+        }
+
+        var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
-            hideLoading();
-            self.records(data.Records);
-            self.currentPage(data.CurrentPage);
             self.hasNext(data.HasNext);
             self.hasPrevious(data.HasPrevious);
-            self.pagesize(data.PageSize)
+            if (isNew) {
+                if (self.order() == 0) {
+                    self.records(data.Records);
+                } else {
+                    self.records(data.Records.reverse());
+                }
+            } else {
+                if (self.order() == 0) {
+                    self.records(self.records().concat(data.Records));
+                    if (self.hasNext() == false) {
+                        self.hasMore(false);
+                    } else {
+                        self.hasMore(true);
+                    }
+                } else {
+                    self.records(self.records().concat(data.Records.reverse()));
+                    if (self.hasPrevious() == false) {
+                        self.hasMore(false);
+                    } else {
+                        self.hasMore(true);
+                    }
+                }
+            }
+            self.currentPage(data.CurrentPage);
+            self.pagesize(data.PageSize);
             self.totalPages(data.TotalPages);
             self.totalRecords(data.TotalRecords);
+            hideLoading();
             //self.SetFavourites();
+            loading = false;
         });
+
+        if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
+            self.fetchData(false);
+        }
+    }
+
+    var typingTimeout;
+    self.searchChanged = function () {
+        var searchQuery = $(event.target).val();
+
+        if (searchQuery.length > 0) {
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            }
+            typingTimeout = setTimeout(function () {
+                self.hasMore(false);
+                ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
+                    console.log(data);
+                    if (self.order() == 0) {
+                        self.records(data);
+                    } else {
+                        self.records(data.reverse());
+                    }
+                });
+            }, 1000);
+        }
+        else {
+            clearTimeout(typingTimeout);
+            self.fetchData(true);
+        }
     };
 
     $(window).on("resize scroll", function () {
@@ -66,6 +122,10 @@ var vm = function () {
         } else {
             $("#scrollToTop").slideDown('fast');
         }
+
+        if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
+            self.fetchData(false);
+        }
         return true;
     });
 
@@ -73,6 +133,9 @@ var vm = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
 
+    self.toggleButtons = function (event, action) {
+        $(event.target).fadeTo('fast', action == "show" ? 1.0 : 0.0);
+    }
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -110,40 +173,12 @@ var vm = function () {
         })
     }
 
-    function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-        console.log("sPageURL=", sPageURL);
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-            }
-        }
-    };
-
     //--- start ....
+    var loading = true;
     showLoading();
-    var pg = getUrlParameter('page');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    self.fetchData(true);
     console.log("VM initialized!");
 };
-
-function showButtons() {
-    $(event.target).children("div").fadeTo('fast', 1.0);
-}
-
-function hideButtons() {
-    $(event.target).children("div").fadeTo('fast', 0.0);
-}
 
 $(document).ready(function () {
     ko.applyBindings(new vm());
