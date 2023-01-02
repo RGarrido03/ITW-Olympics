@@ -12,16 +12,16 @@ var vm = function () {
     self.IOC = ko.observable('');
     self.Flag = ko.observable('');
     self.Name = ko.observable('');
-    self.Participant = ko.observable('');
-    self.Organizer = ko.observable('');
-    self.Events = ko.observableArray('');
+    self.Participant = ko.observableArray([]);
+    self.Organizer = ko.observableArray([]);
+    self.Events = ko.observableArray([]);
     self.Url = ko.observable('');
 
     //--- Page Events
-    self.activate = function (id) {
-        console.log('CALL: getGame...');
+    self.activate = async function (id) {
+        console.log('Country ID: ' + id);
         var composedUri = self.baseUri() + id;
-        ajaxHelper(composedUri, 'GET').done(function (data) {
+        await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             hideLoading();
             self.Id(data.Id);
@@ -31,8 +31,56 @@ var vm = function () {
             self.Participant(data.Participant);
             self.Organizer(data.Organizer);
             self.Events(data.Events);
+            self.addMarkers();
         });
     };
+
+    self.scrollToTop = function () {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+    };
+
+    self.goBack = function () {
+        if (window.history.length > 1) {
+            history.back();
+        } else {
+            window.location.href = '/countries.html';
+        }
+    };
+
+    $(window).on("resize scroll", function () {
+        if ($(window).scrollTop() == 0) {
+            $("#scrollToTop").slideUp('fast');
+        } else {
+            $("#scrollToTop").slideDown('fast');
+        }
+        return true;
+    });
+
+    self.addMarkers = async function () {
+        var mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
+        mcgLayerSupportGroup.addTo(map);
+
+        var summer = L.layerGroup().addTo(map);
+        var winter = L.layerGroup().addTo(map);
+
+        await self.Participant().forEach(function (record) {
+            var marker = L.marker([record.Lat, record.Lon], { alt: record.Name }).addTo(map);
+            marker.bindPopup("<b>" + record.Name + "</b><br>" + record.CityName);
+            if (record.Name.includes('Summer')) {
+                summer.addLayer(marker);
+            } else {
+                winter.addLayer(marker);
+            }
+        });
+
+        mcgLayerSupportGroup.checkIn(summer);
+        mcgLayerSupportGroup.checkIn(winter);
+        summer.addTo(map);
+        winter.addTo(map);
+        
+        var overlay = {'Summer': summer, 'Winter': winter};
+        L.control.layers(null, overlay).addTo(map);
+    }
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -42,11 +90,13 @@ var vm = function () {
             url: uri,
             dataType: 'json',
             contentType: 'application/json',
-            data: data ? JSON.stringify(data) : null,
+            data: data ? data : null,
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("AJAX Call[" + uri + "] Fail...");
                 hideLoading();
                 self.error(errorThrown);
+                const toast = new bootstrap.Toast($('#errorToast'));
+                toast.show();
             }
         });
     }
@@ -80,13 +130,15 @@ var vm = function () {
 
     //--- start ....
     showLoading();
-    var pg = getUrlParameter('id');
-    console.log(pg);
-    if (pg == undefined)
-        self.activate(1);
-    else {
-        self.activate(pg);
-    }
+    var id = getUrlParameter('id');
+    self.activate(id);
+
+    var map = L.map('map', {zoomSnap: 0.25}).setView([28,0], 1.5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
     console.log("VM initialized!");
 };
 
