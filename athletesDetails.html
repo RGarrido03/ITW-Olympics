@@ -122,13 +122,13 @@
     <div data-bind="hidden: Summary">
       <div id="map" class="rounded mt-3 mb-3 w-100" style="height: 20rem;"></div>
       <div class="accordion">
-        <div class="accordion-item" id="fullDetailsAccordion">
+        <div class="accordion-item" id="athletesAccordion">
           <h2 class="accordion-header" id="headingOne">
             <button id="AthletesArray" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               Games (<span data-bind="text: Games().length"></span>)
             </button>
           </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#fullDetailsAccordion">
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#athletesAccordion">
             <div class="accordion-body row g-3" data-bind="foreach: Games">
               <div class="col-12 card-hover p-3 rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center">
                 <div class="card-body align-items-center h-auto">
@@ -150,13 +150,13 @@
             </div>
           </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item" id="competitionsAccordion">
           <h2 class="accordion-header" id="headingTwo">
             <button id="CompetitionsArray" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
               Competitions (<span data-bind="text: Competitions().length"></span>)
             </button>
           </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#fullDetailsAccordion">
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#competitionsAccordion">
             <div class="accordion-body row g-3" data-bind="foreach: Competitions">
               <div class="col-12 card-hover p-3 rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center">
                 <div class="card-body align-items-center h-auto">
@@ -179,13 +179,13 @@
             </div>
           </div>
         </div>
-        <div class="accordion-item" data-bind="visible: Medals().length > 0">
+        <div class="accordion-item" id="medalsAccordion" data-bind="visible: Medals().length > 0">
           <h2 class="accordion-header" id="headingThree">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
               Medals (<span data-bind="text: Medals().length"></span>)
             </button>
           </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#fullDetailsAccordion">
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#medalsAccordion">
             <div class="accordion-body row g-3" data-bind="foreach: Medals">
               <div class="col-12 card-hover p-3 rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center">
                 <div class="card-body align-items-center h-auto">
@@ -203,13 +203,13 @@
             </div>
           </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item" id="modalitiesAccordion">
           <h2 class="accordion-header" id="headingFour">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
               Modalities (<span data-bind="text: Modalities().length"></span>)
             </button>
           </h2>
-          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#fullDetailsAccordion">
+          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#modalitiesAccordion">
             <div class="accordion-body row g-3" data-bind="foreach: Modalities">
               <div class="col-12 card-hover p-3 rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center">
                 <div class="card-body align-items-center h-auto">
