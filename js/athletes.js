@@ -17,6 +17,7 @@ var vm = function () {
     self.sortby = ko.observable('');
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
+    self.searchLoading = ko.observable(false);
 
     //--- Page Events
     self.fetchData = async function (isNew) {
@@ -49,6 +50,7 @@ var vm = function () {
             hideLoading();
             //self.SetFavourites();
             loading = false;
+            self.searchLoading(false);
         });
 
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
@@ -65,14 +67,17 @@ var vm = function () {
                 clearTimeout(typingTimeout);
             }
             typingTimeout = setTimeout(function () {
+                self.searchLoading(true);
                 self.hasMore(false);
                 ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
                     self.records(data);
+                    self.searchLoading(false);
                 });
             }, 1000);
         }
         else {
+            self.searchLoading(true);
             clearTimeout(typingTimeout);
             self.fetchData(true);
         }
