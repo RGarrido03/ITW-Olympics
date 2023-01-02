@@ -86,12 +86,27 @@ var vm = function () {
         var composedUri = self.baseUri() + "/FullDetails?id=" + id;
         await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
+
+            self.Id(data.Id);
+            self.Name(data.Name);
+            self.Sex(data.Sex);
+            self.Height(data.Height);
+            self.Weight(data.Weight);
+            self.BornDate(data.BornDate ? new Date(data.BornDate).toLocaleDateString("pt-PT") : null);
+            self.BornPlace(data.BornPlace);
+            self.DiedDate(data.DiedDate ? new Date(data.DiedDate).toLocaleDateString("pt-PT"): null);
+            self.DiedPlace(data.DiedPlace);
+            self.OlympediaLink(data.OlympediaLink);
+            self.Photo(data.Photo);
+
             self.Summary(false);
             self.Games(data.Games);
             self.Modalities(data.Modalities);
             self.Competitions(data.Competitions);
             self.Medals(data.Medals);
-        }).then(hideLoading());
+            hideLoading();
+            self.addMarkers();
+        });
     };
 
     self.scrollToTop = function () {
@@ -114,6 +129,32 @@ var vm = function () {
         }
         return true;
     });
+
+    self.addMarkers = async function () {
+        var mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
+        mcgLayerSupportGroup.addTo(map);
+
+        var summer = L.layerGroup().addTo(map);
+        var winter = L.layerGroup().addTo(map);
+
+        await self.Games().forEach(function (record) {
+            var marker = L.marker([record.Lat, record.Lon], { alt: record.Name }).addTo(map);
+            marker.bindPopup("<b>" + record.Name + "</b><br>" + record.CityName);
+            if (record.Name.includes('Summer')) {
+                summer.addLayer(marker);
+            } else {
+                winter.addLayer(marker);
+            }
+        });
+
+        mcgLayerSupportGroup.checkIn(summer);
+        mcgLayerSupportGroup.checkIn(winter);
+        summer.addTo(map);
+        winter.addTo(map);
+        
+        var overlay = {'Summer': summer, 'Winter': winter};
+        L.control.layers(null, overlay).addTo(map);
+    }
 
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
@@ -165,6 +206,13 @@ var vm = function () {
     showLoading();
     var id = getUrlParameter('id');
     self.activate(id);
+
+    var map = L.map('map', {zoomSnap: 0.25}).setView([28,0], 1.5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
     console.log("VM initialized!");
 };
 

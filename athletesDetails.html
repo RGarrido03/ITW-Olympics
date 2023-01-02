@@ -14,6 +14,9 @@
   <link rel="stylesheet" href="css/hover.css" />
   <link rel="stylesheet" href="css/cards.css" />
   <link rel="stylesheet" href="css/scrollToTop.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css" integrity="sha512-fYyZwU1wU0QWB4Yutd/Pvhy5J1oWAwFXun1pt+Bps04WSe4Aq6tyHlT4+MHSJhD8JlLfgLuC4CbCnX5KHSjyCg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css" integrity="sha512-ENrTWqddXrLJsQS2A86QmvA17PkJ0GVm1bqj5aTgpeMAfDKN2+SIOLpKG8R/6KkimnhTb+VW5qqUHB/r1zaRgg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="js/darkMode.js"></script>
 </head>
 <body>
@@ -58,7 +61,8 @@
       </div>
       <div class="col">
         <p class="mb-0">Athlete ID: <span data-bind="text: Id"></span></p>
-        <h2 class="mb-4 fw-bold" data-bind="text: Name"></h2>
+        <h2 class="mb-3 fw-bold" data-bind="text: Name"></h2>
+        <a style="height: 2.5rem; width: 17rem;" class="btn btn-hover bg-body-secondary border rounded center text-decoration-none text-body-emphasis mb-3" data-bind="attr: {href: OlympediaLink}"><i class="fa-solid text-body fa-link"></i>&nbsp;&nbsp;Check info at Olympedia.org</a>
       </div>
     </div>
     <div class="row g-3">
@@ -74,7 +78,7 @@
           <h3 class="card-title mb-0 text-body-emphasis" data-bind="text:Sex"></h3>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-3" data-bind="visible: Height">
+      <div class="col-6 col-md-4 col-lg-3">
         <div class="card card-hover py-3 text-center bg-body-tertiary">
           <p class="card-text mb-1">Height</p>
           <h3 class="card-title mb-0 text-body-emphasis" data-bind="text: Height"></h3>
@@ -107,7 +111,8 @@
       <div class="col"></div>
     </div>
     <div data-bind="hidden: Summary">
-      <div class="accordion mt-4">
+      <div id="map" class="rounded mt-3 mb-3 w-100" style="height: 20rem;"></div>
+      <div class="accordion">
         <div class="accordion-item" id="fullDetailsAccordion">
           <h2 class="accordion-header" id="headingOne">
             <button id="AthletesArray" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -257,6 +262,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js" integrity="sha512-TiMWaqipFi2Vqt4ugRzsF8oRoGFlFFuqIi30FFxEPNw58Ov9mOy6LgC05ysfkxwLE0xVeZtmr92wVg9siAFRWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/leaflet.markercluster.layersupport@2.0.1/dist/leaflet.markercluster.layersupport.js"></script>
   <script src="js/athletesDetails.js"></script>
   <script src="js/emoji.js"></script>
 </body>
