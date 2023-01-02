@@ -40,6 +40,9 @@ var vm = function () {
     self.Medals = ko.observableArray([]);
     self.Medals_country = ko.observableArray([]);
 
+    self.MedalsPerCountry_CountryList = ko.observableArray([]);
+    self.MedalsPerCountry_MedalsList = ko.observableArray([]);
+
     //--- Page Events
     self.activate = async function (id) {
         console.log("Game ID: " + id);
@@ -60,10 +63,16 @@ var vm = function () {
             self.addMarkers();
         });
         await ajaxHelper("http://192.168.160.58/Olympics/api/Statistics/Medals_Country?id=" + id, 'GET').done(function (data) {
+            console.log(data)
             self.Medals_country(data);
             $("#goldCounter").text('Counter: ' + self.Medals_country()[0].Medals[0].Counter);
             $("#silverCounter").text('Counter: ' + self.Medals_country()[0].Medals[1].Counter);
             $("#bronzeCounter").text('Counter: ' + self.Medals_country()[0].Medals[2].Counter);
+            self.Medals_country().forEach(function (item) {
+                self.MedalsPerCountry_CountryList.push(item.CountryName);
+                self.MedalsPerCountry_MedalsList.push(item.Medals[0].Counter + item.Medals[1].Counter + item.Medals[2].Counter);
+            });
+            self.createGraph();
         });
         var CountryEmojiName = self.CountryName() == "Great Britain" ? "United Kingdom" : self.CountryName();
         await ajaxHelper("https://api.emojisworld.fr/v1/search", 'GET', { "q": CountryEmojiName, limit: 1, categories: 10 }).done(function (data) {
@@ -93,6 +102,29 @@ var vm = function () {
             self.Medals(data.Medals);
         }).then(hideLoading());
     };
+
+    self.createGraph = function () {
+        const ctx = document.getElementById('MedalsPerCountryChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: self.MedalsPerCountry_CountryList(),
+                datasets: [{
+                    label: '# of Medals',
+                    data: self.MedalsPerCountry_MedalsList(),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 
     self.scrollToTop = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
