@@ -74,13 +74,13 @@
             <img class="card-img-top card-image-cover" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
             <div data-bind="hidden: Photo" class="card-img-top card-image-default bg-body-secondary">
               <div class="center w-100 h-100">
-                <img src="img/Olympic_rings.svg" alt="Imagem não disponível" class="w-75" />
+                <img src="img/Olympic_rings.svg" alt="Photo not available" class="w-75" />
               </div>
             </div>
             <div class="center card-action-buttons rounded-top">
               <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="See details" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
               <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Set as favorite"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
-              <p class="m-0 text-body-secondary card-image-not-available" data-bind="hidden: Photo">Imagem não disponível</p>
+              <p class="m-0 text-body-secondary card-image-not-available" data-bind="hidden: Photo">Photo not available</p>
             </div>
           </div>
           <div class="card-body">

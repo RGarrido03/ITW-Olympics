@@ -71,7 +71,8 @@
           <div class="card-body align-items-center h-auto">
             <div class="row align-items-center">
               <div class="col-auto pe-0">
-                <img class="bg-body-secondary border rounded-circle" style="width: 3rem; height: 3rem; object-fit: cover;" data-bind="attr:{src: Photo, alt:Name, id:'img' + Id}">
+                <img class="bg-body-secondary border rounded-circle" style="width: 3rem; height: 3rem; object-fit: cover;" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
+                <div class="bg-body-secondary border rounded-circle center" style="width: 3rem; height: 3rem;" data-bind="hidden: Photo"><i class="fa-solid fa-dumbbell"></i></div>
               </div>
               <div class="col">
                 <p class="card-title m-0 text-body-emphasis" data-bind="text: Name"></p>

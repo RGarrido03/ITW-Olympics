@@ -18,10 +18,13 @@ var vm = function () {
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
     self.searchLoading = ko.observable(false);
+    self.countryRecords = ko.observableArray([]);
+    self.filter = ko.observable('');
 
     //--- Page Events
-    self.fetchData = async function (isNew) {
+    self.fetchData = async function (isNew, IOC) {
         if (isNew) {
+            IOC ? self.filter(IOC) : self.filter('');
             self.sortby($("#sortBySelect option").filter(':selected').val());
             self.count(1);
         } else {
@@ -37,7 +40,7 @@ var vm = function () {
             }
         }
 
-        var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize() + "&sortby=" + self.sortby();
+        var composedUri = self.baseUri() + (self.filter() ? ("/ByIOC?ioc=" + self.filter() + "&") : "?") + "page=" + self.count() + "&pageSize=" + self.pagesize() + "&sortby=" + self.sortby();
         console.log(composedUri);
         await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
@@ -56,6 +59,15 @@ var vm = function () {
         if (($(window).scrollTop() + $(window).height() > $(document).height() - 425) && $("#searchInput").val().length == 0) {
             self.fetchData(false);
         }
+    }
+
+    self.fetchCountriesData = async function () {
+        await ajaxHelper("http://192.168.160.58/Olympics/api/countries?page=1&pageSize=500", 'GET').done(function (data) {
+            console.log(data);
+            self.hasNext(data.HasNext);
+            self.hasPrevious(data.HasPrevious);
+            self.countryRecords(data.Records);
+        });
     }
 
     var typingTimeout;
@@ -82,6 +94,26 @@ var vm = function () {
             self.fetchData(true);
         }
     };
+
+    self.filterCountry = function () {
+        if ($(event.target).is("input")) {
+            var countryIOC = $(event.target)[0].id.slice(1, 4);
+            console.log(countryIOC);
+            self.fetchData(true, countryIOC);
+            $("#searchInput").attr("disabled", true);
+            $("#sortBySelect").attr("disabled", true);
+            $("#filterBtn").removeClass("bg-body-tertiary").addClass("bg-success-subtle border-success-subtle");
+        }
+        return true
+    }
+
+    self.clearCountrySelection = function () {
+        $('[name="flexRadioDefault"]').prop('checked', false);
+        $("#searchInput").attr("disabled", false);
+        $("#sortBySelect").attr("disabled", false);
+        $("#filterBtn").removeClass("bg-success-subtle border-success-subtle").addClass("bg-body-tertiary");
+        self.fetchData(true);
+    }
 
     $(window).on("resize scroll", function () {
         if ($(window).scrollTop() == 0) {
@@ -144,6 +176,7 @@ var vm = function () {
     var loading = true;
     showLoading();
     self.fetchData(true);
+    self.fetchCountriesData();
     console.log("VM initialized!");
 };
 
