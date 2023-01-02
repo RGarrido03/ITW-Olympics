@@ -52,16 +52,20 @@
       <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
         <div class="input-group">
           <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
         </div>
       </div>
       <!-- Order by -->
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
         <div class="input-group">
           <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
-          <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
-            <option value="0" selected>Nome: A-Z</option>
-            <option value="1">Nome: Z-A</option>
+          <select class="form-select" aria-label="Sort items" aria-describedby="sortLabel" id="sortBySelect" data-bind="event: { change: function () { fetchData(true) } }">
+            <option value="NameUp" selected>Name: A-Z</option>
+            <option value="NameDn">Name: Z-A</option>
+            <option value="HeightUp">Height: Ascendant</option>
+            <option value="HeightDn">Height: Descendant</option>
+            <option value="SexUp">Sex: Ascendant</option>
+            <option value="SexDn">Sex: Descendant</option>
           </select>
         </div>
       </div>
@@ -84,8 +88,13 @@
             </div>
           </div>
           <div class="card-body">
-            <h5 class="card-title fw-semibold" data-bind="text:Name"></h5>
-            <p class="card-text" data-bind="text: 'Best position: ' + BestPosition"></p>
+            <h5 class="card-title fw-semibold text-body-emphasis" data-bind="text:Name"></h5>
+            <p class="card-text">
+              <span data-bind="text: Sex"></span> | Best position: <span data-bind="text: BestPosition"></span>
+              <span data-bind="visible: BestPosition === 1">🥇️</span>
+              <span data-bind="visible: BestPosition === 2">🥈️</span>
+              <span data-bind="visible: BestPosition === 3">🥉️</span>
+            </p>
           </div>
         </div>
       </div>

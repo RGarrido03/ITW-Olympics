@@ -14,68 +14,34 @@ var vm = function () {
     self.hasPrevious = ko.observable(false);
     self.hasNext = ko.observable(false);
     self.totalPages = ko.observable(0);
-    self.order = ko.observable(0);
+    self.sortby = ko.observable('');
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
 
     //--- Page Events
     self.fetchData = async function (isNew) {
         if (isNew) {
-            self.order($("#orderSelect option").filter(':selected').val());
-            if (self.order() == '0') {
-                self.count(1);
-            } else {
-                self.count(self.totalPages());
-            }
+            self.sortby($("#sortBySelect option").filter(':selected').val());
+            self.count(1);
         } else {
             if (loading) {
                 return;
             } else {
-                if (self.order() == 0) {
-                    if (self.hasNext()) {
-                        self.count(self.count() + 1);
-                    } else {
-                        return;
-                    }
+                if (self.hasNext()) {
+                    self.count(self.count() + 1);
                 } else {
-                    if (self.hasPrevious()) {
-                        self.count(self.count() - 1);
-                    } else {
-                        return;
-                    }
+                    return;
                 }
                 loading = true;
             }
         }
 
-        var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize();
+        var composedUri = self.baseUri() + "?page=" + self.count() + "&pageSize=" + self.pagesize() + "&sortby=" + self.sortby();
+        console.log(composedUri);
         await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             self.hasNext(data.HasNext);
-            self.hasPrevious(data.HasPrevious);
-            if (isNew) {
-                if (self.order() == 0) {
-                    self.records(data.Records);
-                } else {
-                    self.records(data.Records.reverse());
-                }
-            } else {
-                if (self.order() == 0) {
-                    self.records(self.records().concat(data.Records));
-                    if (self.hasNext() == false) {
-                        self.hasMore(false);
-                    } else {
-                        self.hasMore(true);
-                    }
-                } else {
-                    self.records(self.records().concat(data.Records.reverse()));
-                    if (self.hasPrevious() == false) {
-                        self.hasMore(false);
-                    } else {
-                        self.hasMore(true);
-                    }
-                }
-            }
+            isNew ? self.records(data.Records) : self.records(self.records().concat(data.Records));
             self.currentPage(data.CurrentPage);
             self.pagesize(data.PageSize);
             self.totalPages(data.TotalPages);
@@ -102,11 +68,7 @@ var vm = function () {
                 self.hasMore(false);
                 ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
-                    if (self.order() == 0) {
-                        self.records(data);
-                    } else {
-                        self.records(data.reverse());
-                    }
+                    self.records(data);
                 });
             }, 1000);
         }
