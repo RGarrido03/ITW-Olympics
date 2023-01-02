@@ -18,6 +18,8 @@ var vm = function () {
     self.City = ko.observable('');
     self.Url = ko.observable('');
     self.Emoji = ko.observable('');
+    self.Lon = ko.observable('');
+    self.Lat = ko.observable('');
     self.Location = ko.computed({
         read: function () {
             return self.City() + ', ' + self.CountryName();
@@ -52,6 +54,9 @@ var vm = function () {
             self.Season(data.Season);
             self.City(data.City);
             self.Year(data.Year);
+            self.Lon(data.Lon);
+            self.Lat(data.Lat);
+            self.addMarkers();
         });
         var CountryEmojiName = self.CountryName() == "Great Britain" ? "United Kingdom" : self.CountryName();
         await ajaxHelper("https://api.emojisworld.fr/v1/search", 'GET', { "q": CountryEmojiName, limit: 1, categories: 10 }).done(function (data) {
@@ -124,6 +129,12 @@ var vm = function () {
         return true;
     });
 
+    self.addMarkers = async function () {
+        console.log(self.Lat() + " " + self.Lon());
+        var marker = L.marker([self.Lat(), self.Lon()], { alt: self.Name() }).addTo(map);
+        marker.bindPopup("<b>" + self.Name() + "</b><br>" + self.City());
+    }
+
     //--- Internal functions
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
@@ -174,6 +185,13 @@ var vm = function () {
     showLoading();
     var id = getUrlParameter('id');
     self.activate(id);
+
+    var map = L.map('map', {zoomSnap: 0.25}).setView([28,0], 1.5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
     console.log("VM initialized!");
 };
 
