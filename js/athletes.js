@@ -100,14 +100,18 @@ var vm = function () {
             var countryIOC = $(event.target)[0].id.slice(1, 4);
             console.log(countryIOC);
             self.fetchData(true, countryIOC);
+            $("#searchInput").attr("disabled", true);
             $("#sortBySelect").attr("disabled", true);
+            $("#filterBtn").removeClass("bg-body-tertiary").addClass("bg-success-subtle border-success-subtle");
         }
         return true
     }
 
     self.clearCountrySelection = function () {
         $('[name="flexRadioDefault"]').prop('checked', false);
+        $("#searchInput").attr("disabled", false);
         $("#sortBySelect").attr("disabled", false);
+        $("#filterBtn").removeClass("bg-success-subtle border-success-subtle").addClass("bg-body-tertiary");
         self.fetchData(true);
     }
 
