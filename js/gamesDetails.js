@@ -62,7 +62,7 @@ var vm = function () {
     self.getMoreData = async function () {
         console.log("Getting full details of game with ID " + self.Id());
         showLoading();
-        var composedUri = self.baseUri() + "/FullDetails?id=" + id;
+        var composedUri = self.baseUri() + "FullDetails?id=" + id;
         await ajaxHelper(composedUri, 'GET').done(function (data) {
             console.log(data);
             self.Summary(false);
