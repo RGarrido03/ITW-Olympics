@@ -98,57 +98,108 @@
           <h3 class="card-title mb-0 text-body-emphasis" data-bind="text:City"></h3>
         </div>
       </div>
-      <div class="col-12 col-lg-6">
+      <div class="col-12">
         <div class="card card-hover p-3 bg-body-tertiary">
-          <p class="card-text mb-1">Medals per country graph</p>
+          <p class="card-text mb-1">Medals per country</p>
           <canvas id="MedalsPerCountryChart"></canvas>
         </div>
       </div>
-      <div class="col-12 col-lg-6">
-        <div class="card card-hover p-3 bg-body-tertiary">
-          <p class="card-text mb-1">Medals per country</p>
+      <div class="col-12">
+        <div class="card p-3 bg-body-tertiary">
+          <p class="card-text mb-1">Data per country</p>
           <select class="form-select mb-3" aria-label="Country selector for medals" data-bind="foreach: Medals_country, event: {change: countryChanged}">
             <option data-bind="text: CountryName, attr: {value: $index}"></option>
           </select>
-          <div class="card-hover rounded bg-body-secondary border w-100 d-flex align-items-center mb-3">
-            <div class="card-body align-items-center h-auto">
-              <div class="row align-items-center">
-                <div class="col-auto pe-0">
-                  <div class="bg-body-tertiary border rounded-circle center" style="width: 3rem; height: 3rem;"><i class="fa-solid fa-medal"></i></div>
+
+          <div class="accordion" id="countryAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapseOne" aria-expanded="true" aria-controls="accordionCollapseOne">
+                  Medals
+                </button>
+              </h2>
+              <div id="accordionCollapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#countryAccordion">
+                <div class="accordion-body">
+                  <div class="card-hover rounded bg-body-tertiary border w-100 d-flex align-items-center mb-3">
+                    <div class="card-body align-items-center h-auto">
+                      <div class="row align-items-center">
+                        <div class="col-auto pe-0">
+                          <div class="bg-body-tertiary border rounded-circle center" style="width: 3rem; height: 3rem;"><i class="fa-solid fa-medal"></i></div>
+                        </div>
+                        <div class="col">
+                          <h5 class="card-title fw-semibold mb-0 text-body-emphasis">Gold</h5>
+                          <p class="card-text" id="goldCounter"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-hover rounded bg-body-tertiary border w-100 d-flex align-items-center mb-3">
+                    <div class="card-body align-items-center h-auto">
+                      <div class="row align-items-center">
+                        <div class="col-auto pe-0">
+                          <div class="bg-body-tertiary border rounded-circle center" style="width: 3rem; height: 3rem;"><i class="fa-solid fa-medal"></i></div>
+                        </div>
+                        <div class="col">
+                          <h5 class="card-title fw-semibold mb-0 text-body-emphasis">Silver</h5>
+                          <p class="card-text" id="silverCounter"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-hover rounded bg-body-tertiary border w-100 d-flex align-items-center">
+                    <div class="card-body align-items-center h-auto">
+                      <div class="row align-items-center">
+                        <div class="col-auto pe-0">
+                          <div class="bg-body-tertiary border rounded-circle center" style="width: 3rem; height: 3rem;"><i class="fa-solid fa-medal"></i></div>
+                        </div>
+                        <div class="col">
+                          <h5 class="card-title fw-semibold mb-0 text-body-emphasis">Bronze</h5>
+                          <p class="card-text" id="bronzeCounter"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col">
-                  <h5 class="card-title fw-semibold mb-0 text-body-emphasis">Gold</h5>
-                  <p class="card-text" id="goldCounter"></p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapseTwo" aria-expanded="false" aria-controls="accordionCollapseTwo">
+                  Athletes
+                </button>
+              </h2>
+              <div id="accordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#countryAccordion">
+                <div class="accordion-body" data-bind="foreach: AthletesPerCountryArray">
+
+                  <div class="card-hover rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center mb-3">
+                    <div class="card-body align-items-center h-auto">
+                      <div class="row align-items-center">
+                        <div class="col-auto pe-0">
+                          <img class="bg-body-secondary border rounded-circle" style="width: 3rem; height: 3rem; object-fit: cover;" data-bind="visible: Photo, attr:{src: Photo, alt:Name, id:'img' + Id}">
+                          <div class="bg-body-secondary border rounded-circle center" style="width: 3rem; height: 3rem;" data-bind="hidden: Photo"><i class="fa-solid fa-user"></i></div>
+                        </div>
+                        <div class="col">
+                          <h5 class="card-title fw-semibold text-body-emphasis" data-bind="text: Name"></h5>
+                          <p class="card-text">
+                            <span data-bind="visible: BestPosition === 1">Best position: 1 🥇️</span>
+                            <span data-bind="visible: BestPosition === 2">Best position: 2 🥈️</span>
+                            <span data-bind="visible: BestPosition === 3">Best position: 3 🥉️</span>
+                            <span data-bind="visible: BestPosition === 4">No medal awarded</span>
+                          </p>
+                        </div>
+                        <div class="col-auto">
+                          <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="See details" data-bind="attr: { href:'./athletesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
+                          <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
           </div>
-          <div class="card-hover rounded bg-body-secondary border w-100 d-flex align-items-center mb-3">
-            <div class="card-body align-items-center h-auto">
-              <div class="row align-items-center">
-                <div class="col-auto pe-0">
-                  <div class="bg-body-tertiary border rounded-circle center" style="width: 3rem; height: 3rem;"><i class="fa-solid fa-medal"></i></div>
-                </div>
-                <div class="col">
-                  <h5 class="card-title fw-semibold mb-0 text-body-emphasis">Silver</h5>
-                  <p class="card-text" id="silverCounter"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-hover rounded bg-body-secondary border w-100 d-flex align-items-center">
-            <div class="card-body align-items-center h-auto">
-              <div class="row align-items-center">
-                <div class="col-auto pe-0">
-                  <div class="bg-body-tertiary border rounded-circle center" style="width: 3rem; height: 3rem;"><i class="fa-solid fa-medal"></i></div>
-                </div>
-                <div class="col">
-                  <h5 class="card-title fw-semibold mb-0 text-body-emphasis">Bronze</h5>
-                  <p class="card-text" id="bronzeCounter"></p>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>

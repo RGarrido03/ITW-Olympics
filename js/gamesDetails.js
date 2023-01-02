@@ -43,6 +43,8 @@ var vm = function () {
     self.MedalsPerCountry_CountryList = ko.observableArray([]);
     self.MedalsPerCountry_MedalsList = ko.observableArray([]);
 
+    self.AthletesPerCountryArray = ko.observableArray([]);
+
     //--- Page Events
     self.activate = async function (id) {
         console.log("Game ID: " + id);
@@ -73,6 +75,7 @@ var vm = function () {
                 self.MedalsPerCountry_MedalsList.push(item.Medals[0].Counter + item.Medals[1].Counter + item.Medals[2].Counter);
             });
             self.createGraph();
+            self.getAthletesPerCountry(0);
         });
         var CountryEmojiName = self.CountryName() == "Great Britain" ? "United Kingdom" : self.CountryName();
         await ajaxHelper("https://api.emojisworld.fr/v1/search", 'GET', { "q": CountryEmojiName, limit: 1, categories: 10 }).done(function (data) {
@@ -85,6 +88,7 @@ var vm = function () {
         $("#goldCounter").text('Counter: ' + self.Medals_country()[countryID].Medals[0].Counter);
         $("#silverCounter").text('Counter: ' + self.Medals_country()[countryID].Medals[1].Counter);
         $("#bronzeCounter").text('Counter: ' + self.Medals_country()[countryID].Medals[2].Counter);
+        self.getAthletesPerCountry(countryID);
     };
 
     self.getMoreData = async function () {
@@ -125,6 +129,18 @@ var vm = function () {
             }
         });
     }
+
+    self.getAthletesPerCountry = function (id) {
+        var countryID = self.Medals_country()[id].CountryId;
+        ajaxHelper("http://192.168.160.58/Olympics/api/Countries/" + countryID, 'GET').done(function (data) {
+            console.log(data);
+            var countryIOC = data.IOC.slice(1,4);
+            ajaxHelper("http://192.168.160.58/Olympics/api/Statistics/Athlete_Country?id=" + self.Id() + "&IOC=" + countryIOC, 'GET').done(function (data) {
+                console.log(data);
+                self.AthletesPerCountryArray(data);
+            });
+        });
+    };
 
     self.scrollToTop = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
