@@ -21,8 +21,47 @@ var vm = function () {
     self.countryRecords = ko.observableArray([]);
     self.filter = ko.observable('');
     self.searchLoading = ko.observable(false);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesArray = ko.observableArray([]);
 
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesArray(self.Favorites.athletes);
+        console.log("Favorite athletes: ", self.FavoritesArray());
+        self.FavoritesArray().forEach(function (id) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+        });
+    };
+
+    self.setFavorites = function (id) {
+        console.log(id)
+        var idx = self.FavoritesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesArray.push(String(id))
+        } else {
+            $("#fav" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesArray.splice(idx, 1);
+        };
+        console.log(self.FavoritesArray());
+        console.log(self.Favorites);
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+
     self.fetchData = async function (isNew, IOC) {
         if (isNew) {
             IOC ? self.filter(IOC) : self.filter('');
@@ -52,7 +91,7 @@ var vm = function () {
             self.totalPages(data.TotalPages);
             self.totalRecords(data.TotalRecords);
             hideLoading();
-            //self.SetFavourites();
+            self.getFavorites();
             loading = false;
             self.searchLoading(false);
         });
@@ -86,6 +125,7 @@ var vm = function () {
                     console.log(data);
                     self.records(data);
                     self.searchLoading(false);
+                    self.getFavorites();
                 });
             }, 1000);
         }
