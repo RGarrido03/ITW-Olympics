@@ -32,8 +32,19 @@
         </ul>
         <ul class="navbar-nav">
           <a class="nav-link me-3" href="search.html"><i class="fa-solid fa-search"></i> Search</a>
-          <a class="nav-link" href="favorites.html"><i class="fa-solid fa-heart text-danger"></i> Favorites</a>
-        </div>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-heart text-danger"></i> Favorites
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="favorites.html?id=athletes"><i class="fa-solid fa-user"></i> Athletes</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=competitions"><i class="fa-solid fa-trophy"></i> Competitions</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=countries"><i class="fa-solid fa-flag"></i> Countries</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=games"><i class="fa-solid fa-map-marker"></i> Games</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=modalities"><i class="fa-solid fa-soccer-ball"></i> Modalities</a></li>
+            </ul>
+          </li>
+        </ul>
       </nav>
 
       <div class="form-body">
