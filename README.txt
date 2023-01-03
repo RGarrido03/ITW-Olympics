@@ -10,7 +10,7 @@ Alterações executadas após a apresentação do trabalho:
   A navbar inclui um botão para a pesquisa global, que redireciona para a página search.html.
 
 - Pesquisa a partir de 3 letras
-  Devido a reduzir a carga da API e do browser (na renderização do DOM), a pesquisa só é feita a partir de 3 letras.
+  De modo a reduzir a carga da API e do browser (na renderização do DOM), a pesquisa só é feita a partir de 3 letras.
 
 - Histórico de pesquisas
   Em cada campo de pesquisa, é apresentado um histórico de pesquisas (sob a forma de uma list group).
