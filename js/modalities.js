@@ -18,6 +18,7 @@ var vm = function () {
     self.order = ko.observable(0);
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
+    self.searchLoading = ko.observable(false);
 
     //--- Page Events
     self.fetchData = async function (isNew) {
@@ -95,12 +96,13 @@ var vm = function () {
     self.searchChanged = function () {
         var searchQuery = $(event.target).val();
 
-        if (searchQuery.length > 0) {
+        if (searchQuery.length >= 3) {
             if (typingTimeout) {
                 clearTimeout(typingTimeout);
             }
             typingTimeout = setTimeout(function () {
                 self.hasMore(false);
+                self.searchLoading(true);
                 ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
                     if (self.order() == 0) {
@@ -108,12 +110,15 @@ var vm = function () {
                     } else {
                         self.records(data.reverse());
                     }
+                    self.searchLoading(false);
                 });
             }, 1000);
         }
-        else {
+        else if (searchQuery.length == 0) {
+            self.searchLoading(true);
             clearTimeout(typingTimeout);
             self.fetchData(true);
+            self.searchLoading(false);
         }
     };
 
@@ -149,6 +154,7 @@ var vm = function () {
                 self.error(errorThrown);
                 const toast = new bootstrap.Toast($('#errorToast'));
                 toast.show();
+                self.searchLoading(false);
             }
         });
     }

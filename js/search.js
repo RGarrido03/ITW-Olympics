@@ -87,6 +87,7 @@ var vm = function () {
                 self.error(errorThrown);
                 const toast = new bootstrap.Toast($('#errorToast'));
                 toast.show();
+                self.searchLoading(false);
             }
         });
     }

@@ -21,6 +21,7 @@ var vm = function () {
     self.filterLink = ko.observable('');
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
+    self.searchLoading = ko.observable(false);
 
     self.getInitialPageData = async function () {
         await ajaxHelper(self.baseUri() + "?page=1&pageSize=20", 'GET').done(function (data) {
@@ -139,12 +140,13 @@ var vm = function () {
     self.searchChanged = function () {
         var searchQuery = $(event.target).val();
 
-        if (searchQuery.length > 0) {
+        if (searchQuery.length >= 3) {
             if (typingTimeout) {
                 clearTimeout(typingTimeout);
             }
             typingTimeout = setTimeout(function () {
                 self.hasMore(false);
+                self.searchLoading(true);
                 console.log(searchQuery);
                 console.log(self.baseUri() + "/SearchByName");
                 ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
@@ -154,12 +156,15 @@ var vm = function () {
                     } else {
                         self.records(data.reverse());
                     }
+                    self.searchLoading(false);
                 });
             }, 1000);
         }
-        else {
+        else if (searchQuery.length == 0) {
+            self.searchLoading(true);
             clearTimeout(typingTimeout);
             self.fetchData(true);
+            self.searchLoading(false);
         }
     };
 
@@ -225,6 +230,7 @@ var vm = function () {
                 self.error(errorThrown);
                 const toast = new bootstrap.Toast($('#errorToast'));
                 toast.show();
+                self.searchLoading(false);
             }
         });
     }

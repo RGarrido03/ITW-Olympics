@@ -57,7 +57,12 @@
       <!-- Search bar -->
       <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
         <div class="input-group">
-          <span class="input-group-text" id="searchBarLabel"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <span class="input-group-text" id="searchBarLabel">
+            <i class="fa-solid fa-magnifying-glass" data-bind="hidden: searchLoading"></i>
+            <div class="spinner-border spinner-border-sm" role="status" data-bind="visible: searchLoading">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </span>
           <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
         </div>
       </div>
