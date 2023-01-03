@@ -9,6 +9,9 @@ Alterações executadas após a apresentação do trabalho:
   que as "list groups" mostram os resultados de cada categoria. Cada item da "list group" é um link para o registo correspondente.
   A navbar inclui um botão para a pesquisa global, que redireciona para a página search.html.
 
+- Pesquisa a partir de 3 letras
+  Devido a reduzir a carga da API e do browser (na renderização do DOM), a pesquisa só é feita a partir de 3 letras.
+
 - Histórico de pesquisas
   Em cada campo de pesquisa, é apresentado um histórico de pesquisas (sob a forma de uma list group).
   O histórico é guardado no local storage do browser, e é carregado em cada página correspondente.
