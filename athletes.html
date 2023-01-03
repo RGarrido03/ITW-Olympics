@@ -70,7 +70,7 @@
       <div class="col-sm-12 col-md-4 col-lg-3 ps-md-2">
         <div class="row g-2">
           <div class="col-auto">
-            <button class="btn bg-body-tertiary border btn-hover" id="filterBtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"><i class="fa-solid fa-filter"></i></button>
+            <button class="btn bg-body-tertiary border btn-hover" id="filterBtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"><i class="fa-solid fa-filter text-body"></i></button>
           </div>
           <div class="col">
             <div class="input-group">
@@ -108,10 +108,11 @@
           <div class="card-body">
             <h5 class="card-title fw-semibold text-body-emphasis" data-bind="text:Name"></h5>
             <p class="card-text">
-              <span data-bind="text: Sex"></span> | Best position: <span data-bind="text: BestPosition"></span>
-              <span data-bind="visible: BestPosition === 1">🥇️</span>
-              <span data-bind="visible: BestPosition === 2">🥈️</span>
-              <span data-bind="visible: BestPosition === 3">🥉️</span>
+              <span data-bind="text: Sex"></span>&nbsp;
+              <span data-bind="visible: BestPosition === 1">| Best position: 1 🥇️</span>
+              <span data-bind="visible: BestPosition === 2">| Best position: 2 🥈️</span>
+              <span data-bind="visible: BestPosition === 3">| Best position: 3 🥉️</span>
+              <span data-bind="visible: BestPosition === 4">| No medals awarded</span>
             </p>
           </div>
         </div>
