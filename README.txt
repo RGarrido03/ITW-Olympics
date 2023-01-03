@@ -2,6 +2,8 @@ P4G4
 Bruno Meixedo ()
 Rúben Garrido (107927)
 
+Nota: esquecemo-nos de referir, na apresentação, que usámos uma API externa para emojis nos gamesDetails.
+
 Alterações executadas após a apresentação do trabalho:
 - Pesquisa global (search.html)
   Permite pesquisar por qualquer palavra-chave, em qualquer campo, de qualquer registo.
