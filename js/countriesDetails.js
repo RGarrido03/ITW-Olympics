@@ -16,6 +16,11 @@ var vm = function () {
     self.Organizer = ko.observableArray([]);
     self.Events = ko.observableArray([]);
     self.Url = ko.observable('');
+    self.Medals = ko.observableArray([]);
+    self.MedalsGames = ko.observableArray([]);
+    self.MedalsGold = ko.observableArray([]);
+    self.MedalsSilver = ko.observableArray([]);
+    self.MedalsBronze = ko.observableArray([]);
 
     //--- Page Events
     self.activate = async function (id) {
@@ -32,8 +37,56 @@ var vm = function () {
             self.Organizer(data.Organizer);
             self.Events(data.Events);
             self.addMarkers();
+            ajaxHelper('http://192.168.160.58/Olympics/api/Statistics/Medals_Games?id=' + id, 'GET').done(function (data) {
+                console.log(data);
+                self.Medals(data);
+                self.Medals().forEach(function (record) {
+                    self.MedalsGames.push(record.GameName.slice(0, 4));
+                    self.MedalsGold.push(record.Medals[0].Counter);
+                    self.MedalsSilver.push(record.Medals[1].Counter);
+                    self.MedalsBronze.push(record.Medals[2].Counter);
+                });
+                self.createGraph();
+            });
         });
     };
+
+    self.createGraph = function () {
+        const ctx = document.getElementById('MedalsPerCountryChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: self.MedalsGames(),
+                datasets: [{
+                    label: 'Gold',
+                    data: self.MedalsGold(),
+                    borderWidth: 1
+                },
+                {
+                    label: 'Silver',
+                    data: self.MedalsSilver(),
+                    borderWidth: 1
+                },
+                {
+                    label: 'Bronze',
+                    data: self.MedalsBronze(),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stacked: true,
+                    },
+                    x: {
+                        stacked: true
+                    }
+                }
+            }
+        });
+    }
 
     self.scrollToTop = function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
