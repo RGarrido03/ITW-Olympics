@@ -30,7 +30,7 @@
     border-radius: 50%;
     box-shadow: none;
     border: 0;
-    transition-property: border-radius, border-color, background-color, box-shadow;
+    transition-property: border-radius, border-color, background-color, box-shadow, color;
     transition-duration: 0.2s;
 }
 
