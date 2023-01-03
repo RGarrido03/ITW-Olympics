@@ -20,4 +20,5 @@ Alterações executadas após a apresentação do trabalho:
 
 - Favoritos
   Os favoritos são guardados no local storage do browser, e são carregados em cada página correspondente.
-  A navbar inclui um link para a página favorites.html, que apresenta e agrupa os favoritos por categoria (ex: Atletas, Competições, etc.).
+  A navbar inclui um dropdown para a página favorites.html?id={athletes | games | countries | modalities | competitions}, que apresenta e
+  agrupa os favoritos por categoria (ex: Atletas, Competições, etc.).
