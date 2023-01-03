@@ -1,5 +1,5 @@
 P4G4
-Bruno Meixedo ()
+Bruno Meixedo (113372)
 Rúben Garrido (107927)
 
 Nota: esquecemo-nos de referir, na apresentação, que usámos uma API externa para emojis nos gamesDetails.
