@@ -34,12 +34,13 @@ h1 {
 }
 
 
-.fadein img{
-    opacity:0.5;
-    transition: 1s ease;
-    }
-    
-    .fadein img:hover{
-    opacity:1;
-    transition: 1s ease;
-    }
+    .shrink img {
+        transition: 1s ease;
+        }
+        
+        .shrink img:hover{
+        -webkit-transform: scale(0.8);
+        -ms-transform: scale(0.8);
+        transform: scale(0.8);
+        transition: 1s ease;
+        }
