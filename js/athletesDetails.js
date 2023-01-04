@@ -8,7 +8,7 @@ var vm = function () {
     self.error = ko.observable('');
     self.passingMessage = ko.observable('');
     //--- Data Record
-    self.Id = ko.observable('');
+    self.Id = ko.observable(0);
     self.Name = ko.observable('');
     self.Sex = ko.observable('');
     self.Height = ko.observable('');
@@ -58,8 +58,43 @@ var vm = function () {
     self.Modalities = ko.observableArray([]);
     self.Competitions = ko.observableArray([]);
     self.Medals = ko.observableArray([]);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesArray = ko.observableArray([]);
 
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesArray(self.Favorites.athletes);
+        if (self.FavoritesArray().includes(id)) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+        }
+    };
+
+    self.setFavorites = function (id) {
+        var idx = self.FavoritesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesArray.push(String(id))
+        } else {
+            $("#fav" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesArray.splice(idx, 1);
+        };
+        console.log(self.FavoritesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
     self.activate = async function (id) {
         console.log('Athelete ID: ' + id);
         var composedUri = self.baseUri() + id;
@@ -77,6 +112,7 @@ var vm = function () {
             self.DiedPlace(data.DiedPlace);
             self.OlympediaLink(data.OlympediaLink);
             self.Photo(data.Photo);
+            self.getFavorites();
         });
     };
 
