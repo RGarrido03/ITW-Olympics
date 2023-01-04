@@ -40,7 +40,7 @@ var vm = function () {
         }
         console.log("Current favorites: ", self.Favorites);
 
-        self.FavoritesArray(self.Favorites.competitions);
+        self.FavoritesArray(self.Favorites.games);
         self.FavoritesArray().forEach(function (id) {
             $("#fav" + id).addClass("text-danger").removeClass("text-body");
         });
