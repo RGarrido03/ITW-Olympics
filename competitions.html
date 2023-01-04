@@ -74,7 +74,7 @@
               <span class="visually-hidden">Loading...</span>
             </div>
           </span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
         </div>
       </div>
       <!-- Order by -->
@@ -82,8 +82,8 @@
         <div class="input-group">
           <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-a-z"></i></span>
           <select class="form-select" aria-label="Ordenar itens" aria-describedby="sortLabel" id="orderSelect" data-bind="event: { change: function () { fetchData(true) } }">
-            <option value="0" selected>Nome: A-Z</option>
-            <option value="1">Nome: Z-A</option>
+            <option value="0" selected>Name: A-Z</option>
+            <option value="1">Name: Z-A</option>
           </select>
         </div>
       </div>
