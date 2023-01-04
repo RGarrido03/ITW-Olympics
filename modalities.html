@@ -103,7 +103,7 @@
               </div>
               <div class="col-auto">
                 <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="Ver detalhes" data-bind="attr: { href:'./modalitiesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
-                <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                <a class="btn py-1 px-2 bg-body-secondary border text-body-secondary" aria-label="Definir como favorito" data-bind="attr: {id: 'fav' + Id}, click: function (data, event) {$parent.setFavorites(Id)}"><i class="fa-solid fa-heart"></i></a>
               </div>
             </div>
           </div>
