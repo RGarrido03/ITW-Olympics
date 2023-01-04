@@ -77,7 +77,10 @@
       </div>
       <div class="col-xs-12 col-lg-8">
         <p class="mb-0">Modality ID: <span data-bind="text: Id"></span></p>
-        <h2 class="mb-0 fw-bold" data-bind="text: Name"></h2>
+        <h2 class="mb-3 fw-bold" data-bind="text: Name"></h2>
+        <button class="btn btn-hover bg-body-secondary border rounded center text-body" data-bind="click: function (data, event) {setModalitiesFavorites(Id())}">
+          <i class="fa-solid fa-heart text-body" data-bind="attr: {id: 'fav_modalities_' + Id()}"></i>&nbsp;&nbsp;Favorite
+        </button>
       </div>
     </div>
 
@@ -96,7 +99,7 @@
               </div>
               <div class="col-auto">
                 <a class="btn py-1 px-2 bg-body-secondary border btn-hover me-1" aria-label="Ver detalhes" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
-                <a class="btn py-1 px-2 bg-body-secondary border btn-hover" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                <a class="btn py-1 px-2 bg-body-secondary border btn-hover" data-bind="click: function (data, event) {$parent.setCompetitionsFavorites(Id)}" aria-label="Definir como favorito"><i class="fa-solid fa-heart text-body-secondary" data-bind="attr: {id: 'fav_competitions_' + Id}"></i></a>
               </div>
             </div>
           </div>
@@ -174,7 +177,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous"></script>
   <script src="js/modalitiesDetails.js"></script>
-  <script src="js/emoji.js"></script>
 </body>
 
 </html>

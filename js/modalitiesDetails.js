@@ -14,8 +14,62 @@ var vm = function () {
     self.Modality = ko.observable('');
     self.Photo = ko.observable('');
     self.Modalities = ko.observableArray([]);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesModalitiesArray = ko.observableArray([]);
+    self.FavoritesCompetitionsArray = ko.observableArray([]);
 
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesModalitiesArray(self.Favorites.modalities);
+        self.FavoritesCompetitionsArray(self.Favorites.competitions);
+
+        if (self.FavoritesModalitiesArray().includes(id)) {
+            $("#fav_modalities_" + id).addClass("text-danger").removeClass("text-body");
+        }
+        self.FavoritesCompetitionsArray().forEach(function (item) {
+            $("#fav_competitions_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
+    };
+
+    self.setModalitiesFavorites = function (id) {
+        var idx = self.FavoritesModalitiesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_modalities_" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesModalitiesArray.push(String(id))
+        } else {
+            $("#fav_modalities_" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesModalitiesArray.splice(idx, 1);
+        };
+        console.log("Modalities favorites: ", self.FavoritesModalitiesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setCompetitionsFavorites = function (id) {
+        var idx = self.FavoritesCompetitionsArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_competitions_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesCompetitionsArray.push(String(id))
+        } else {
+            $("#fav_competitions_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesCompetitionsArray.splice(idx, 1);
+        };
+        console.log("Competitions favorites: ", self.FavoritesCompetitionsArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
     self.activate = async function (id) {
         console.log("Modality ID: " + id);
         var composedUri = self.baseUri() + id;
@@ -26,6 +80,7 @@ var vm = function () {
             self.Name(data.Name);
             self.Modalities(data.Modalities);
             self.Photo(data.Photo);
+            self.getFavorites();
         });
     };
 
