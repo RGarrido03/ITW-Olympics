@@ -75,7 +75,10 @@
     <div class="row g-3 d-flex align-items-center mb-sm-0 mb-lg-3">
       <div class="col">
         <p class="mb-0">Game ID: <span data-bind="text: Id"></span></p>
-        <h2 class="mb-lg-3 fw-bold" data-bind="text: Name"></h2>
+        <h2 class="mb-3 fw-bold" data-bind="text: Name"></h2>
+        <button class="btn btn-hover bg-body-secondary border rounded mb-lg-3 center text-body" data-bind="click: function (data, event) {setGamesFavorites(Id())}">
+          <i class="fa-solid fa-heart text-body" data-bind="attr: {id: 'fav_games_' + Id()}"></i>&nbsp;&nbsp;Favorite
+        </button>
       </div>
       <div class="col-12 col-lg-4">
         <img class="card-hover rounded border bg-body-tertiary w-100" style="height: 20rem; object-fit: cover;" data-bind="attr:{src: Photo}" />
@@ -186,7 +189,6 @@
               </h2>
               <div id="accordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#countryAccordion">
                 <div class="accordion-body" data-bind="foreach: AthletesPerCountryArray">
-
                   <div class="card-hover rounded bg-body-tertiary border w-100 h-100 d-flex align-items-center mb-3">
                     <div class="card-body align-items-center h-auto">
                       <div class="row align-items-center">
@@ -205,12 +207,11 @@
                         </div>
                         <div class="col-auto">
                           <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="See details" data-bind="attr: { href:'./athletesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
-                          <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                          <a class="btn py-1 px-2 bg-body-secondary border" data-bind="click: function (data, event) {$parent.setAthletesFavorites(Id)}" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary" data-bind="attr: {id: 'fav_athletes_country_' + Id}"></i></a>
                         </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -254,7 +255,7 @@
                     </div>
                     <div class="col-auto">
                       <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="See details" data-bind="attr: { href:'./athletesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
-                      <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                      <a class="btn py-1 px-2 bg-body-secondary border" data-bind="click: function (data, event) {$parent.setAthletesFavorites(Id)}" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary" data-bind="attr: {id: 'fav_athletes_' + Id}"></i></a>
                     </div>
                   </div>
                 </div>
@@ -283,7 +284,7 @@
                     </div>
                     <div class="col-auto">
                       <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="See details" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
-                      <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                      <a class="btn py-1 px-2 bg-body-secondary border" data-bind="click: function (data, event) {$parent.setCompetitionsFavorites(Id)}" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary" data-bind="attr: {id: 'fav_competitions_' + Id}"></i></a>
                     </div>
                   </div>
                 </div>
@@ -336,7 +337,7 @@
                     </div>
                     <div class="col-auto">
                       <a class="btn py-1 px-2 bg-body-secondary border me-1" aria-label="See details" data-bind="attr: { href:'./modalitiesDetails.html?id=' + Id }"><i class="fa-solid fa-eye text-body-emphasis"></i></a>
-                      <a class="btn py-1 px-2 bg-body-secondary border" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary"></i></a>
+                      <a class="btn py-1 px-2 bg-body-secondary border" data-bind="click: function (data, event) {$parent.setModalitiesFavorites(Id)}" aria-label="Set as favorite"><i class="fa-solid fa-heart text-body-secondary" data-bind="attr: {id: 'fav_modalities_' + Id}"></i></a>
                     </div>
                   </div>
                 </div>

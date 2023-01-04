@@ -45,7 +45,101 @@ var vm = function () {
 
     self.AthletesPerCountryArray = ko.observableArray([]);
 
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    };
+    self.FavoritesGamesArray = ko.observableArray([]);
+    self.FavoritesAthletesArray = ko.observableArray([]);
+    self.FavoritesCompetitionsArray = ko.observableArray([]);
+    self.FavoritesModalitiesArray = ko.observableArray([]);
+
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesGamesArray(self.Favorites.games);
+        self.FavoritesModalitiesArray(self.Favorites.modalities);
+        self.FavoritesAthletesArray(self.Favorites.athletes);
+        self.FavoritesCompetitionsArray(self.Favorites.competitions);
+
+        if (self.FavoritesGamesArray().includes(id)) {
+            $("#fav_games_" + id).addClass("text-danger").removeClass("text-body");
+        }
+        self.FavoritesModalitiesArray().forEach(function (item) {
+            $("#fav_modalities_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
+        self.FavoritesCompetitionsArray().forEach(function (item) {
+            $("#fav_competitions_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
+        self.FavoritesAthletesArray().forEach(function (item) {
+            $("#fav_athletes_" + item).addClass("text-danger").removeClass("text-body-secondary");
+            $("#fav_athletes_country_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
+    };
+
+    self.setGamesFavorites = function (id) {
+        var idx = self.FavoritesGamesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_games_" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesGamesArray.push(String(id))
+        } else {
+            $("#fav_games_" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesGamesArray.splice(idx, 1);
+        };
+        console.log("Games favorites: ", self.FavoritesGamesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setModalitiesFavorites = function (id) {
+        var idx = self.FavoritesModalitiesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_modalities_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesModalitiesArray.push(String(id))
+        } else {
+            $("#fav_modalities_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesModalitiesArray.splice(idx, 1);
+        };
+        console.log("Modalities favorites: ", self.FavoritesModalitiesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setAthletesFavorites = function (id) {
+        var idx = self.FavoritesAthletesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_athletes_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            $("#fav_athletes_country_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesAthletesArray.push(String(id))
+        } else {
+            $("#fav_athletes_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            $("#fav_athletes_country_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesAthletesArray.splice(idx, 1);
+        };
+        console.log("Athletes favorites: ", self.FavoritesAthletesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setCompetitionsFavorites = function (id) {
+        var idx = self.FavoritesCompetitionsArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_competitions_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesCompetitionsArray.push(String(id))
+        } else {
+            $("#fav_competitions_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesCompetitionsArray.splice(idx, 1);
+        };
+        console.log("Competitions favorites: ", self.FavoritesCompetitionsArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
     self.activate = async function (id) {
         console.log("Game ID: " + id);
         var composedUri = self.baseUri() + id;
@@ -63,9 +157,10 @@ var vm = function () {
             self.Lon(data.Lon);
             self.Lat(data.Lat);
             self.addMarkers();
+            self.getFavorites();
         });
         await ajaxHelper("http://192.168.160.58/Olympics/api/Statistics/Medals_Country?id=" + id, 'GET').done(function (data) {
-            console.log(data)
+            console.log(data);
             self.Medals_country(data);
             $("#goldCounter").text('Counter: ' + self.Medals_country()[0].Medals[0].Counter);
             $("#silverCounter").text('Counter: ' + self.Medals_country()[0].Medals[1].Counter);
@@ -104,7 +199,9 @@ var vm = function () {
             self.Competitions(data.Competitions);
             self.CompetitionsMin(data.Competitions.slice(0, 20));
             self.Medals(data.Medals);
-        }).then(hideLoading());
+            self.getFavorites();
+            hideLoading();
+        });
     };
 
     self.createGraph = function () {
@@ -138,6 +235,7 @@ var vm = function () {
             ajaxHelper("http://192.168.160.58/Olympics/api/Statistics/Athlete_Country?id=" + self.Id() + "&IOC=" + countryIOC, 'GET').done(function (data) {
                 console.log(data);
                 self.AthletesPerCountryArray(data);
+                self.getFavorites();
             });
         });
     };
@@ -161,6 +259,7 @@ var vm = function () {
             loading = true;
             self.AthletesPage(self.AthletesPage() + 1);
             self.AthletesMin(self.AthletesMin().concat(self.Athletes().slice((self.AthletesPage() - 1) * 20, self.AthletesPage() * 20)));
+            self.getFavorites();
             loading = false;
         }
     }
@@ -171,6 +270,7 @@ var vm = function () {
             loading = true;
             self.CompetitionsPage(self.CompetitionsPage() + 1);
             self.CompetitionsMin(self.CompetitionsMin().concat(self.Competitions().slice((self.CompetitionsPage() - 1) * 20, self.CompetitionsPage() * 20)));
+            self.getFavorites();
             loading = false;
         }
     }
