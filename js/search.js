@@ -12,6 +12,49 @@ var vm = function () {
     self.GamesRecords = ko.observableArray([]);
     self.ModalitiesRecords = ko.observableArray([]);
     self.searchLoading = ko.observable(false);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesAthletesArray = ko.observableArray([]);
+    self.FavoritesCompetitionsArray = ko.observableArray([]);
+    self.FavoritesCountriesArray = ko.observableArray([]);
+    self.FavoritesGamesArray = ko.observableArray([]);
+    self.FavoritesModalitiesArray = ko.observableArray([]);
+
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesAthletesArray(self.Favorites.athletes);
+        self.FavoritesCompetitionsArray(self.Favorites.competitions);
+        self.FavoritesCountriesArray(self.Favorites.countries);
+        self.FavoritesGamesArray(self.Favorites.games);
+        self.FavoritesModalitiesArray(self.Favorites.modalities);
+
+        self.FavoritesAthletesArray().forEach(function (item) {
+            $("#fav_athletes_" + item).show();
+        });
+        self.FavoritesCompetitionsArray().forEach(function (item) {
+            $("#fav_competitions_" + item).show();
+        });
+        self.FavoritesCountriesArray().forEach(function (item) {
+            $("#fav_countries_" + item).show();
+        });
+        self.FavoritesGamesArray().forEach(function (item) {
+            $("#fav_games_" + item).show();
+        });
+        self.FavoritesModalitiesArray().forEach(function (item) {
+            $("#fav_modalities_" + item).show();
+        });
+    };
 
     var typingTimeout;
     self.searchChanged = function () {
@@ -44,8 +87,8 @@ var vm = function () {
                                 break;
                         }
                     });
+                    self.getFavorites();
                     self.searchLoading(false);
-                    console.log(self.AthletesRecords());
                 });
             }, 1000);
         }
