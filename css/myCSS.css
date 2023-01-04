@@ -22,3 +22,7 @@ a {
     justify-content: center;
     align-items: center;
 }
+
+.fa-solid {
+    transition: all 0.2s;
+}
