@@ -21,8 +21,83 @@ var vm = function () {
     self.MedalsGold = ko.observableArray([]);
     self.MedalsSilver = ko.observableArray([]);
     self.MedalsBronze = ko.observableArray([]);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesCountriesArray = ko.observableArray([]);
+    self.FavoritesGamesArray = ko.observableArray([]);
+    self.FavoritesCompetitionsArray = ko.observableArray([]);
 
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesCountriesArray(self.Favorites.countries);
+        self.FavoritesGamesArray(self.Favorites.games);
+        self.FavoritesCompetitionsArray(self.Favorites.competitions);
+
+        if (self.FavoritesCountriesArray().includes(id)) {
+            $("#fav_countries_" + id).addClass("text-danger").removeClass("text-body");
+        }
+        self.FavoritesCompetitionsArray().forEach(function (item) {
+            $("#fav_competitions_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
+        self.FavoritesGamesArray().forEach(function (item) {
+            $("#fav_games_" + item).addClass("text-danger").removeClass("text-body-secondary");
+            $("#fav_games_org_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
+    };
+
+    self.setCountriesFavorites = function (id) {
+        var idx = self.FavoritesCountriesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_countries_" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesCountriesArray.push(String(id))
+        } else {
+            $("#fav_countries_" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesCountriesArray.splice(idx, 1);
+        };
+        console.log("Countries favorites: ", self.FavoritesCountriesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setGamesFavorites = function (id) {
+        var idx = self.FavoritesGamesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_games_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            $("#fav_games_org_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesGamesArray.push(String(id))
+        } else {
+            $("#fav_games_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            $("#fav_games_org_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesGamesArray.splice(idx, 1);
+        };
+        console.log("Games favorites: ", self.FavoritesGamesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setCompetitionsFavorites = function (id) {
+        var idx = self.FavoritesCompetitionsArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_competitions_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesCompetitionsArray.push(String(id))
+        } else {
+            $("#fav_competitions_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesCompetitionsArray.splice(idx, 1);
+        };
+        console.log("Competitions favorites: ", self.FavoritesCompetitionsArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
     self.activate = async function (id) {
         console.log('Country ID: ' + id);
         var composedUri = self.baseUri() + id;
@@ -37,6 +112,7 @@ var vm = function () {
             self.Organizer(data.Organizer);
             self.Events(data.Events);
             self.addMarkers();
+            self.getFavorites();
             ajaxHelper('http://192.168.160.58/Olympics/api/Statistics/Medals_Games?id=' + id, 'GET').done(function (data) {
                 console.log(data);
                 self.Medals(data);
