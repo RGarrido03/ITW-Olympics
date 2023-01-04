@@ -101,7 +101,7 @@
             </div>
             <div class="center card-action-buttons rounded-top">
               <a class="btn me-2 bg-body card-action-buttons-each center" aria-label="See details" data-bind="attr: { href:'./competitionsDetails.html?id=' + Id }"><i class="fa-solid fa-eye fa-lg text-body"></i></a>
-              <a class="btn ms-2 bg-body card-action-buttons-each center" aria-label="Set as favorite"><i class="fa-solid fa-heart fa-lg text-body"></i></a>
+              <a class="btn ms-2 bg-body card-action-buttons-each center text-body" aria-label="Set as favorite"  data-bind="attr: {id: 'fav' + Id}, click: function (data, event) {$parent.setFavorites(Id)}"><i class="fa-solid fa-heart fa-lg"></i></a>
               <p class="m-0 text-body-secondary card-image-not-available" data-bind="hidden: Photo">Photo not available</p>
             </div>
           </div>

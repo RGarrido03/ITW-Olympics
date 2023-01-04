@@ -18,8 +18,45 @@ var vm = function () {
     self.count = ko.observable(1);
     self.hasMore = ko.observable(true);
     self.searchLoading = ko.observable(false);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesArray = ko.observableArray([]);
 
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesArray(self.Favorites.competitions);
+        self.FavoritesArray().forEach(function (id) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+        });
+    };
+
+    self.setFavorites = function (id) {
+        console.log(id)
+        var idx = self.FavoritesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesArray.push(String(id))
+        } else {
+            $("#fav" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesArray.splice(idx, 1);
+        };
+        console.log(self.FavoritesArray());
+        console.log(self.Favorites);
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
     self.fetchData = async function (isNew) {
         if (isNew) {
             self.order($("#orderSelect option").filter(':selected').val());
@@ -81,8 +118,8 @@ var vm = function () {
             self.pagesize(data.PageSize);
             self.totalPages(data.TotalPages);
             self.totalRecords(data.TotalRecords);
+            self.getFavorites();
             hideLoading();
-            //self.SetFavourites();
             loading = false;
         });
 
@@ -110,6 +147,7 @@ var vm = function () {
                         self.records(data.reverse());
                     }
                     self.searchLoading(false);
+                    self.getFavorites();
                 });
             }, 1000);
         }
