@@ -68,6 +68,11 @@ var vm = function () {
                 self.searchLoading(true);
                 ajaxHelper(self.baseUri(), 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
+                    self.AthletesRecords([]);
+                    self.CompetitionsRecords([]);
+                    self.CountriesRecords([]);
+                    self.GamesRecords([]);
+                    self.ModalitiesRecords([]);
                     data.forEach(function (item) {
                         switch (item.TableName) {
                             case "Athletes":
