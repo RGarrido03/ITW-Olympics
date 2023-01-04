@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Favorites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/myCSS.css" />
+  <link rel="stylesheet" href="css/scrollToTop.css" />
+  <link rel="stylesheet" href="css/socialMedia.css" />
+  <script src="js/darkMode.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html" tabindex="Olympics"><img src="img/Olympic_rings.svg" height="24" /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="athletes.html"><i class="fa-solid fa-user text-warning"></i> Athletes</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="competitions.html"><i class="fa-solid fa-trophy "></i> Competitions</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="countries.html"><i class="fa-solid fa-flag text-danger"></i> Countries</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="games.html"><i class="fa-solid fa-map-marker text-success"></i> Games</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="modalities.html"><i class="fa-solid fa-soccer-ball text-primary"></i> Modalities</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="statistics.html"><i class="fa-solid fa-chart-simple"></i> Statistics</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="store.html" target="_blank"><i class="fa-solid fa-store"></i> Store</a></li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="search.html"><i class="fa-solid fa-search"></i> Search</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-heart text-danger"></i> Favorites
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="favorites.html?id=athletes"><i class="fa-solid fa-user"></i> Athletes</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=competitions"><i class="fa-solid fa-trophy"></i> Competitions</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=countries"><i class="fa-solid fa-flag"></i> Countries</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=games"><i class="fa-solid fa-map-marker"></i> Games</a></li>
+              <li><a class="dropdown-item" href="favorites.html?id=modalities"><i class="fa-solid fa-soccer-ball"></i> Modalities</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Scroll to top button -->
+  <a class="btn btn-dark btn-lg" id="scrollToTop" data-bind="click: scrollToTop">
+    <i class="fa-solid fa-arrow-up"></i><span id="scrollToTopText">&nbsp;&nbsp;Scroll to top</span>
+  </a>
+
+  <div class="container">
+    <h2 class="mx-0 pb-3 pt-5 text-center">Check your favorites</h2>
+  </div>
+</body>
+</html>
