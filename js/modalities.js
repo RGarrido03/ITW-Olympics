@@ -39,7 +39,7 @@ var vm = function () {
 
         self.FavoritesArray(self.Favorites.modalities);
         self.FavoritesArray().forEach(function (id) {
-            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+            $("#fav" + id).addClass("text-danger").removeClass("text-body-secondary");
         });
     };
 
