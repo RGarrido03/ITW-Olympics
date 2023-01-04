@@ -23,8 +23,43 @@ var vm = function () {
     }),
     self.Photo = ko.observable('');
     self.Games = ko.observableArray([]);
+    self.Favorites = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": []
+    }
+    self.FavoritesArray = ko.observableArray([]);
 
     //--- Page Events
+    self.getFavorites = function () {
+        if (localStorage.getItem("Favorites")) {
+            self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
+        } else {
+            localStorage.setItem("Favorites", JSON.stringify(self.Favorites));
+        }
+        console.log("Current favorites: ", self.Favorites);
+
+        self.FavoritesArray(self.Favorites.competitions);
+        if (self.FavoritesArray().includes(id)) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+        }
+    };
+
+    self.setFavorites = function (id) {
+        var idx = self.FavoritesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesArray.push(String(id))
+        } else {
+            $("#fav" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesArray.splice(idx, 1);
+        };
+        console.log(self.FavoritesArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
     self.activate = async function (id) {
         console.log("Competition ID: " + id);
         var composedUri = self.baseUri() + id;
@@ -38,6 +73,7 @@ var vm = function () {
             self.ModalityLink(data.ModalityId);
             self.Photo(data.Photo);
             self.Games(data.Participant);
+            self.getFavorites();
         });
     };
 
