@@ -65,7 +65,7 @@ var vm = function () {
         "games": [],
         "modalities": []
     }
-    self.FavoritesArray = ko.observableArray([]);
+    self.FavoritesAthletesArray = ko.observableArray([]);
     self.FavoritesGamesArray = ko.observableArray([]);
     self.FavoritesModalitiesArray = ko.observableArray([]);
     self.FavoritesCompetitionsArray = ko.observableArray([]);
@@ -79,13 +79,13 @@ var vm = function () {
         }
         console.log("Current favorites: ", self.Favorites);
 
-        self.FavoritesArray(self.Favorites.athletes);
+        self.FavoritesAthletesArray(self.Favorites.athletes);
         self.FavoritesGamesArray(self.Favorites.games);
         self.FavoritesModalitiesArray(self.Favorites.modalities);
         self.FavoritesCompetitionsArray(self.Favorites.competitions);
 
-        if (self.FavoritesArray().includes(id)) {
-            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+        if (self.FavoritesAthletesArray().includes(id)) {
+            $("#fav_athletes_" + id).addClass("text-danger").removeClass("text-body");
         }
         self.FavoritesCompetitionsArray().forEach(function (item) {
             $("#fav_competitions_" + item).addClass("text-danger").removeClass("text-body-secondary");
@@ -98,16 +98,16 @@ var vm = function () {
         });
     };
 
-    self.setFavorites = function (id) {
-        var idx = self.FavoritesArray.indexOf(id.toString());
+    self.setAthletesFavorites = function (id) {
+        var idx = self.FavoritesAthletesArray.indexOf(id.toString());
         if (idx == -1) {
-            $("#fav" + id).addClass("text-danger").removeClass("text-body");
-            self.FavoritesArray.push(String(id))
+            $("#fav_athletes_" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesAthletesArray.push(String(id))
         } else {
-            $("#fav" + id).removeClass("text-danger").addClass("text-body");
-            self.FavoritesArray.splice(idx, 1);
+            $("#fav_athletes_" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesAthletesArray.splice(idx, 1);
         };
-        console.log(self.FavoritesArray());
+        console.log("Athletes favorites: ", self.FavoritesAthletesArray());
         localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
     };
 

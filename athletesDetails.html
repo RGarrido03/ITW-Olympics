@@ -86,8 +86,8 @@
         <p class="mb-0">Athlete ID: <span data-bind="text: Id"></span></p>
         <h2 class="mb-3 fw-bold" data-bind="text: Name"></h2>
         <a class="btn btn-hover bg-body-secondary border rounded center text-decoration-none mb-3 text-body" style="width: fit-content" data-bind="attr: {href: OlympediaLink}"><i class="fa-solid text-body fa-link"></i>&nbsp;&nbsp;Check info at Olympedia.org</a>
-        <button class="btn btn-hover bg-body-secondary border rounded center text-body" data-bind="click: function (data, event) {setFavorites(Id())}">
-          <i class="fa-solid fa-heart text-body" data-bind="attr: {id: 'fav' + Id()}"></i>&nbsp;&nbsp;Favorite
+        <button class="btn btn-hover bg-body-secondary border rounded center text-body" data-bind="click: function (data, event) {setAthletesFavorites(Id())}">
+          <i class="fa-solid fa-heart text-body" data-bind="attr: {id: 'fav_athletes_' + Id()}"></i>&nbsp;&nbsp;Favorite
         </button>
       </div>
     </div>
