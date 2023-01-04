@@ -30,7 +30,8 @@ var vm = function () {
         "games": [],
         "modalities": []
     }
-    self.FavoritesArray = ko.observableArray([]);
+    self.FavoritesCompetitionsArray = ko.observableArray([]);
+    self.FavoritesGamesArray = ko.observableArray([]);
 
     //--- Page Events
     self.getFavorites = function () {
@@ -41,22 +42,40 @@ var vm = function () {
         }
         console.log("Current favorites: ", self.Favorites);
 
-        self.FavoritesArray(self.Favorites.competitions);
-        if (self.FavoritesArray().includes(id)) {
-            $("#fav" + id).addClass("text-danger").removeClass("text-body");
+        self.FavoritesCompetitionsArray(self.Favorites.competitions);
+        self.FavoritesGamesArray(self.Favorites.games);
+
+        if (self.FavoritesCompetitionsArray().includes(id)) {
+            $("#fav_competitions_" + id).addClass("text-danger").removeClass("text-body");
         }
+        self.FavoritesGamesArray().forEach(function (item) {
+            $("#fav_games_" + item).addClass("text-danger").removeClass("text-body-secondary");
+        });
     };
 
-    self.setFavorites = function (id) {
-        var idx = self.FavoritesArray.indexOf(id.toString());
+    self.setCompetitionsFavorites = function (id) {
+        var idx = self.FavoritesCompetitionsArray.indexOf(id.toString());
         if (idx == -1) {
-            $("#fav" + id).addClass("text-danger").removeClass("text-body");
-            self.FavoritesArray.push(String(id))
+            $("#fav_competitions_" + id).addClass("text-danger").removeClass("text-body");
+            self.FavoritesCompetitionsArray.push(String(id))
         } else {
-            $("#fav" + id).removeClass("text-danger").addClass("text-body");
-            self.FavoritesArray.splice(idx, 1);
+            $("#fav_competitions_" + id).removeClass("text-danger").addClass("text-body");
+            self.FavoritesCompetitionsArray.splice(idx, 1);
         };
-        console.log(self.FavoritesArray());
+        console.log("Competitions favorites: ", self.FavoritesCompetitionsArray());
+        localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
+    };
+
+    self.setGamesFavorites = function (id) {
+        var idx = self.FavoritesGamesArray.indexOf(id.toString());
+        if (idx == -1) {
+            $("#fav_games_" + id).addClass("text-danger").removeClass("text-body-secondary");
+            self.FavoritesGamesArray.push(String(id))
+        } else {
+            $("#fav_games_" + id).removeClass("text-danger").addClass("text-body-secondary");
+            self.FavoritesGamesArray.splice(idx, 1);
+        };
+        console.log("Games favorites: ", self.FavoritesGamesArray());
         localStorage.setItem('Favorites', JSON.stringify(self.Favorites))
     };
 
