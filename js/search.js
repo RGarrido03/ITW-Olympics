@@ -108,14 +108,16 @@ var vm = function () {
             var idx = array.indexOf(itemName);
             array.splice(idx, 1);
         }
-        
+
         localStorage.setItem("History", JSON.stringify(self.History));
     }
 
     var typingTimeout;
-    self.searchChanged = function (event_b) {
-        var searchQuery = $(event_b.target).val();
-        $("#searchInput").val(searchQuery);
+    self.searchChanged = function (event) {
+        var searchQuery = $(event.target).val();
+        if ($("#searchInput").val() != searchQuery) {
+            $("#searchInput").val(searchQuery);
+        }
 
         if (searchQuery.length >= 3) {
             if (typingTimeout) {
