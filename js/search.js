@@ -24,6 +24,23 @@ var vm = function () {
     self.FavoritesCountriesArray = ko.observableArray([]);
     self.FavoritesGamesArray = ko.observableArray([]);
     self.FavoritesModalitiesArray = ko.observableArray([]);
+    self.History = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": [],
+        "all": []
+    }
+    self.HistoryAthletesArray = ko.observableArray([]);
+    self.HistoryCompetitionsArray = ko.observableArray([]);
+    self.HistoryCountriesArray = ko.observableArray([]);
+    self.HistoryGamesArray = ko.observableArray([]);
+    self.HistoryModalitiesArray = ko.observableArray([]);
+    self.HistoryAllArray = ko.observableArray([]);
+    self.HistoryArray = ko.observableArray([]);
+    self.showHistory = ko.observable(false);
+    var allArrays = [self.HistoryAthletesArray, self.HistoryCompetitionsArray, self.HistoryCountriesArray, self.HistoryGamesArray, self.HistoryModalitiesArray, self.HistoryAllArray]
 
     self.getFavorites = function () {
         if (localStorage.getItem("Favorites")) {
@@ -56,9 +73,47 @@ var vm = function () {
         });
     };
 
+    self.getHistory = function () {
+        if (localStorage.getItem("History")) {
+            self.History = JSON.parse(localStorage.getItem("History"));
+        } else {
+            localStorage.setItem("History", JSON.stringify(self.History));
+        }
+        console.log("Current history: ", self.History);
+
+        self.HistoryAthletesArray(self.History.athletes);
+        self.HistoryCompetitionsArray(self.History.competitions);
+        self.HistoryCountriesArray(self.History.countries);
+        self.HistoryGamesArray(self.History.games);
+        self.HistoryModalitiesArray(self.History.modalities);
+        self.HistoryAllArray(self.History.all);
+        self.HistoryArray([]);
+
+        for (array of allArrays) {
+            console.log(array())
+            array().forEach(function (item) {
+                self.HistoryArray.push(item);
+            });
+        }
+
+        if (self.HistoryArray().length > 0) {
+            self.showHistory(true);
+        } else {
+            self.showHistory(false);
+        }
+    };
+
+    self.clearEntry = function (itemName) {
+        for (array of allArrays) {
+            var idx = array.indexOf(itemName.toString());
+            array.splice(idx, 1);
+        }
+    }
+
     var typingTimeout;
-    self.searchChanged = function () {
-        var searchQuery = $(event.target).val();
+    self.searchChanged = function (event_b) {
+        var searchQuery = $(event_b.target).val();
+        $("#searchInput").val(searchQuery);
 
         if (searchQuery.length >= 3) {
             if (typingTimeout) {
@@ -66,6 +121,7 @@ var vm = function () {
             }
             typingTimeout = setTimeout(function () {
                 self.searchLoading(true);
+                self.showHistory(false);
                 ajaxHelper(self.baseUri(), 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
                     self.AthletesRecords([]);
@@ -94,7 +150,16 @@ var vm = function () {
                     });
                     self.getFavorites();
                     self.searchLoading(false);
+                    return true;
                 });
+                var idx = self.HistoryArray.indexOf(searchQuery.toString());
+                if (idx == -1) {
+                    self.HistoryAllArray.push(String(searchQuery));
+                }
+                console.log(self.HistoryArray());
+                console.log(self.History);
+                localStorage.setItem('History', JSON.stringify(self.History))
+                
             }, 1000);
         }
         else if (searchQuery.length == 0) {
@@ -105,7 +170,9 @@ var vm = function () {
             self.CountriesRecords([]);
             self.GamesRecords([]);
             self.ModalitiesRecords([]);
+            self.getHistory();
             self.searchLoading(false);
+            return true;
         }
     };
 
@@ -139,6 +206,8 @@ var vm = function () {
             }
         });
     }
+
+    self.getHistory();
 }
 
 $(document).ready(function () {

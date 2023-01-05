@@ -68,9 +68,24 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </span>
-      <input type="text" id="searchInput" class="form-control" placeholder="Enter your search query here" aria-label="Search" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
+      <input type="text" id="searchInput" class="form-control" placeholder="Enter your search query here" aria-label="Search" aria-describedby="searchBarLabel" data-bind="event: { input: function(data, event) {searchChanged(event)} }">
     </div>
 
+    <!-- Search history -->
+    <div data-bind="visible: showHistory">
+      <h5><i class="fa-solid fa-clock-rotate-left"></i> Search history</h5>
+      <div class="list-group" data-bind="foreach: HistoryArray">
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="cursor: pointer" data-bind="value: $data, click: function(data, event) {$parent.searchChanged(event)}">
+          <span data-bind="text: $data"></span>
+          <i class="fa-solid fa-xmark text-body"
+            onmouseenter="this.classList.add('text-body-emphasis'); this.classList.remove('text-body')"
+            onmouseleave="this.classList.add('text-body'); this.classList.remove('text-body-emphasis')"
+            data-bind="click: function(data, event, $data) {deleteEntry($data)}"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search results -->
     <div class="accordion" id="accordionExample">
       <div class="accordion-item" data-bind="visible: AthletesRecords().length > 0">
         <h2 class="accordion-header" id="headingOne">
