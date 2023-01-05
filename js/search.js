@@ -103,11 +103,13 @@ var vm = function () {
         }
     };
 
-    self.clearEntry = function (itemName) {
+    self.deleteEntry = function (itemName) {
         for (array of allArrays) {
-            var idx = array.indexOf(itemName.toString());
+            var idx = array.indexOf(itemName);
             array.splice(idx, 1);
         }
+        
+        localStorage.setItem("History", JSON.stringify(self.History));
     }
 
     var typingTimeout;

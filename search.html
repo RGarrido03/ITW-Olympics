@@ -80,7 +80,7 @@
           <i class="fa-solid fa-xmark text-body"
             onmouseenter="this.classList.add('text-body-emphasis'); this.classList.remove('text-body')"
             onmouseleave="this.classList.add('text-body'); this.classList.remove('text-body-emphasis')"
-            data-bind="click: function(data, event, $data) {deleteEntry($data)}"></i>
+            data-bind="click: function(data, event) {$parent.deleteEntry(data)}"></i>
         </div>
       </div>
     </div>
