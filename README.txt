@@ -14,7 +14,7 @@ Alterações executadas após a apresentação do trabalho:
 - Pesquisa a partir de 3 letras
   De modo a reduzir a carga da API e do browser (na renderização do DOM), a pesquisa só é feita a partir de 3 letras.
 
-- Histórico de pesquisas (implementação em curso - atualmente funciona na pesquisa)
+- Histórico de pesquisas
   Em cada campo de pesquisa, é apresentado um histórico de pesquisas (sob a forma de uma list group).
   O histórico é guardado no local storage do browser, e é carregado em cada página correspondente.
 
