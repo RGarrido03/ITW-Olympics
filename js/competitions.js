@@ -27,7 +27,44 @@ var vm = function () {
     }
     self.FavoritesArray = ko.observableArray([]);
 
+    self.History = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": [],
+        "all": []
+    }
+    self.HistoryCompetitionsArray = ko.observableArray([]);
+    self.showHistory = ko.observable(false);
+
     //--- Page Events
+    self.getHistory = function () {
+        if (localStorage.getItem("History")) {
+            self.History = JSON.parse(localStorage.getItem("History"));
+        } else {
+            localStorage.setItem("History", JSON.stringify(self.History));
+        }
+        console.log("Current history: ", self.History);
+        self.HistoryCompetitionsArray(self.History.competitions);
+    };
+
+    self.showHistoryTrue = function () {
+        self.showHistory(true);
+        return true;
+    }
+
+    self.showHistoryFalse = function () {
+        self.showHistory(false);
+    }
+
+    self.deleteEntry = function (itemName) {
+        var idx = self.HistoryCompetitionsArray.indexOf(itemName);
+        self.HistoryCompetitionsArray.splice(idx, 1);
+        
+        localStorage.setItem("History", JSON.stringify(self.History));
+    }
+
     self.getFavorites = function () {
         if (localStorage.getItem("Favorites")) {
             self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
@@ -129,8 +166,11 @@ var vm = function () {
     }
 
     var typingTimeout;
-    self.searchChanged = function () {
+    self.searchChanged = function (event) {
         var searchQuery = $(event.target).val();
+        if ($("#searchInput").val() != searchQuery) {
+            $("#searchInput").val(searchQuery);
+        }
 
         if (searchQuery.length >= 3) {
             if (typingTimeout) {
@@ -138,6 +178,7 @@ var vm = function () {
             }
             typingTimeout = setTimeout(function () {
                 self.hasMore(false);
+                self.showHistory(false);
                 self.searchLoading(true);
                 ajaxHelper(self.baseUri() + "/SearchByName", 'GET', { q: searchQuery }).done(function (data) {
                     console.log(data);
@@ -149,12 +190,19 @@ var vm = function () {
                     self.searchLoading(false);
                     self.getFavorites();
                 });
+                var idx = self.HistoryCompetitionsArray.indexOf(searchQuery);
+                if (idx == -1) {
+                    self.HistoryCompetitionsArray.push(String(searchQuery));
+                }
+                console.log(self.History);
+                localStorage.setItem('History', JSON.stringify(self.History));
             }, 1000);
         }
         else if (searchQuery.length == 0) {
             self.searchLoading(true);
             clearTimeout(typingTimeout);
             self.fetchData(true);
+            self.getHistory();
             self.searchLoading(false);
         }
     };
@@ -221,6 +269,7 @@ var vm = function () {
     var loading = true;
     showLoading();
     self.fetchData(true);
+    self.getHistory();
     console.log("VM initialized!");
 };
 
