@@ -71,7 +71,7 @@
         <div id="map" class="rounded" style="height: 20rem;"></div>
       </div>
       <!-- Search bar -->
-      <div class="col-sm-12 col-md-4 col-lg-3 px-md-2">
+      <div class="col-sm-12 col-md-4 col-lg-3 px-md-2" style="position: relative;" data-bind="event: {click: showHistoryTrue, mouseleave: showHistoryFalse}">
         <div class="input-group mb-3">
           <span class="input-group-text" id="searchBarLabel">
             <i class="fa-solid fa-magnifying-glass" data-bind="hidden: searchLoading"></i>
@@ -79,7 +79,19 @@
               <span class="visually-hidden">Loading...</span>
             </div>
           </span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Search by year" aria-label="Search by year" aria-describedby="searchBarLabel" data-bind="event: { input: searchChanged }">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search by year" aria-label="Search by year" aria-describedby="searchBarLabel" data-bind="event: { input: function(data, event) {searchChanged(event)} }">
+        </div>
+        <!-- Search history -->
+        <div data-bind="visible: showHistory" style="position: absolute; top: calc(1rem + 12px); width: calc(100% - 16px); z-index: 5" class="pt-3">
+          <div class="list-group shadow" data-bind="foreach: HistoryGamesArray">
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="cursor: pointer" data-bind="value: $data, click: function(data, event) {$parent.searchChanged(event)}">
+              <span data-bind="text: $data"></span>
+              <i class="fa-solid fa-xmark text-body"
+                onmouseenter="this.classList.add('text-body-emphasis'); this.classList.remove('text-body')"
+                onmouseleave="this.classList.add('text-body'); this.classList.remove('text-body-emphasis')"
+                data-bind="click: function(data, event) {$parent.deleteEntry(data)}"></i>
+            </div>
+          </div>
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="sortLabel"><i class="fa-solid fa-arrow-down-1-9"></i></span>

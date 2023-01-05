@@ -31,7 +31,44 @@ var vm = function () {
     }
     self.FavoritesArray = ko.observableArray([]);
 
+    self.History = {
+        "athletes": [],
+        "countries": [],
+        "competitions": [],
+        "games": [],
+        "modalities": [],
+        "all": []
+    }
+    self.HistoryGamesArray = ko.observableArray([]);
+    self.showHistory = ko.observable(false);
+
     //--- Page Events
+    self.getHistory = function () {
+        if (localStorage.getItem("History")) {
+            self.History = JSON.parse(localStorage.getItem("History"));
+        } else {
+            localStorage.setItem("History", JSON.stringify(self.History));
+        }
+        console.log("Current history: ", self.History);
+        self.HistoryGamesArray(self.History.games);
+    };
+
+    self.showHistoryTrue = function () {
+        self.showHistory(true);
+        return true;
+    }
+
+    self.showHistoryFalse = function () {
+        self.showHistory(false);
+    }
+
+    self.deleteEntry = function (itemName) {
+        var idx = self.HistoryGamesArray.indexOf(itemName);
+        self.HistoryGamesArray.splice(idx, 1);
+        
+        localStorage.setItem("History", JSON.stringify(self.History));
+    }
+
     self.getFavorites = function () {
         if (localStorage.getItem("Favorites")) {
             self.Favorites = JSON.parse(localStorage.getItem("Favorites"));
@@ -175,8 +212,11 @@ var vm = function () {
     }
 
     var typingTimeout;
-    self.searchChanged = function () {
+    self.searchChanged = function (event) {
         var searchQuery = $(event.target).val();
+        if ($("#searchInput").val() != searchQuery) {
+            $("#searchInput").val(searchQuery);
+        }
 
         if (searchQuery.length >= 3) {
             if (typingTimeout) {
@@ -184,6 +224,7 @@ var vm = function () {
             }
             typingTimeout = setTimeout(function () {
                 self.hasMore(false);
+                self.showHistory(false);
                 self.searchLoading(true);
                 console.log(searchQuery);
                 console.log(self.baseUri() + "/SearchByName");
@@ -197,12 +238,19 @@ var vm = function () {
                     self.searchLoading(false);
                     self.getFavorites();
                 });
+                var idx = self.HistoryGamesArray.indexOf(searchQuery);
+                if (idx == -1) {
+                    self.HistoryGamesArray.push(String(searchQuery));
+                }
+                console.log(self.History);
+                localStorage.setItem('History', JSON.stringify(self.History));
             }, 1000);
         }
         else if (searchQuery.length == 0) {
             self.searchLoading(true);
             clearTimeout(typingTimeout);
             self.fetchData(true);
+            self.getHistory();
             self.searchLoading(false);
         }
     };
@@ -306,6 +354,7 @@ var vm = function () {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    self.getHistory();
     console.log("VM initialized!");
 };
 
