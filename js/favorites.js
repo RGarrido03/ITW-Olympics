@@ -81,7 +81,7 @@ var vm = function () {
                     for (const item of self.FavoritesCountriesArray()) {
                         await ajaxHelper(self.baseUri() + 'Countries/' + item, 'GET').done(function (data) {
                             console.log("Country: ", data)
-                            self.CountriesRecords.push({'name': data.Name, 'id': data.Id, 'photo': data.Photo, 'placeholder': 'fa-flag', 'link': 'countries'});
+                            self.CountriesRecords.push({'name': data.Name, 'id': data.Id, 'photo': data.Flag, 'placeholder': 'fa-flag', 'link': 'countries'});
                         });
                     };
                 }
