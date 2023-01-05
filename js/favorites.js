@@ -174,9 +174,7 @@ var vm = function () {
         });
     }
     function hideLoading() {
-        $('#myModal').on('shown.bs.modal', function (e) {
-            $("#myModal").modal('hide');
-        })
+        $("#myModal").modal('hide');
     }
 
     showLoading();
