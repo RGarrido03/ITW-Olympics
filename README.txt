@@ -14,11 +14,11 @@ Alterações executadas após a apresentação do trabalho:
 - Pesquisa a partir de 3 letras
   De modo a reduzir a carga da API e do browser (na renderização do DOM), a pesquisa só é feita a partir de 3 letras.
 
-- Histórico de pesquisas (por implementar)
+- Histórico de pesquisas (implementação em curso - atualmente funciona na pesquisa)
   Em cada campo de pesquisa, é apresentado um histórico de pesquisas (sob a forma de uma list group).
   O histórico é guardado no local storage do browser, e é carregado em cada página correspondente.
 
-- Favoritos (implementação em curso - atualmente funciona nos atletas)
+- Favoritos
   Os favoritos são guardados no local storage do browser, e são carregados em cada página correspondente.
   A navbar inclui um dropdown para a página favorites.html?id={athletes | games | countries | modalities | competitions}, que apresenta e
   agrupa os favoritos por categoria (ex: Atletas, Competições, etc.).
