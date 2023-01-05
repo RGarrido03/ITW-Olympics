@@ -203,6 +203,7 @@ var vm = function () {
             clearTimeout(typingTimeout);
             self.fetchData(true);
             self.getHistory();
+            self.showHistory(true);
             self.searchLoading(false);
         }
     };
