@@ -3,18 +3,6 @@
     margin: 3.5rem 0 4.5rem 0;
 }
 
-/* Vai ser removido após o infinite scrolling
-   estiver presente em todas as páginas */
-li.page-item a {
-    font-size: 0.85rem;
-}
-
-a {
-    color: rgb(2, 0, 0);
-}
-
-
-
 /* Instead of always use class="d-flex align-items-center justify-content-center",
    this simpler class simplifies the process of centering things both horizontally and vertically */
    .center {
